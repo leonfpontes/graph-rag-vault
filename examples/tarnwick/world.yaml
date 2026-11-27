@@ -1,0 +1,2614 @@
+# The world of Tarnwick Cycles, a fictional bicycle maker. Every person, customer, supplier and place
+# here is invented. This file is the source of truth of the example vault: every note in vault/ is
+# rendered from one entry below (pnpm --filter @graph-rag/vault generate), and a test fails when the
+# two disagree. Some notes are stale or contradict a newer one on purpose: the search has to cope.
+company: Tarnwick Cycles
+snapshot: 2026-11-20
+
+people:
+  - id: per-elena-brandt
+    title: Elena Brandt
+    aliases: [Elena, EB]
+    role: CEO
+    created: 2015-03-02
+    updated: 2026-07-30
+    status: active
+    body: |
+      ## Summary
+      Founded Tarnwick Cycles in 2015 after ten years building frames for other brands. Chairs the
+      monthly leadership meeting and signs off anything above the annual plan.
+
+      ## Focus for 2026
+      Grow the e-bike range without losing the dealers who sell the commuter bikes, and open the
+      Nordic market through a small number of strong shops.
+
+  - id: per-maya-okafor
+    title: Maya Okafor
+    aliases: [Maya]
+    role: Head of Product
+    created: 2019-06-10
+    updated: 2026-10-11
+    status: active
+    reports_to: per-elena-brandt
+    body: |
+      ## Summary
+      Runs the product team: industrial design, the e-bike engineers and customer service. Owns the
+      roadmap and the [[prj-commuter-2027|Commuter 2027 frame]].
+
+      ## How she works
+      Wants every product decision written down with the meeting where it was taken. Holds a product
+      review every second Thursday.
+
+  - id: per-priya-raman
+    title: Priya Raman
+    aliases: [Priya, PR]
+    role: Head of Supply Chain
+    created: 2020-02-03
+    updated: 2026-10-02
+    status: active
+    reports_to: per-elena-brandt
+    body: |
+      ## Summary
+      Buys everything that goes into a Tarnwick bike, from tubing to electronics, and runs the
+      quarterly supply review. Before Tarnwick she managed sourcing for a scooter maker.
+
+      ## Current priorities
+      Two sources for every critical part, and shorter lead times on drive units.
+
+  - id: per-tomas-lindqvist
+    title: Tomás Lindqvist
+    aliases: [Tomás, TL]
+    role: Engineering Lead, e-bikes
+    created: 2021-09-01
+    updated: 2026-09-28
+    status: active
+    reports_to: per-maya-okafor
+    body: |
+      ## Summary
+      Leads the e-bike engineering team: drive units, battery packs, wiring and firmware. Came from a
+      motorcycle supplier, where he designed battery enclosures.
+
+      ## Team
+      [[per-dev-kerr|Dev Kerr]] on firmware and [[per-yara-dunmore|Yara Dunmore]] on validation.
+
+  - id: per-jonah-whitfield
+    title: Jonah Whitfield
+    aliases: [Jonah, JW]
+    role: Dealer Sales Manager
+    created: 2018-04-16
+    updated: 2026-08-19
+    status: active
+    reports_to: per-elena-brandt
+    body: |
+      ## Summary
+      Looks after the dealer network: terms, orders, the yearly dealer day and the trade shows.
+      Knows most shop owners by name.
+
+      ## Team
+      [[per-sana-orr|Sana Orr]] handles the day-to-day accounts.
+
+  - id: per-hiro-sato
+    title: Hiro Sato
+    aliases: [Hiro]
+    role: Head of Operations
+    created: 2017-01-09
+    updated: 2026-10-20
+    status: active
+    reports_to: per-elena-brandt
+    body: |
+      ## Summary
+      Runs the plant in Tarnwick: the frame shop, the paint line, wheel building and final assembly.
+      Plans capacity a year ahead and hates overtime.
+
+  - id: per-greta-hale
+    title: Greta Hale
+    aliases: [Greta]
+    role: Frame Shop Supervisor
+    created: 2017-05-22
+    updated: 2026-10-20
+    status: active
+    reports_to: per-hiro-sato
+    body: |
+      ## Summary
+      Supervises the frame shop and its six jigs. Trained most of the people who work there and keeps
+      the shop's capacity plan.
+
+  - id: per-kofi-mensah
+    title: Kofi Mensah
+    aliases: [Kofi]
+    role: Quality Engineer
+    created: 2020-08-31
+    updated: 2026-09-24
+    status: active
+    reports_to: per-hiro-sato
+    body: |
+      ## Summary
+      Owns incoming inspection, the test lab and the quarterly quality report. Signs every test
+      report that leaves the lab.
+
+  - id: per-lena-nyberg
+    title: Lena Nyberg
+    aliases: [Lena]
+    role: Customer Service Lead
+    created: 2019-11-04
+    updated: 2026-08-28
+    status: active
+    reports_to: per-maya-okafor
+    body: |
+      ## Summary
+      Leads customer service: rider questions, dealer claims and the service manuals. Her team
+      answers in English, German and Norwegian.
+
+  - id: per-oskar-farrow
+    title: Oskar Farrow
+    aliases: [Oskar]
+    role: Finance Director
+    created: 2018-09-03
+    updated: 2026-10-20
+    status: active
+    reports_to: per-elena-brandt
+    body: |
+      ## Summary
+      Owns the budget, pricing and the bank. Every price list goes through him before it reaches a
+      dealer.
+
+  - id: per-ines-castell
+    title: Ines Castell
+    aliases: [Ines]
+    role: Industrial Designer
+    created: 2022-02-14
+    updated: 2026-09-12
+    status: active
+    reports_to: per-maya-okafor
+    body: |
+      ## Summary
+      Designs frames and the small parts riders touch: dropouts, cable ports, the rear rack mounts.
+      Leads the design work on the commuter range.
+
+  - id: per-dev-kerr
+    title: Dev Kerr
+    aliases: [Dev]
+    role: Firmware Engineer
+    created: 2023-03-06
+    updated: 2026-07-14
+    status: active
+    reports_to: per-tomas-lindqvist
+    body: |
+      ## Summary
+      Writes the motor controller and display firmware, and the app that dealers use to read error
+      codes.
+
+  - id: per-wren-galloway
+    title: Wren Galloway
+    aliases: [Wren]
+    role: Marketing Lead
+    created: 2021-05-17
+    updated: 2026-08-28
+    status: active
+    reports_to: per-elena-brandt
+    body: |
+      ## Summary
+      Runs marketing: the catalogue, the website, launch events and the dealer materials.
+
+  - id: per-mateo-ivers
+    title: Mateo Ivers
+    aliases: [Mateo]
+    role: Purchasing Specialist
+    created: 2022-06-27
+    updated: 2026-10-02
+    status: active
+    reports_to: per-priya-raman
+    body: |
+      ## Summary
+      Places the purchase orders, chases deliveries and keeps the supplier scorecards up to date.
+
+  - id: per-yara-dunmore
+    title: Yara Dunmore
+    aliases: [Yaz]
+    role: Validation Engineer
+    created: 2023-09-11
+    updated: 2026-10-05
+    status: active
+    reports_to: per-tomas-lindqvist
+    body: |
+      ## Summary
+      Runs bench tests and field tests of prototypes, with a group of twelve outside test riders.
+      Writes up every test round.
+
+  - id: per-theo-marsh
+    title: Theo Marsh
+    aliases: [Theo]
+    role: Legal Counsel
+    created: 2021-01-11
+    updated: 2026-08-28
+    status: active
+    reports_to: per-oskar-farrow
+    body: |
+      ## Summary
+      Part-time counsel: supplier contracts, consumer terms and trademarks.
+
+  - id: per-sana-orr
+    title: Sana Orr
+    aliases: [Sana]
+    role: Dealer Account Manager
+    created: 2022-10-03
+    updated: 2026-09-12
+    status: active
+    reports_to: per-jonah-whitfield
+    body: |
+      ## Summary
+      Day-to-day contact for the dealers: orders, deliveries, demo bikes and claims that need a
+      decision from the factory.
+
+  - id: per-femi-rowe
+    title: Femi Rowe
+    aliases: [Femi]
+    role: Service Trainer
+    created: 2023-01-16
+    updated: 2026-06-18
+    status: active
+    reports_to: per-lena-nyberg
+    body: |
+      ## Summary
+      Trains dealer mechanics on Tarnwick bikes and writes the service bulletins.
+
+  # ---- filler ----
+
+  - id: per-ana-albers
+    title: Ana Albers
+    aliases: [Ana]
+    role: Assembly Team Lead
+    created: 2016-05-31
+    updated: 2023-02-21
+    status: active
+    reports_to: per-hiro-sato
+    body: |
+      ## Summary
+      Runs one of the two assembly lines and the morning stand-up on the shop floor.
+
+      ## Started
+      Joined Tarnwick in May 2016.
+
+  - id: per-ben-brook
+    title: Ben Brook
+    aliases: [Ben]
+    role: Paint Line Technician
+    created: 2018-12-07
+    updated: 2022-05-28
+    status: active
+    reports_to: per-hiro-sato
+    body: |
+      ## Summary
+      Keeps the powder-coat line running and mixes the special colours.
+
+      ## Started
+      Joined Tarnwick in December 2018.
+
+  - id: per-chloe-dumont
+    title: 'Chloé Dumont'
+    aliases: ['Chloé']
+    role: Wheel Builder
+    created: 2022-01-25
+    updated: 2026-11-05
+    status: active
+    reports_to: per-hiro-sato
+    body: |
+      ## Summary
+      Builds and trues the wheels for every bike that leaves the plant.
+
+      ## Started
+      Joined Tarnwick in January 2022.
+
+  - id: per-ewa-ekberg
+    title: Ewa Ekberg
+    aliases: [Ewa]
+    role: Production Planner
+    created: 2017-08-25
+    updated: 2019-08-08
+    status: active
+    reports_to: per-hiro-sato
+    body: |
+      ## Summary
+      Turns the sales forecast into a weekly build plan for the plant.
+
+      ## Started
+      Joined Tarnwick in August 2017.
+
+  - id: per-rafe-lowe
+    title: Rafe Lowe
+    aliases: [Rafe]
+    role: Frame Builder
+    created: 2019-03-08
+    updated: 2023-09-05
+    status: active
+    reports_to: per-greta-hale
+    body: |
+      ## Summary
+      Builds frames on the jigs and checks alignment on the surface table.
+
+      ## Started
+      Joined Tarnwick in March 2019.
+
+  - id: per-pia-quint
+    title: Pia Quint
+    aliases: [Pia]
+    role: Frame Builder
+    created: 2018-08-29
+    updated: 2021-09-29
+    status: active
+    reports_to: per-greta-hale
+    body: |
+      ## Summary
+      Builds frames and trains apprentices on the jigs.
+
+      ## Started
+      Joined Tarnwick in August 2018.
+
+  - id: per-nora-pell
+    title: Nora Pell
+    aliases: [Nora]
+    role: Test Lab Technician
+    created: 2016-12-20
+    updated: 2025-12-23
+    status: active
+    reports_to: per-kofi-mensah
+    body: |
+      ## Summary
+      Runs fatigue and impact tests in the lab and logs every result.
+
+      ## Started
+      Joined Tarnwick in December 2016.
+
+  - id: per-mateus-rocha
+    title: Mateus Rocha
+    aliases: [Mateus]
+    role: Supplier Quality Engineer
+    created: 2017-10-24
+    updated: 2023-02-07
+    status: active
+    reports_to: per-kofi-mensah
+    body: |
+      ## Summary
+      Visits suppliers, audits their processes and approves first samples.
+
+      ## Started
+      Joined Tarnwick in October 2017.
+
+  - id: per-hana-ivarsson
+    title: Hana Ivarsson
+    aliases: [Hana]
+    role: Product Manager, commuter range
+    created: 2016-05-19
+    updated: 2026-10-01
+    status: active
+    reports_to: per-maya-okafor
+    body: |
+      ## Summary
+      Owns the commuter range: what goes in each model year and at what price point.
+
+      ## Started
+      Joined Tarnwick in May 2016.
+
+  - id: per-jakub-novak
+    title: Jakub Novak
+    aliases: [Jakub]
+    role: Mechanical Engineer, e-bikes
+    created: 2017-11-01
+    updated: 2026-04-11
+    status: active
+    reports_to: per-tomas-lindqvist
+    body: |
+      ## Summary
+      Designs motor mounts, cable routing and the charging port.
+
+      ## Started
+      Joined Tarnwick in November 2017.
+
+  - id: per-sara-lindgren
+    title: Sara Lindgren
+    aliases: [Sara]
+    role: Electrical Engineer
+    created: 2018-04-15
+    updated: 2018-10-29
+    status: active
+    reports_to: per-tomas-lindqvist
+    body: |
+      ## Summary
+      Designs wiring looms and the lighting system of the e-bikes.
+
+      ## Started
+      Joined Tarnwick in April 2018.
+
+  - id: per-theo-castillo
+    title: Theo Castillo
+    aliases: [Theo]
+    role: CAD Technician
+    created: 2022-07-21
+    updated: 2026-10-16
+    status: active
+    reports_to: per-ines-castell
+    body: |
+      ## Summary
+      Turns sketches into drawings and keeps the part library tidy.
+
+      ## Started
+      Joined Tarnwick in July 2022.
+
+  - id: per-uma-sethi
+    title: Uma Sethi
+    aliases: [Uma]
+    role: Logistics Coordinator
+    created: 2023-04-13
+    updated: 2026-02-09
+    status: active
+    reports_to: per-priya-raman
+    body: |
+      ## Summary
+      Books freight, tracks containers and runs the small parts warehouse.
+
+      ## Started
+      Joined Tarnwick in April 2023.
+
+  - id: per-vik-halvorsen
+    title: Vik Halvorsen
+    aliases: [Vik]
+    role: Buyer, components
+    created: 2017-09-09
+    updated: 2025-10-24
+    status: active
+    reports_to: per-priya-raman
+    body: |
+      ## Summary
+      Buys drivetrains, brakes and wheels, and negotiates the yearly prices.
+
+      ## Started
+      Joined Tarnwick in September 2017.
+
+  - id: per-wilde-tull
+    title: Wilde Tull
+    aliases: [Wilde]
+    role: Dealer Account Manager, Germany
+    created: 2024-01-01
+    updated: 2026-04-28
+    status: active
+    reports_to: per-jonah-whitfield
+    body: |
+      ## Summary
+      Looks after the German dealers and speaks at the regional dealer evenings.
+
+      ## Started
+      Joined Tarnwick in January 2024.
+
+  - id: per-kit-farrow
+    title: Kit Farrow
+    aliases: [Kit]
+    role: Inside Sales
+    created: 2025-07-06
+    updated: 2025-08-19
+    status: active
+    reports_to: per-jonah-whitfield
+    body: |
+      ## Summary
+      Takes orders by phone and e-mail and keeps the dealer list current.
+
+      ## Started
+      Joined Tarnwick in July 2025.
+
+  - id: per-lou-marsh
+    title: Lou Marsh
+    aliases: [Lou]
+    role: Customer Service Agent
+    created: 2016-08-11
+    updated: 2021-09-12
+    status: active
+    reports_to: per-lena-nyberg
+    body: |
+      ## Summary
+      Answers riders and dealers, and logs every repeated question for the FAQ.
+
+      ## Started
+      Joined Tarnwick in August 2016.
+
+  - id: per-ivo-kerr
+    title: Ivo Kerr
+    aliases: [Ivo]
+    role: Spare Parts Coordinator
+    created: 2025-09-16
+    updated: 2026-07-07
+    status: active
+    reports_to: per-lena-nyberg
+    body: |
+      ## Summary
+      Keeps spare parts in stock and ships them to dealers the same day.
+
+      ## Started
+      Joined Tarnwick in September 2025.
+
+  - id: per-dana-vance
+    title: Dana Vance
+    aliases: [Dana]
+    role: Accountant
+    created: 2025-11-13
+    updated: 2026-10-04
+    status: active
+    reports_to: per-oskar-farrow
+    body: |
+      ## Summary
+      Closes the books every month and prepares the board pack.
+
+      ## Started
+      Joined Tarnwick in November 2025.
+
+  - id: per-max-orr
+    title: Max Orr
+    aliases: [Max]
+    role: Content Producer
+    created: 2024-03-29
+    updated: 2026-02-18
+    status: active
+    reports_to: per-wren-galloway
+    body: |
+      ## Summary
+      Shoots the catalogue photos and the launch videos.
+
+      ## Started
+      Joined Tarnwick in March 2024.
+
+projects:
+  - id: prj-ridgeline-emtb
+    title: Ridgeline e-MTB
+    aliases: [Ridgeline, RL-1]
+    created: 2025-11-03
+    updated: 2026-10-09
+    status: active
+    owner: per-tomas-lindqvist
+    body: |
+      ## Summary
+      A full-suspension electric mountain bike with 150 mm of travel and a mid-drive motor, for a
+      spring 2027 launch. The first Tarnwick bike built for trails rather than roads.
+
+      ## Status
+      The second prototype round ended in September. Battery integration is the open risk; the cell
+      choice is recorded in [[dec-switch-battery-voltaro|the October decision]] and the pack in
+      [[doc-battery-spec-v3|the battery spec]].
+
+  - id: prj-commuter-2027
+    title: Commuter 2027 frame
+    aliases: [C27]
+    created: 2026-06-15
+    updated: 2026-07-02
+    status: active
+    owner: per-maya-okafor
+    body: |
+      ## Summary
+      A new frame for the commuter range from the 2027 model year: lower step-over, integrated rear
+      rack mounts and room for 45 mm tyres.
+
+      ## Plan
+      Prototype frames in August, series production from January 2027. Frames will be welded in our
+      own frame shop in Tarnwick, as all commuter frames have been since 2015.
+
+  - id: prj-dealer-portal
+    title: Dealer portal
+    created: 2025-10-06
+    updated: 2026-06-03
+    status: paused
+    owner: per-jonah-whitfield
+    body: |
+      ## Summary
+      A website where dealers order bikes and parts, see delivery dates and download marketing
+      material. Paused in June 2026, see [[dec-pause-dealer-portal|the decision]].
+
+  - id: prj-warranty-flow
+    title: Warranty claims flow
+    created: 2025-09-01
+    updated: 2026-04-14
+    status: active
+    owner: per-lena-nyberg
+    body: |
+      ## Summary
+      Dealers file warranty claims on a web form instead of by e-mail. A claim for a cracked frame
+      within the five-year frame warranty goes straight to [[per-kofi-mensah|quality]] with photos.
+
+      ## Status
+      Live for dealers in the UK and Germany since April 2026. Average time to a decision fell from
+      nine days to four.
+
+  - id: prj-cargo-longtail
+    title: Cargo Longtail
+    aliases: [Longtail]
+    created: 2026-02-02
+    updated: 2026-09-01
+    status: active
+    owner: per-tomas-lindqvist
+    body: |
+      ## Summary
+      An electric longtail cargo bike that carries two children or 60 kg of shopping. Shares the
+      drive unit with the Ridgeline but has its own frame.
+
+  - id: prj-gravel-gx
+    title: Gravel GX
+    aliases: [GX]
+    created: 2025-04-07
+    updated: 2026-05-19
+    status: done
+    owner: per-ines-castell
+    body: |
+      ## Summary
+      The steel gravel bike launched in March 2026. Sold out its first batch of 400 in seven weeks.
+
+  - id: prj-nordic-dealers
+    title: Nordic dealer expansion
+    created: 2026-01-19
+    updated: 2026-09-12
+    status: active
+    owner: per-jonah-whitfield
+    body: |
+      ## Summary
+      Sign five dealers in Sweden and Norway by the end of 2026. Two have signed so far:
+      [[cus-velo-lund|Velo Lund]] and [[cus-fjord-rides|Fjord Rides]].
+
+      ## Open questions
+      Shipping from a warehouse in Gothenburg or direct from Tarnwick; who trains the mechanics.
+
+  # ---- filler ----
+
+  - id: prj-kids-20
+    title: Kids 20 inch
+    aliases: [Kids 20]
+    created: 2026-03-09
+    updated: 2026-09-18
+    status: active
+    owner: per-ines-castell
+    body: |
+      ## Summary
+      A light 20-inch bike for children from six to nine, with a single gear and short-reach brake levers.
+
+  - id: prj-brake-lever-recall
+    title: Brake lever recall 2026
+    created: 2026-02-16
+    updated: 2026-07-25
+    status: done
+    owner: per-kofi-mensah
+    body: |
+      ## Summary
+      Replace the brake levers on 1,140 commuter bikes built in late 2025 after a batch of levers cracked in testing.
+
+  - id: prj-paint-line-upgrade
+    title: Paint line upgrade
+    created: 2026-04-20
+    updated: 2026-07-19
+    status: active
+    owner: per-hiro-sato
+    body: |
+      ## Summary
+      A second curing oven so the paint line can run matte and gloss colours on the same day.
+
+  - id: prj-fit-studio
+    title: Fit studio
+    created: 2025-11-17
+    updated: 2026-08-06
+    status: paused
+    owner: per-wren-galloway
+    body: |
+      ## Summary
+      A bike-fit room at the factory where riders can book a fitting and a test ride.
+
+  - id: prj-rear-rack-v2
+    title: Rear rack v2
+    aliases: [Rack v2]
+    created: 2026-05-11
+    updated: 2026-06-08
+    status: active
+    owner: per-ines-castell
+    body: |
+      ## Summary
+      A stiffer rear rack rated for 27 kg with a mount for a child seat.
+
+  - id: prj-trade-show-2027
+    title: Trade show 2027
+    created: 2026-08-03
+    updated: 2026-10-29
+    status: active
+    owner: per-wren-galloway
+    body: |
+      ## Summary
+      Our stand at the big spring trade show: three bikes, a test track and a dealer lounge.
+
+  - id: prj-dealer-training
+    title: Dealer training programme
+    created: 2026-01-26
+    updated: 2026-03-03
+    status: active
+    owner: per-femi-rowe
+    body: |
+      ## Summary
+      Two-day courses for dealer mechanics, at the factory and online.
+
+  - id: prj-packaging-redesign
+    title: Packaging redesign
+    created: 2026-06-08
+    updated: 2026-10-27
+    status: active
+    owner: per-uma-sethi
+    body: |
+      ## Summary
+      Boxes without plastic foam, sized so a bike ships with the bars turned instead of removed.
+
+  - id: prj-erp-migration
+    title: ERP migration
+    aliases: [ERP]
+    created: 2026-02-02
+    updated: 2026-06-25
+    status: active
+    owner: per-oskar-farrow
+    body: |
+      ## Summary
+      Move orders, stock and accounts from the old system to a new ERP before the 2027 model year.
+
+customers:
+  - id: cus-harbor-bikes
+    title: Harbor Bikes
+    segment: dealer
+    city: Bristol
+    created: 2016-05-10
+    updated: 2026-08-19
+    status: active
+    owner: per-jonah-whitfield
+    body: |
+      ## Summary
+      Our oldest dealer and the biggest by volume: three shops around Bristol. Sells mostly commuter
+      bikes and wants an e-MTB to keep its trail riders.
+
+  - id: cus-velo-lund
+    title: Velo Lund
+    segment: dealer
+    city: Lund
+    created: 2026-03-02
+    updated: 2026-09-12
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A family-run shop near the university, with a strong workshop. Signed in March 2026 as the
+      first Tarnwick dealer outside the UK and Germany. Their buyer, Ebba, wants commuter bikes with
+      low step-overs for students and older riders.
+
+  - id: cus-fjord-rides
+    title: Fjord Rides
+    segment: dealer
+    city: Bergen
+    created: 2026-05-25
+    updated: 2026-08-03
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      Rents and sells bikes to visitors. Ordered twenty Gravel GX for its rental fleet in its first
+      season.
+
+  - id: cus-northpath-cycles
+    title: Northpath Cycles
+    segment: dealer
+    city: Leeds
+    created: 2019-03-18
+    updated: 2026-04-27
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      Two shops in Leeds. Good with e-bikes, slow to pay.
+
+  - id: cus-kettle-lane-bikes
+    title: Kettle Lane Bikes
+    segment: dealer
+    city: Hamburg
+    created: 2021-07-05
+    updated: 2026-06-22
+    status: active
+    owner: per-jonah-whitfield
+    body: |
+      ## Summary
+      Our first German dealer. Sells cargo and commuter bikes to families in the city.
+
+  # ---- filler ----
+
+  - id: cus-cobble-and-co
+    title: Cobble & Co
+    segment: dealer
+    city: Oxford
+    created: 2018-04-24
+    updated: 2022-08-31
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A city shop known for its repair service; sells commuter bikes to students.
+
+  - id: cus-upland-bike-hub
+    title: Upland Bike Hub
+    segment: dealer
+    city: Sheffield
+    created: 2025-09-05
+    updated: 2025-12-08
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A trail shop near the Peak District with a big rental fleet.
+
+  - id: cus-meridian-sports
+    title: Meridian Sports
+    segment: chain
+    city: Munich
+    created: 2024-06-07
+    updated: 2025-08-14
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A sports chain with eleven stores in Bavaria; takes bikes for four of them.
+
+  - id: cus-saltmarsh-cycle
+    title: Saltmarsh Cycle
+    segment: dealer
+    city: Norwich
+    created: 2017-12-16
+    updated: 2023-02-18
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A small shop with a loyal following among touring riders.
+
+  - id: cus-pinebarrow-bikes
+    title: Pinebarrow Bikes
+    segment: dealer
+    city: Exeter
+    created: 2026-06-01
+    updated: 2026-08-15
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      Sells family and cargo bikes; asks a lot of questions before ordering.
+
+  - id: cus-alder-and-spoke
+    title: Alder & Spoke
+    segment: dealer
+    city: Cardiff
+    created: 2025-01-20
+    updated: 2026-07-10
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A new shop run by two former racers; buys the Gravel GX.
+
+  - id: cus-bergstrom-cykel
+    title: Bergstrom Cykel
+    segment: dealer
+    city: Malmo
+    created: 2017-08-12
+    updated: 2025-02-19
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A workshop-first shop that wants to stock bikes from 2027.
+
+  - id: cus-hafen-rad
+    title: Hafen Rad
+    segment: dealer
+    city: Bremen
+    created: 2026-05-06
+    updated: 2026-11-09
+    status: active
+    owner: per-wilde-tull
+    body: |
+      ## Summary
+      Sells commuter and cargo bikes near the harbour.
+
+  - id: cus-lindenhof-bikes
+    title: Lindenhof Bikes
+    segment: dealer
+    city: Cologne
+    created: 2017-06-30
+    updated: 2019-01-30
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A family business in its third generation.
+
+  - id: cus-canal-street-cycles
+    title: Canal Street Cycles
+    segment: dealer
+    city: Manchester
+    created: 2024-01-09
+    updated: 2024-07-05
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A busy city shop that sells many commuter bikes on cycle-to-work schemes.
+
+  - id: cus-moorland-bike-co
+    title: Moorland Bike Co
+    segment: dealer
+    city: York
+    created: 2018-04-21
+    updated: 2024-10-16
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A shop with a café; runs group rides every Sunday.
+
+  - id: cus-elbe-velo
+    title: Elbe Velo
+    segment: dealer
+    city: Dresden
+    created: 2017-03-19
+    updated: 2017-07-12
+    status: active
+    owner: per-jonah-whitfield
+    body: |
+      ## Summary
+      Sells e-bikes to commuters and older riders.
+
+  - id: cus-larkspur-cycles
+    title: Larkspur Cycles
+    segment: dealer
+    city: Brighton
+    created: 2025-10-29
+    updated: 2026-09-16
+    status: active
+    owner: per-sana-orr
+    body: |
+      ## Summary
+      A shop on the seafront that sells mostly to commuters.
+
+meetings:
+  - id: mtg-2026-03-17-supply-review
+    title: Supply review · 17 Mar 2026
+    created: 2026-03-17
+    status: held
+    attendees: [per-priya-raman, per-elena-brandt, per-mateo-ivers, per-tomas-lindqvist]
+    body: |
+      ## Notes
+      - Battery cells: Ampcore delivered on time all winter. Price up 4%, still the best offer.
+      - Tubing: second source for chromoly tubes still open.
+      - Drive units: lead time back to ten weeks.
+
+      ## Outcome
+      [[dec-keep-ampcore|Keep Ampcore as battery supplier]] for the Ridgeline and the next model year.
+
+  - id: mtg-2026-10-02-supply-review
+    title: Supply review · 2 Oct 2026
+    created: 2026-10-02
+    status: held
+    attendees: [per-priya-raman, per-tomas-lindqvist, per-maya-okafor, per-mateo-ivers]
+    body: |
+      ## Notes
+      - The lab report on the Voltaro cells came back clean ([[doc-cell-test-report|report]]).
+      - Ampcore warned of a twelve-week delay from January.
+      - Rear rack supplier moving to new tooling in November.
+
+      ## Outcome
+      [[dec-switch-battery-voltaro|Switch Ridgeline battery cells to Voltaro]].
+
+  - id: mtg-2026-06-30-frame-review
+    title: Frame review · 30 Jun 2026
+    created: 2026-06-30
+    status: held
+    attendees: [per-hiro-sato, per-greta-hale, per-maya-okafor, per-ines-castell]
+    body: |
+      ## Notes
+      - Prototype drawings for the new commuter frame are ready.
+      - The frame shop can take the new frame if the old commuter frame ends in December.
+
+      ## Outcome
+      [[dec-weld-c27-in-house|Weld the Commuter 2027 frames in-house]].
+
+  - id: mtg-2026-09-12-c27-kickoff
+    title: C27 kickoff · 12 Sep 2026
+    created: 2026-09-12
+    status: held
+    attendees: [per-maya-okafor, per-ines-castell, per-hiro-sato, per-sana-orr]
+    customer: cus-velo-lund
+    body: |
+      ## Notes
+      - Their buyer joined for the first hour and rode the two prototype frames.
+      - She liked the low step-over; asked for a darker paint option.
+      - Series production still planned for January.
+
+      ## Outcome
+      The tube alloy is settled, see [[dec-aluminium-6061|the decision]].
+
+  - id: mtg-2026-10-20-ops-sync
+    title: Operations sync · 20 Oct 2026
+    created: 2026-10-20
+    status: held
+    attendees: [per-hiro-sato, per-greta-hale, per-priya-raman, per-oskar-farrow]
+    body: |
+      ## Notes
+      - The jig line is booked solid until March with the Cargo Longtail and spare parts.
+      - Calvane Tubeworks can start in January at a unit cost close to ours.
+      - Paint line keeps its two shifts.
+
+      ## Outcome
+      [[dec-c27-joining-calvane|Calvane takes over C27 tube joining from January]].
+
+  - id: mtg-2026-08-28-leadership
+    title: Leadership meeting · 28 Aug 2026
+    created: 2026-08-28
+    status: held
+    attendees:
+      [
+        per-elena-brandt,
+        per-maya-okafor,
+        per-oskar-farrow,
+        per-lena-nyberg,
+        per-wren-galloway,
+        per-theo-marsh,
+      ]
+    body: |
+      ## Notes
+      - Claims for structural failures stayed under 0.2% of bikes sold for three years.
+      - Marketing wants a promise that sets us apart from the big brands.
+      - Legal has checked the wording for the UK and Germany.
+
+      ## Outcome
+      [[dec-lifetime-frame-cover|Lifetime structural cover for first owners]].
+
+  - id: mtg-2025-06-11-warranty-review
+    title: Warranty review · 11 Jun 2025
+    created: 2025-06-11
+    status: held
+    attendees: [per-lena-nyberg, per-kofi-mensah, per-maya-okafor]
+    body: |
+      ## Notes
+      - Frame warranty claims: 31 in twelve months, most of them paint, not cracks.
+      - The five-year frame warranty stays; dealers like it and it costs little.
+      - Claims should come in through a web form, see [[prj-warranty-flow|the project]].
+
+  - id: mtg-2026-05-06-dealer-day
+    title: Dealer day · 6 May 2026
+    created: 2026-05-06
+    status: held
+    attendees: [per-jonah-whitfield, per-sana-orr, per-wren-galloway, per-elena-brandt]
+    customer: cus-harbor-bikes
+    body: |
+      ## Notes
+      - Hosted at Harbor Bikes in Bristol, 22 dealers came.
+      - Dealers asked for an e-MTB before 2027 and for faster spare parts.
+      - The dealer portal got a lukewarm reception.
+
+  # ---- filler ----
+
+  - id: mtg-2025-03-13-product-review
+    title: 'Product review · 13 Mar 2025'
+    created: 2025-03-13
+    status: held
+    attendees: [per-maya-okafor, per-hana-ivarsson, per-jakub-novak]
+    body: |
+      ## Notes
+      - The roadmap slide for 2027 needs the new launch dates.
+      - Prototype feedback from the test riders was mostly positive.
+      - Spec sheets must be ready before the catalogue shoot.
+
+      ## Outcome
+      - [[dec-free-first-service-after-500-km|Free first service after 500 km]]
+
+  - id: mtg-2025-04-11-sales-weekly
+    title: 'Sales weekly · 11 Apr 2025'
+    created: 2025-04-11
+    status: held
+    attendees: [per-jonah-whitfield, per-kit-farrow, per-wilde-tull]
+    body: |
+      ## Notes
+      - The German dealers want the price list in German.
+      - Spare parts questions keep coming in by phone.
+      - Two dealers asked for demo bikes for spring events.
+
+      ## Outcome
+      - [[dec-monthly-order-cut-off-on-the-first-monday|Monthly order cut-off on the first Monday]]
+
+  - id: mtg-2025-04-11-quality-review
+    title: 'Quality review · 11 Apr 2025'
+    created: 2025-04-11
+    status: held
+    attendees: [per-kofi-mensah, per-ana-albers, per-nora-pell]
+    body: |
+      ## Notes
+      - Paint adhesion complaints down after the new pre-treatment.
+      - Two dealers reported loose headsets; root cause still open.
+      - The test lab needs a second rig.
+
+  - id: mtg-2025-04-12-marketing-planning
+    title: 'Marketing planning · 12 Apr 2025'
+    created: 2025-04-12
+    status: held
+    attendees: [per-wren-galloway, per-max-orr]
+    body: |
+      ## Notes
+      - Video for the Kids 20 launch.
+      - Photo shoot booked for the catalogue.
+      - Website product pages to be rewritten.
+
+      ## Outcome
+      - [[dec-catalogue-printed-on-recycled-paper|Catalogue printed on recycled paper]]
+
+  - id: mtg-2025-04-26-operations-weekly
+    title: 'Operations weekly · 26 Apr 2025'
+    created: 2025-04-26
+    status: held
+    attendees: [per-hiro-sato, per-chloe-dumont, per-ben-brook]
+    body: |
+      ## Notes
+      - Overtime only on the paint line.
+      - Forklift service due next month.
+      - Build plan met three weeks in a row.
+
+      ## Outcome
+      - [[dec-second-source-for-chromoly-tubing|Second source for chromoly tubing]]
+
+  - id: mtg-2025-05-18-finance-review
+    title: 'Finance review · 18 May 2025'
+    created: 2025-05-18
+    status: held
+    attendees: [per-oskar-farrow, per-dana-vance]
+    body: |
+      ## Notes
+      - The board pack is due in two weeks.
+      - Currency hedging for the euro orders renewed.
+      - Freight costs above budget by 6%.
+
+  - id: mtg-2025-05-19-product-review
+    title: 'Product review · 19 May 2025'
+    created: 2025-05-19
+    status: held
+    attendees: [per-maya-okafor, per-theo-castillo, per-jakub-novak]
+    body: |
+      ## Notes
+      - Spec sheets must be ready before the catalogue shoot.
+      - Colour choices for next year narrowed to six.
+      - The roadmap slide for 2027 needs the new launch dates.
+
+  - id: mtg-2025-05-25-visit-upland-bike-hub
+    title: 'Visit to Upland Bike Hub · 25 May 2025'
+    created: 2025-05-25
+    status: held
+    customer: cus-upland-bike-hub
+    attendees: [per-sana-orr, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - Sales of the Gravel GX above their forecast.
+      - They want more demo bikes in spring.
+      - Asked about delivery times for the Cargo Longtail.
+
+  - id: mtg-2025-06-04-sales-weekly
+    title: 'Sales weekly · 4 Jun 2025'
+    created: 2025-06-04
+    status: held
+    attendees: [per-jonah-whitfield, per-kit-farrow, per-wilde-tull]
+    body: |
+      ## Notes
+      - Spare parts questions keep coming in by phone.
+      - Late payments down to three dealers.
+      - Order intake above plan for commuter bikes.
+
+  - id: mtg-2025-06-10-quality-review
+    title: 'Quality review · 10 Jun 2025'
+    created: 2025-06-10
+    status: held
+    attendees: [per-kofi-mensah, per-ben-brook, per-nora-pell]
+    body: |
+      ## Notes
+      - Two dealers reported loose headsets; root cause still open.
+      - Incoming inspection rejected one batch of spokes.
+      - The test lab needs a second rig.
+
+  - id: mtg-2025-06-11-marketing-planning
+    title: 'Marketing planning · 11 Jun 2025'
+    created: 2025-06-11
+    status: held
+    attendees: [per-wren-galloway, per-max-orr]
+    body: |
+      ## Notes
+      - Website product pages to be rewritten.
+      - Photo shoot booked for the catalogue.
+      - Social posts to follow the trade show plan.
+
+      ## Outcome
+      - [[dec-move-the-dealer-newsletter-to-monthly|Move the dealer newsletter to monthly]]
+
+  - id: mtg-2025-06-21-visit-pinebarrow-bikes
+    title: 'Visit to Pinebarrow Bikes · 21 Jun 2025'
+    created: 2025-06-21
+    status: held
+    customer: cus-pinebarrow-bikes
+    attendees: [per-sana-orr, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - Happy with the spare parts service.
+      - Their mechanic wants to join the next training course.
+      - Asked about delivery times for the Cargo Longtail.
+
+  - id: mtg-2025-06-23-operations-weekly
+    title: 'Operations weekly · 23 Jun 2025'
+    created: 2025-06-23
+    status: held
+    attendees: [per-hiro-sato, per-ben-brook, per-rafe-lowe]
+    body: |
+      ## Notes
+      - Forklift service due next month.
+      - Overtime only on the paint line.
+      - Build plan met three weeks in a row.
+
+      ## Outcome
+      - [[dec-four-day-week-for-the-paint-line-in-january|Four-day week for the paint line in January]]
+
+  - id: mtg-2025-07-23-visit-saltmarsh-cycle
+    title: 'Visit to Saltmarsh Cycle · 23 Jul 2025'
+    created: 2025-07-23
+    status: held
+    customer: cus-saltmarsh-cycle
+    attendees: [per-sana-orr, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - Window display needs new posters.
+      - They want more demo bikes in spring.
+      - Sales of the Gravel GX above their forecast.
+
+  - id: mtg-2025-08-07-visit-cobble-and-co
+    title: 'Visit to Cobble & Co · 7 Aug 2025'
+    created: 2025-08-07
+    status: held
+    customer: cus-cobble-and-co
+    attendees: [per-sana-orr, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - Their mechanic wants to join the next training course.
+      - Sales of the Gravel GX above their forecast.
+      - Window display needs new posters.
+
+  - id: mtg-2025-08-24-finance-review
+    title: 'Finance review · 24 Aug 2025'
+    created: 2025-08-24
+    status: held
+    attendees: [per-oskar-farrow, per-dana-vance]
+    body: |
+      ## Notes
+      - Currency hedging for the euro orders renewed.
+      - Dealer credit limits reviewed.
+      - Freight costs above budget by 6%.
+
+  - id: mtg-2025-09-01-product-review
+    title: 'Product review · 1 Sep 2025'
+    created: 2025-09-01
+    status: held
+    attendees: [per-maya-okafor, per-sara-lindgren, per-theo-castillo]
+    body: |
+      ## Notes
+      - Prototype feedback from the test riders was mostly positive.
+      - Spec sheets must be ready before the catalogue shoot.
+      - The roadmap slide for 2027 needs the new launch dates.
+
+  - id: mtg-2025-10-11-sales-weekly
+    title: 'Sales weekly · 11 Oct 2025'
+    created: 2025-10-11
+    status: held
+    attendees: [per-jonah-whitfield, per-wilde-tull, per-kit-farrow]
+    body: |
+      ## Notes
+      - Two dealers asked for demo bikes for spring events.
+      - Spare parts questions keep coming in by phone.
+      - Order intake above plan for commuter bikes.
+
+      ## Outcome
+      - [[dec-two-order-cut-offs-per-month|Two order cut-offs per month]]
+
+  - id: mtg-2025-10-14-quality-review
+    title: 'Quality review · 14 Oct 2025'
+    created: 2025-10-14
+    status: held
+    attendees: [per-kofi-mensah, per-ana-albers, per-ben-brook]
+    body: |
+      ## Notes
+      - Fatigue tests on the rack mounts passed.
+      - The test lab needs a second rig.
+      - Incoming inspection rejected one batch of spokes.
+
+  - id: mtg-2025-10-19-marketing-planning
+    title: 'Marketing planning · 19 Oct 2025'
+    created: 2025-10-19
+    status: held
+    attendees: [per-wren-galloway, per-max-orr]
+    body: |
+      ## Notes
+      - Video for the Kids 20 launch.
+      - Website product pages to be rewritten.
+      - Dealer window posters for spring.
+
+  - id: mtg-2025-11-06-operations-weekly
+    title: 'Operations weekly · 6 Nov 2025'
+    created: 2025-11-06
+    status: held
+    attendees: [per-hiro-sato, per-pia-quint, per-ben-brook]
+    body: |
+      ## Notes
+      - Forklift service due next month.
+      - Overtime only on the paint line.
+      - Scrap rate in wheel building down to 1%.
+
+      ## Outcome
+      - [[dec-hire-two-apprentices-for-the-plant|Hire two apprentices for the plant]]
+
+  - id: mtg-2025-11-15-finance-review
+    title: 'Finance review · 15 Nov 2025'
+    created: 2025-11-15
+    status: held
+    attendees: [per-oskar-farrow, per-dana-vance]
+    body: |
+      ## Notes
+      - Freight costs above budget by 6%.
+      - Cash position healthy; the bank line not used since March.
+      - Dealer credit limits reviewed.
+
+  - id: mtg-2025-11-19-product-review
+    title: 'Product review · 19 Nov 2025'
+    created: 2025-11-19
+    status: held
+    attendees: [per-maya-okafor, per-jakub-novak, per-hana-ivarsson]
+    body: |
+      ## Notes
+      - The roadmap slide for 2027 needs the new launch dates.
+      - Spec sheets must be ready before the catalogue shoot.
+      - Weight targets reviewed model by model.
+
+  - id: mtg-2025-11-30-sales-weekly
+    title: 'Sales weekly · 30 Nov 2025'
+    created: 2025-11-30
+    status: held
+    attendees: [per-jonah-whitfield, per-kit-farrow, per-wilde-tull]
+    body: |
+      ## Notes
+      - The German dealers want the price list in German.
+      - Spare parts questions keep coming in by phone.
+      - Two dealers asked for demo bikes for spring events.
+
+  - id: mtg-2025-12-10-quality-review
+    title: 'Quality review · 10 Dec 2025'
+    created: 2025-12-10
+    status: held
+    attendees: [per-kofi-mensah, per-ben-brook, per-nora-pell]
+    body: |
+      ## Notes
+      - Paint adhesion complaints down after the new pre-treatment.
+      - Incoming inspection rejected one batch of spokes.
+      - The test lab needs a second rig.
+
+  - id: mtg-2025-12-19-marketing-planning
+    title: 'Marketing planning · 19 Dec 2025'
+    created: 2025-12-19
+    status: held
+    attendees: [per-wren-galloway, per-max-orr]
+    body: |
+      ## Notes
+      - Video for the Kids 20 launch.
+      - Photo shoot booked for the catalogue.
+      - Social posts to follow the trade show plan.
+
+      ## Outcome
+      - [[dec-pause-the-fit-studio|Pause the fit studio]]
+
+  - id: mtg-2025-12-27-operations-weekly
+    title: 'Operations weekly · 27 Dec 2025'
+    created: 2025-12-27
+    status: held
+    attendees: [per-hiro-sato, per-pia-quint, per-ana-albers]
+    body: |
+      ## Notes
+      - One assembly station short of staff on Fridays.
+      - Overtime only on the paint line.
+      - Scrap rate in wheel building down to 1%.
+
+  - id: mtg-2025-12-29-finance-review
+    title: 'Finance review · 29 Dec 2025'
+    created: 2025-12-29
+    status: held
+    attendees: [per-oskar-farrow, per-dana-vance]
+    body: |
+      ## Notes
+      - Currency hedging for the euro orders renewed.
+      - Dealer credit limits reviewed.
+      - Cash position healthy; the bank line not used since March.
+
+  - id: mtg-2025-12-29-product-review
+    title: 'Product review · 29 Dec 2025'
+    created: 2025-12-29
+    status: held
+    attendees: [per-maya-okafor, per-hana-ivarsson, per-theo-castillo]
+    body: |
+      ## Notes
+      - The roadmap slide for 2027 needs the new launch dates.
+      - Spec sheets must be ready before the catalogue shoot.
+      - Colour choices for next year narrowed to six.
+
+  - id: mtg-2026-01-15-sales-weekly
+    title: 'Sales weekly · 15 Jan 2026'
+    created: 2026-01-15
+    status: held
+    attendees: [per-jonah-whitfield, per-kit-farrow, per-wilde-tull]
+    body: |
+      ## Notes
+      - Spare parts questions keep coming in by phone.
+      - Two dealers asked for demo bikes for spring events.
+      - Order intake above plan for commuter bikes.
+
+  - id: mtg-2026-01-27-quality-review
+    title: 'Quality review · 27 Jan 2026'
+    created: 2026-01-27
+    status: held
+    attendees: [per-kofi-mensah, per-ana-albers, per-mateus-rocha]
+    body: |
+      ## Notes
+      - Incoming inspection rejected one batch of spokes.
+      - The test lab needs a second rig.
+      - Two dealers reported loose headsets; root cause still open.
+
+  - id: mtg-2026-02-03-marketing-planning
+    title: 'Marketing planning · 3 Feb 2026'
+    created: 2026-02-03
+    status: held
+    attendees: [per-wren-galloway, per-max-orr]
+    body: |
+      ## Notes
+      - Website product pages to be rewritten.
+      - Photo shoot booked for the catalogue.
+      - Dealer window posters for spring.
+
+  - id: mtg-2026-04-12-visit-alder-and-spoke
+    title: 'Visit to Alder & Spoke · 12 Apr 2026'
+    created: 2026-04-12
+    status: held
+    customer: cus-alder-and-spoke
+    attendees: [per-sana-orr, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - They want more demo bikes in spring.
+      - Sales of the Gravel GX above their forecast.
+      - Happy with the spare parts service.
+
+  - id: mtg-2026-04-16-operations-weekly
+    title: 'Operations weekly · 16 Apr 2026'
+    created: 2026-04-16
+    status: held
+    attendees: [per-hiro-sato, per-ewa-ekberg, per-pia-quint]
+    body: |
+      ## Notes
+      - Overtime only on the paint line.
+      - Scrap rate in wheel building down to 1%.
+      - Build plan met three weeks in a row.
+
+  - id: mtg-2026-05-11-finance-review
+    title: 'Finance review · 11 May 2026'
+    created: 2026-05-11
+    status: held
+    attendees: [per-oskar-farrow, per-dana-vance]
+    body: |
+      ## Notes
+      - The board pack is due in two weeks.
+      - Dealer credit limits reviewed.
+      - Freight costs above budget by 6%.
+
+      ## Outcome
+      - [[dec-pay-dealers-a-flat-fee-per-lever-swap|Pay dealers a flat fee per lever swap]]
+      - [[dec-go-live-with-the-new-erp-in-february|Go live with the new ERP in February]]
+
+  - id: mtg-2026-05-29-product-review
+    title: 'Product review · 29 May 2026'
+    created: 2026-05-29
+    status: held
+    attendees: [per-maya-okafor, per-hana-ivarsson, per-theo-castillo]
+    body: |
+      ## Notes
+      - Colour choices for next year narrowed to six.
+      - Weight targets reviewed model by model.
+      - Prototype feedback from the test riders was mostly positive.
+
+      ## Outcome
+      - [[dec-drop-the-16-inch-option-from-kids-20|Drop the 16-inch option from Kids 20]]
+      - [[dec-rear-rack-v2-rated-for-27-kg|Rear rack v2 rated for 27 kg]]
+      - [[dec-train-dealer-mechanics-at-the-factory|Train dealer mechanics at the factory]]
+
+  - id: mtg-2026-05-30-visit-meridian-sports
+    title: 'Visit to Meridian Sports · 30 May 2026'
+    created: 2026-05-30
+    status: held
+    customer: cus-meridian-sports
+    attendees: [per-sana-orr, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - Sales of the Gravel GX above their forecast.
+      - Their mechanic wants to join the next training course.
+      - They want more demo bikes in spring.
+
+  - id: mtg-2026-06-24-sales-weekly
+    title: 'Sales weekly · 24 Jun 2026'
+    created: 2026-06-24
+    status: held
+    attendees: [per-jonah-whitfield, per-kit-farrow, per-wilde-tull]
+    body: |
+      ## Notes
+      - Spare parts questions keep coming in by phone.
+      - Two dealers asked for demo bikes for spring events.
+      - Late payments down to three dealers.
+
+  - id: mtg-2026-07-08-visit-hafen-rad
+    title: 'Visit to Hafen Rad · 8 Jul 2026'
+    created: 2026-07-08
+    status: held
+    customer: cus-hafen-rad
+    attendees: [per-wilde-tull, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - Asked about delivery times for the Cargo Longtail.
+      - They want more demo bikes in spring.
+      - Happy with the spare parts service.
+
+  - id: mtg-2026-07-13-quality-review
+    title: 'Quality review · 13 Jul 2026'
+    created: 2026-07-13
+    status: held
+    attendees: [per-kofi-mensah, per-ben-brook, per-ana-albers]
+    body: |
+      ## Notes
+      - The test lab needs a second rig.
+      - Fatigue tests on the rack mounts passed.
+      - Paint adhesion complaints down after the new pre-treatment.
+
+      ## Outcome
+      - [[dec-replace-levers-on-all-affected-commuter-bike|Replace levers on all affected commuter bikes]]
+
+  - id: mtg-2026-08-04-visit-bergstrom-cykel
+    title: 'Visit to Bergstrom Cykel · 4 Aug 2026'
+    created: 2026-08-04
+    status: held
+    customer: cus-bergstrom-cykel
+    attendees: [per-sana-orr, per-jonah-whitfield]
+    body: |
+      ## Notes
+      - Window display needs new posters.
+      - Asked about delivery times for the Cargo Longtail.
+      - Their mechanic wants to join the next training course.
+
+  - id: mtg-2026-08-09-marketing-planning
+    title: 'Marketing planning · 9 Aug 2026'
+    created: 2026-08-09
+    status: held
+    attendees: [per-wren-galloway, per-max-orr]
+    body: |
+      ## Notes
+      - Social posts to follow the trade show plan.
+      - Video for the Kids 20 launch.
+      - Dealer window posters for spring.
+
+      ## Outcome
+      - [[dec-book-a-60-square-metre-stand|Book a 60 square metre stand]]
+
+  - id: mtg-2026-08-27-operations-weekly
+    title: 'Operations weekly · 27 Aug 2026'
+    created: 2026-08-27
+    status: held
+    attendees: [per-hiro-sato, per-rafe-lowe, per-pia-quint]
+    body: |
+      ## Notes
+      - One assembly station short of staff on Fridays.
+      - Scrap rate in wheel building down to 1%.
+      - Build plan met three weeks in a row.
+
+      ## Outcome
+      - [[dec-buy-a-second-curing-oven|Buy a second curing oven]]
+      - [[dec-install-the-oven-in-the-october-shutdown|Install the oven in the October shutdown]]
+      - [[dec-rack-v2-made-by-our-current-rack-supplier|Rack v2 made by our current rack supplier]]
+      - [[dec-boxes-without-plastic-foam|Boxes without plastic foam]]
+      - [[dec-ship-bikes-with-the-bars-turned|Ship bikes with the bars turned]]
+
+  - id: mtg-2026-09-22-finance-review
+    title: 'Finance review · 22 Sep 2026'
+    created: 2026-09-22
+    status: held
+    attendees: [per-oskar-farrow, per-dana-vance]
+    body: |
+      ## Notes
+      - The board pack is due in two weeks.
+      - Freight costs above budget by 6%.
+      - Dealer credit limits reviewed.
+
+      ## Outcome
+      - [[dec-charge-dealers-for-the-second-course|Charge dealers for the second course]]
+      - [[dec-go-live-with-the-new-erp-in-april|Go live with the new ERP in April]]
+
+  - id: mtg-2026-10-07-product-review
+    title: 'Product review · 7 Oct 2026'
+    created: 2026-10-07
+    status: held
+    attendees: [per-maya-okafor, per-theo-castillo, per-sara-lindgren]
+    body: |
+      ## Notes
+      - Spec sheets must be ready before the catalogue shoot.
+      - Colour choices for next year narrowed to six.
+      - Weight targets reviewed model by model.
+
+      ## Outcome
+      - [[dec-kids-20-gets-a-single-gear|Kids 20 gets a single gear]]
+
+  - id: mtg-2026-10-26-sales-weekly
+    title: 'Sales weekly · 26 Oct 2026'
+    created: 2026-10-26
+    status: held
+    attendees: [per-jonah-whitfield, per-kit-farrow, per-wilde-tull]
+    body: |
+      ## Notes
+      - Order intake above plan for commuter bikes.
+      - The German dealers want the price list in German.
+      - Late payments down to three dealers.
+
+  - id: mtg-2026-11-13-quality-review
+    title: 'Quality review · 13 Nov 2026'
+    created: 2026-11-13
+    status: held
+    attendees: [per-kofi-mensah, per-ben-brook, per-nora-pell]
+    body: |
+      ## Notes
+      - Two dealers reported loose headsets; root cause still open.
+      - The test lab needs a second rig.
+      - Fatigue tests on the rack mounts passed.
+
+      ## Outcome
+      - [[dec-move-the-oven-install-to-the-december-shutdo|Move the oven install to the December shutdown]]
+
+  - id: mtg-2026-11-18-marketing-planning
+    title: 'Marketing planning · 18 Nov 2026'
+    created: 2026-11-18
+    status: held
+    attendees: [per-wren-galloway, per-max-orr]
+    body: |
+      ## Notes
+      - Social posts to follow the trade show plan.
+      - Photo shoot booked for the catalogue.
+      - Website product pages to be rewritten.
+
+      ## Outcome
+      - [[dec-book-a-90-square-metre-stand|Book a 90 square metre stand]]
+
+decisions:
+  - id: dec-keep-ampcore
+    title: Keep Ampcore as battery supplier
+    created: 2026-03-17
+    status: superseded
+    owner: per-priya-raman
+    decided_in: mtg-2026-03-17-supply-review
+    body: |
+      ## Decision
+      Ampcore stays the battery cell supplier for the Ridgeline and the 2027 model year.
+
+      ## Why
+      On-time delivery all winter and the best price per cell, even after a 4% increase.
+
+  - id: dec-switch-battery-voltaro
+    title: Switch Ridgeline battery cells to Voltaro
+    created: 2026-10-02
+    status: current
+    owner: per-priya-raman
+    decided_in: mtg-2026-10-02-supply-review
+    supersedes: [dec-keep-ampcore]
+    body: |
+      ## Decision
+      From January 2027 the Ridgeline packs use Voltaro cells. Ampcore keeps the cargo bike packs
+      until its contract ends.
+
+      ## Why
+      Ampcore's twelve-week delay would have moved the [[prj-ridgeline-emtb|Ridgeline]] launch, and
+      the Voltaro cells passed every lab test.
+
+  - id: dec-aluminium-6061
+    title: Commuter 2027 frame in 6061 aluminium
+    created: 2026-09-12
+    status: current
+    owner: per-maya-okafor
+    decided_in: mtg-2026-09-12-c27-kickoff
+    body: |
+      ## Decision
+      The [[prj-commuter-2027|C27]] frame is made of 6061 aluminium, heat-treated after joining.
+
+      ## Why
+      Lighter than our steel frames by 600 g and cheaper to paint. Steel stays on the Gravel GX.
+
+  - id: dec-weld-c27-in-house
+    title: Weld the Commuter 2027 frames in-house
+    created: 2026-06-30
+    status: current
+    owner: per-hiro-sato
+    decided_in: mtg-2026-06-30-frame-review
+    body: |
+      ## Decision
+      The Commuter 2027 frames are welded in our frame shop in Tarnwick, on two of the six jigs, from
+      January 2027.
+
+      ## Why
+      We keep control of quality, and the old commuter frame frees the jigs in December.
+
+  - id: dec-c27-joining-calvane
+    title: Calvane takes over C27 tube joining from January
+    created: 2026-10-20
+    status: current
+    owner: per-hiro-sato
+    decided_in: mtg-2026-10-20-ops-sync
+    supersedes: [dec-weld-c27-in-house]
+    body: |
+      ## Decision
+      From January 2027 the tubes of the C27 are joined by Calvane Tubeworks, our contract partner
+      in Porto. Tarnwick keeps heat treatment, paint and final assembly.
+
+      ## Why
+      The jig line has no room until March, and the partner's unit cost is within 3% of ours.
+
+  - id: dec-lifetime-frame-cover
+    title: Lifetime structural cover for first owners
+    created: 2026-08-28
+    status: current
+    owner: per-maya-okafor
+    decided_in: mtg-2026-08-28-leadership
+    supersedes: [doc-warranty-terms]
+    body: |
+      ## Decision
+      For bikes sold new from 1 September 2026, the chassis is covered against structural failure
+      for as long as the first owner keeps the bike. Paint, bearings and electrics keep their
+      current terms.
+
+      ## Why
+      Structural failures are rare and cheap to cover, and the promise sets us apart in the shops.
+
+  - id: dec-pause-dealer-portal
+    title: Pause the dealer portal
+    created: 2026-06-03
+    status: current
+    owner: per-jonah-whitfield
+    body: |
+      ## Decision
+      Stop work on the [[prj-dealer-portal|dealer portal]] until the Ridgeline has launched.
+
+      ## Why
+      Dealers would rather have the e-MTB sooner, and the same two people work on both.
+
+  # ---- filler ----
+
+  - id: dec-drop-the-16-inch-option-from-kids-20
+    title: Drop the 16-inch option from Kids 20
+    created: 2026-05-29
+    status: current
+    owner: per-ines-castell
+    decided_in: mtg-2026-05-29-product-review
+    body: |
+      ## Decision
+      The Kids 20 ships in one size only. Part of [[prj-kids-20|Kids 20 inch]].
+
+      ## Why
+      Two sizes doubled the tooling cost for a few hundred bikes.
+
+  - id: dec-kids-20-gets-a-single-gear
+    title: Kids 20 gets a single gear
+    created: 2026-10-07
+    status: current
+    owner: per-ines-castell
+    decided_in: mtg-2026-10-07-product-review
+    body: |
+      ## Decision
+      No derailleur on the Kids 20: one gear and a chain guard. Part of [[prj-kids-20|Kids 20 inch]].
+
+      ## Why
+      Parents asked for less maintenance; it saves 400 g.
+
+  - id: dec-replace-levers-on-all-affected-commuter-bike
+    title: Replace levers on all affected commuter bikes
+    created: 2026-07-13
+    status: current
+    owner: per-kofi-mensah
+    decided_in: mtg-2026-07-13-quality-review
+    body: |
+      ## Decision
+      Every commuter bike built between October and December 2025 gets new levers, fitted by the dealer. Part of [[prj-brake-lever-recall|Brake lever recall 2026]].
+
+      ## Why
+      A recall of the whole batch is simpler than testing each lever.
+
+  - id: dec-pay-dealers-a-flat-fee-per-lever-swap
+    title: Pay dealers a flat fee per lever swap
+    created: 2026-05-11
+    status: current
+    owner: per-oskar-farrow
+    decided_in: mtg-2026-05-11-finance-review
+    body: |
+      ## Decision
+      Dealers get £25 or €28 per bike for the lever swap. Part of [[prj-brake-lever-recall|Brake lever recall 2026]].
+
+      ## Why
+      A flat fee is quicker to pay than hourly claims.
+
+  - id: dec-buy-a-second-curing-oven
+    title: Buy a second curing oven
+    created: 2026-08-27
+    status: current
+    owner: per-hiro-sato
+    decided_in: mtg-2026-08-27-operations-weekly
+    body: |
+      ## Decision
+      We buy a second curing oven for the paint line. Part of [[prj-paint-line-upgrade|Paint line upgrade]].
+
+      ## Why
+      Colour changes cost us half a shift every week.
+
+  - id: dec-install-the-oven-in-the-october-shutdown
+    title: Install the oven in the October shutdown
+    created: 2026-08-27
+    status: superseded
+    owner: per-hiro-sato
+    decided_in: mtg-2026-08-27-operations-weekly
+    body: |
+      ## Decision
+      The oven goes in during the one-week October shutdown. Part of [[prj-paint-line-upgrade|Paint line upgrade]].
+
+      ## Why
+      No lost production days.
+
+  - id: dec-move-the-oven-install-to-the-december-shutdo
+    title: Move the oven install to the December shutdown
+    created: 2026-11-13
+    status: current
+    owner: per-hiro-sato
+    decided_in: mtg-2026-11-13-quality-review
+    supersedes: [dec-install-the-oven-in-the-october-shutdown]
+    body: |
+      ## Decision
+      The oven goes in during the December shutdown instead. Part of [[prj-paint-line-upgrade|Paint line upgrade]].
+
+      ## Why
+      The supplier cannot deliver before November.
+
+  - id: dec-pause-the-fit-studio
+    title: Pause the fit studio
+    created: 2025-12-19
+    status: current
+    owner: per-wren-galloway
+    decided_in: mtg-2025-12-19-marketing-planning
+    body: |
+      ## Decision
+      Stop the fit studio until the trade show is over. Part of [[prj-fit-studio|Fit studio]].
+
+      ## Why
+      The same room is needed for the trade show bikes.
+
+  - id: dec-rear-rack-v2-rated-for-27-kg
+    title: Rear rack v2 rated for 27 kg
+    created: 2026-05-29
+    status: current
+    owner: per-ines-castell
+    decided_in: mtg-2026-05-29-product-review
+    body: |
+      ## Decision
+      The new rack is rated for 27 kg and takes a child seat. Part of [[prj-rear-rack-v2|Rear rack v2]].
+
+      ## Why
+      Dealers lose sales to cargo bikes because of the old 20 kg limit.
+
+  - id: dec-rack-v2-made-by-our-current-rack-supplier
+    title: Rack v2 made by our current rack supplier
+    created: 2026-08-27
+    status: current
+    owner: per-priya-raman
+    decided_in: mtg-2026-08-27-operations-weekly
+    body: |
+      ## Decision
+      The rack stays with the current supplier on new tooling. Part of [[prj-rear-rack-v2|Rear rack v2]].
+
+      ## Why
+      They hold the tooling and the price was the best of three quotes.
+
+  - id: dec-book-a-60-square-metre-stand
+    title: Book a 60 square metre stand
+    created: 2026-08-09
+    status: current
+    owner: per-wren-galloway
+    decided_in: mtg-2026-08-09-marketing-planning
+    body: |
+      ## Decision
+      We take a 60 square metre stand in hall B. Part of [[prj-trade-show-2027|Trade show 2027]].
+
+      ## Why
+      Big enough for a short test track.
+
+  - id: dec-book-a-90-square-metre-stand
+    title: Book a 90 square metre stand
+    created: 2026-11-18
+    status: current
+    owner: per-wren-galloway
+    decided_in: mtg-2026-11-18-marketing-planning
+    supersedes: [dec-book-a-60-square-metre-stand]
+    body: |
+      ## Decision
+      We take a 90 square metre corner stand in hall B instead. Part of [[prj-trade-show-2027|Trade show 2027]].
+
+      ## Why
+      The Ridgeline launch needs room for a proper test track.
+
+  - id: dec-train-dealer-mechanics-at-the-factory
+    title: Train dealer mechanics at the factory
+    created: 2026-05-29
+    status: current
+    owner: per-femi-rowe
+    decided_in: mtg-2026-05-29-product-review
+    body: |
+      ## Decision
+      The first course of each season runs at the factory, the rest online. Part of [[prj-dealer-training|Dealer training programme]].
+
+      ## Why
+      Mechanics learn more with the bikes in front of them.
+
+  - id: dec-charge-dealers-for-the-second-course
+    title: Charge dealers for the second course
+    created: 2026-09-22
+    status: current
+    owner: per-oskar-farrow
+    decided_in: mtg-2026-09-22-finance-review
+    body: |
+      ## Decision
+      The first course is free for each dealer; further places cost €150. Part of [[prj-dealer-training|Dealer training programme]].
+
+      ## Why
+      Free places were booked and then not used.
+
+  - id: dec-boxes-without-plastic-foam
+    title: Boxes without plastic foam
+    created: 2026-08-27
+    status: current
+    owner: per-uma-sethi
+    decided_in: mtg-2026-08-27-operations-weekly
+    body: |
+      ## Decision
+      From the 2027 model year bikes ship in boxes with paper padding only. Part of [[prj-packaging-redesign|Packaging redesign]].
+
+      ## Why
+      Dealers pay to dispose of foam, and riders complain about it.
+
+  - id: dec-ship-bikes-with-the-bars-turned
+    title: Ship bikes with the bars turned
+    created: 2026-08-27
+    status: current
+    owner: per-uma-sethi
+    decided_in: mtg-2026-08-27-operations-weekly
+    body: |
+      ## Decision
+      Bikes ship with the handlebar turned, not removed. Part of [[prj-packaging-redesign|Packaging redesign]].
+
+      ## Why
+      Dealers save fifteen minutes per bike.
+
+  - id: dec-go-live-with-the-new-erp-in-february
+    title: Go live with the new ERP in February
+    created: 2026-05-11
+    status: current
+    owner: per-oskar-farrow
+    decided_in: mtg-2026-05-11-finance-review
+    body: |
+      ## Decision
+      The new ERP goes live on 1 February 2027. Part of [[prj-erp-migration|ERP migration]].
+
+      ## Why
+      After the year-end close and before the spring orders.
+
+  - id: dec-go-live-with-the-new-erp-in-april
+    title: Go live with the new ERP in April
+    created: 2026-09-22
+    status: current
+    owner: per-oskar-farrow
+    decided_in: mtg-2026-09-22-finance-review
+    supersedes: [dec-go-live-with-the-new-erp-in-february]
+    body: |
+      ## Decision
+      The new ERP goes live on 6 April 2027 instead. Part of [[prj-erp-migration|ERP migration]].
+
+      ## Why
+      The data migration test found too many duplicate parts.
+
+  - id: dec-monthly-order-cut-off-on-the-first-monday
+    title: Monthly order cut-off on the first Monday
+    created: 2025-04-11
+    status: current
+    owner: per-jonah-whitfield
+    decided_in: mtg-2025-04-11-sales-weekly
+    body: |
+      ## Decision
+      Dealer orders close on the first Monday of each month.
+
+      ## Why
+      One cut-off makes the build plan stable.
+
+  - id: dec-two-order-cut-offs-per-month
+    title: Two order cut-offs per month
+    created: 2025-10-11
+    status: current
+    owner: per-jonah-whitfield
+    decided_in: mtg-2025-10-11-sales-weekly
+    supersedes: [dec-monthly-order-cut-off-on-the-first-monday]
+    body: |
+      ## Decision
+      Dealer orders close on the first and the third Monday of each month.
+
+      ## Why
+      Dealers waited too long for small top-up orders.
+
+  - id: dec-second-source-for-chromoly-tubing
+    title: Second source for chromoly tubing
+    created: 2025-04-26
+    status: current
+    owner: per-priya-raman
+    decided_in: mtg-2025-04-26-operations-weekly
+    body: |
+      ## Decision
+      We qualify a second supplier for chromoly tubing.
+
+      ## Why
+      One supplier for the Gravel GX tubes is too great a risk.
+
+  - id: dec-catalogue-printed-on-recycled-paper
+    title: Catalogue printed on recycled paper
+    created: 2025-04-12
+    status: current
+    owner: per-wren-galloway
+    decided_in: mtg-2025-04-12-marketing-planning
+    body: |
+      ## Decision
+      The 2027 catalogue is printed on recycled paper, 20% fewer pages.
+
+      ## Why
+      Cheaper and dealers keep the website open anyway.
+
+  - id: dec-four-day-week-for-the-paint-line-in-january
+    title: Four-day week for the paint line in January
+    created: 2025-06-23
+    status: current
+    owner: per-hiro-sato
+    decided_in: mtg-2025-06-23-operations-weekly
+    body: |
+      ## Decision
+      The paint line works four days a week in January.
+
+      ## Why
+      January demand is always low.
+
+  - id: dec-free-first-service-after-500-km
+    title: Free first service after 500 km
+    created: 2025-03-13
+    status: current
+    owner: per-lena-nyberg
+    decided_in: mtg-2025-03-13-product-review
+    body: |
+      ## Decision
+      Every new bike gets a free first service at the dealer after 500 km.
+
+      ## Why
+      Riders who come back for a service buy their next bike from us.
+
+  - id: dec-hire-two-apprentices-for-the-plant
+    title: Hire two apprentices for the plant
+    created: 2025-11-06
+    status: current
+    owner: per-hiro-sato
+    decided_in: mtg-2025-11-06-operations-weekly
+    body: |
+      ## Decision
+      Two apprentices start in September, one in assembly and one in the paint line.
+
+      ## Why
+      Half of the plant team retires within ten years.
+
+  - id: dec-move-the-dealer-newsletter-to-monthly
+    title: Move the dealer newsletter to monthly
+    created: 2025-06-11
+    status: current
+    owner: per-wren-galloway
+    decided_in: mtg-2025-06-11-marketing-planning
+    body: |
+      ## Decision
+      The dealer newsletter goes out once a month instead of every week.
+
+      ## Why
+      Open rates fell below 20%.
+
+documents:
+  - id: doc-battery-spec-v2
+    title: Ridgeline battery spec v2
+    created: 2026-02-10
+    status: outdated
+    owner: per-tomas-lindqvist
+    body: |
+      ## Pack
+      720 Wh pack of 21700 cells from Ampcore, 13 in series and 4 in parallel, in a cast magnesium
+      case inside the down tube.
+
+      ## Charging
+      4 A charger, full in five hours.
+
+  - id: doc-battery-spec-v3
+    title: Ridgeline battery spec v3
+    created: 2026-09-30
+    status: current
+    owner: per-tomas-lindqvist
+    supersedes: [doc-battery-spec-v2]
+    body: |
+      ## Pack
+      750 Wh pack of 21700 Voltaro cells, 13 in series and 4 in parallel, same case as v2. See
+      [[dec-switch-battery-voltaro|the cell decision]].
+
+      ## Charging
+      5 A charger, full in four hours.
+
+  - id: doc-cell-test-report
+    title: Voltaro cell test report
+    created: 2026-09-24
+    status: final
+    owner: per-kofi-mensah
+    body: |
+      ## Result
+      Forty cells cycled 800 times at 25 °C and 45 °C: capacity loss under 9%, no swelling, no
+      thermal events. Passed the crush and nail tests.
+
+  - id: doc-ampcore-supply-agreement
+    title: Ampcore supply agreement
+    created: 2025-04-01
+    updated: 2026-03-20
+    status: active
+    owner: per-priya-raman
+    body: |
+      ## Terms
+      Ampcore supplies 21700 battery cells for Tarnwick e-bikes until 31 March 2027, with prices
+      fixed per quarter and ten weeks of lead time.
+
+  - id: doc-warranty-terms
+    title: Warranty terms
+    created: 2024-02-01
+    status: current
+    owner: per-lena-nyberg
+    body: |
+      ## Frames
+      Tarnwick frames carry a five-year warranty against manufacturing defects, for the first owner,
+      from the date of purchase.
+
+      ## Other parts
+      Two years on components, paint and electrics.
+
+  - id: doc-dealer-handbook-2025
+    title: Dealer handbook 2025
+    created: 2025-01-15
+    status: current
+    owner: per-jonah-whitfield
+    body: |
+      ## Ordering
+      Orders close on the first Monday of each month; bikes ship within three weeks.
+
+      ## Warranty
+      Five years on the frame and two years on everything else. File claims with photos.
+
+  - id: doc-service-faq
+    title: Service FAQ for riders
+    created: 2025-05-20
+    status: current
+    owner: per-lena-nyberg
+    body: |
+      ## How long is the frame warranty?
+      Five years from the date you bought the bike, if you are its first owner.
+
+      ## Where do I get my bike serviced?
+      At any Tarnwick dealer; the first service after 500 km is free.
+
+  - id: doc-c27-frame-spec
+    title: C27 frame spec
+    created: 2026-07-10
+    status: draft
+    owner: per-ines-castell
+    body: |
+      ## Construction
+      TIG-welded aluminium tubes, welded in the Tarnwick frame shop on jig 4 and jig 5.
+
+      ## Fit
+      Step-over 380 mm on the medium size; rack mounts rated for 25 kg.
+
+  - id: doc-frame-shop-capacity-plan
+    title: Frame shop capacity plan 2027
+    created: 2026-07-22
+    status: current
+    owner: per-greta-hale
+    body: |
+      ## Plan
+      Welding hours per week by frame for 2027: Commuter 2027 frame 160 hours on two jigs, Cargo
+      Longtail 120 hours, spare frames 40 hours.
+
+  - id: doc-pricing-sheet-2026
+    title: Price list 2026
+    created: 2026-01-12
+    updated: 2026-05-04
+    status: current
+    owner: per-oskar-farrow
+    body: |
+      ## Retail prices
+      UK and Germany only. Gravel GX: £2,450 / €2,790. Commuter: £1,390 / €1,590. Cargo Longtail:
+      £4,900 / €5,490 from autumn. Ridgeline: target £5,400 / €5,990 at launch.
+
+  - id: doc-field-test-autumn-2026
+    title: Field test notes, autumn 2026
+    created: 2026-10-05
+    status: final
+    owner: per-yara-dunmore
+    body: |
+      ## Riders
+      Twelve outside riders, three weeks on the [[prj-ridgeline-emtb|e-MTB prototype]].
+
+      ## Complaints
+      A creak from the rear shock bushing after wet rides, and a display that is hard to read in
+      low sun. Range was praised by everyone.
+
+  - id: doc-nordic-expansion-memo
+    title: Nordic expansion memo
+    created: 2026-04-02
+    status: current
+    owner: per-jonah-whitfield
+    body: |
+      ## Plan
+      Dealers in Sweden and Norway order in euros and collect from a Gothenburg warehouse.
+      Mechanics are trained in Tarnwick in their first season.
+
+  # ---- filler ----
+
+  - id: doc-torque-spec-gravel-gx
+    title: Torque spec, Gravel GX
+    created: 2026-08-08
+    updated: 2026-09-05
+    status: current
+    owner: per-femi-rowe
+    body: |
+      ## Content
+      Stem bolts 5 Nm, seat post clamp 6 Nm, thru-axles 12 Nm, disc rotor bolts 6 Nm. Use a torque wrench on carbon parts.
+
+  - id: doc-packaging-guide
+    title: Packaging guide
+    created: 2025-12-16
+    updated: 2026-03-01
+    status: current
+    owner: per-uma-sethi
+    body: |
+      ## Content
+      Pedals and manual in the small box, bars turned and taped to the top tube, wheels protected with paper sleeves.
+
+  - id: doc-pre-delivery-safety-checklist
+    title: Pre-delivery safety checklist
+    created: 2025-06-24
+    updated: 2025-12-20
+    status: current
+    owner: per-femi-rowe
+    body: |
+      ## Content
+      Brakes bedded in, gears indexed, tyre pressure set, quick releases closed, lights tested, bell fitted.
+
+  - id: doc-assembly-manual-commuter
+    title: Assembly manual, Commuter
+    created: 2025-07-19
+    updated: 2026-01-30
+    status: current
+    owner: per-ana-albers
+    body: |
+      ## Content
+      Twenty-two steps from frame to finished bike, with the torque value and the tool for each step.
+
+  - id: doc-brake-test-protocol
+    title: Brake test protocol
+    created: 2025-02-14
+    updated: 2025-06-20
+    status: current
+    owner: per-nora-pell
+    body: |
+      ## Content
+      Every brake model is tested for 1,000 stops from 25 km/h, wet and dry, with lever force logged.
+
+  - id: doc-supplier-scorecard-q2-2026
+    title: Supplier scorecard Q2 2026
+    created: 2026-03-14
+    updated: 2026-05-31
+    status: current
+    owner: per-mateo-ivers
+    body: |
+      ## Content
+      On-time delivery by supplier: tubing 97%, saddles 91%, tyres 88%, racks 94%. Two suppliers on watch.
+
+  - id: doc-supplier-scorecard-q3-2026
+    title: Supplier scorecard Q3 2026
+    created: 2026-08-18
+    updated: 2026-09-16
+    status: current
+    owner: per-mateo-ivers
+    body: |
+      ## Content
+      On-time delivery by supplier: tubing 95%, saddles 93%, tyres 92%, racks 85% (tooling change). One supplier on watch.
+
+  - id: doc-roadmap-memo-2027
+    title: Roadmap memo 2027
+    created: 2026-09-20
+    updated: 2026-09-30
+    status: current
+    owner: per-maya-okafor
+    body: |
+      ## Content
+      Launches in 2027: Ridgeline in spring, Kids 20 in summer, the new commuter frame across the range. No new road bike.
+
+  - id: doc-return-policy
+    title: Return policy
+    created: 2025-11-03
+    updated: 2025-11-30
+    status: current
+    owner: per-lena-nyberg
+    body: |
+      ## Content
+      Riders who buy online can return an unridden bike within 30 days. Dealer sales follow the dealer's own policy.
+
+  - id: doc-quality-report-q1-2026
+    title: Quality report Q1 2026
+    created: 2025-12-06
+    updated: 2026-01-05
+    status: current
+    owner: per-kofi-mensah
+    body: |
+      ## Content
+      Field returns 1.1% of bikes sold. Top causes: headset play, rear light connectors, paint chips on delivery.
+
+  - id: doc-quality-report-q2-2026
+    title: Quality report Q2 2026
+    created: 2025-08-05
+    updated: 2025-10-21
+    status: current
+    owner: per-kofi-mensah
+    body: |
+      ## Content
+      Field returns 0.9%. Headset play fixed with a new bearing supplier; light connectors still the first cause.
+
+  - id: doc-quality-report-q3-2026
+    title: Quality report Q3 2026
+    created: 2025-03-26
+    updated: 2025-06-24
+    status: current
+    owner: per-kofi-mensah
+    body: |
+      ## Content
+      Field returns 0.8%. First quarter without a paint complaint from a dealer.
+
+  - id: doc-marketing-plan-2027
+    title: Marketing plan 2027
+    created: 2025-03-12
+    updated: 2025-04-25
+    status: current
+    owner: per-wren-galloway
+    body: |
+      ## Content
+      Budget split: 40% trade show and launch, 30% dealer support, 20% online, 10% photography and video.
+
+  - id: doc-trade-show-brief
+    title: Trade show brief
+    created: 2025-06-04
+    updated: 2025-07-06
+    status: current
+    owner: per-wren-galloway
+    body: |
+      ## Content
+      Stand in hall B with a short test track. Three bikes on show, the Ridgeline in the middle. Dealer lounge at the back.
+
+  - id: doc-onboarding-guide-for-new-staff
+    title: Onboarding guide for new staff
+    created: 2026-06-13
+    updated: 2026-07-27
+    status: current
+    owner: per-dana-vance
+    body: |
+      ## Content
+      Day one: safety walk, tool issue and a ride on every current model. Week one: a day in each department.
+
+  - id: doc-it-security-policy
+    title: IT security policy
+    created: 2025-05-13
+    updated: 2025-07-25
+    status: current
+    owner: per-oskar-farrow
+    body: |
+      ## Content
+      Two-factor sign-in for every account, laptops encrypted, no customer data on personal phones.
+
+  - id: doc-sustainability-report-2025
+    title: Sustainability report 2025
+    created: 2025-12-02
+    updated: 2025-12-19
+    status: current
+    owner: per-elena-brandt
+    body: |
+      ## Content
+      Electricity from renewable sources since 2023. Paint line solvent use down 35%. Foam packaging to go in 2027.
+
+  - id: doc-spare-parts-catalogue-2026
+    title: Spare parts catalogue 2026
+    created: 2026-10-04
+    updated: 2026-11-01
+    status: current
+    owner: per-ivo-kerr
+    body: |
+      ## Content
+      Every spare part by model and year, with its part number, price to dealers and stock status.
+
+  - id: doc-colour-list-2027
+    title: Colour list 2027
+    created: 2025-05-20
+    updated: 2025-11-23
+    status: current
+    owner: per-ines-castell
+    body: |
+      ## Content
+      Six colours: slate, moss, sand, harbour blue, signal orange and a darker charcoal for the commuter range.
+
+  - id: doc-hiring-plan-2027
+    title: Hiring plan 2027
+    created: 2025-04-27
+    updated: 2025-05-25
+    status: current
+    owner: per-dana-vance
+    body: |
+      ## Content
+      Eight new roles in 2027: two apprentices, two assembly staff, one firmware engineer, one buyer, two in customer service.
+
+  - id: doc-board-pack-september-2026
+    title: Board pack, September 2026
+    created: 2025-03-23
+    updated: 2025-05-10
+    status: current
+    owner: per-dana-vance
+    body: |
+      ## Content
+      Sales 12% above last year, gross margin 31%, cash enough for eleven months of costs.
+
+  - id: doc-dealer-agreement-template
+    title: Dealer agreement template
+    created: 2025-12-26
+    updated: 2026-03-11
+    status: current
+    owner: per-theo-marsh
+    body: |
+      ## Content
+      Standard terms for new dealers: credit limit, order cut-offs, demo bike rules and minimum stock.
+
+  - id: doc-firmware-release-notes-3-2
+    title: Firmware release notes 3.2
+    created: 2025-07-31
+    updated: 2025-11-30
+    status: current
+    owner: per-dev-kerr
+    body: |
+      ## Content
+      Smoother motor start, a new walk-assist mode and error codes in plain words on the display.
+
+  - id: doc-firmware-release-notes-3-3
+    title: Firmware release notes 3.3
+    created: 2026-08-25
+    updated: 2026-10-06
+    status: current
+    owner: per-dev-kerr
+    body: |
+      ## Content
+      Range estimate based on the last 20 km, and a fix for the display freezing in cold weather.
+
+  - id: doc-cargo-longtail-frame-spec
+    title: Cargo Longtail frame spec
+    created: 2026-08-28
+    updated: 2026-10-22
+    status: current
+    owner: per-jakub-novak
+    body: |
+      ## Content
+      Wheelbase 1,350 mm, rear deck rated for 60 kg plus the rider, two-leg centre stand.
+
+  - id: doc-kids-20-spec
+    title: Kids 20 spec
+    created: 2025-05-24
+    updated: 2025-08-01
+    status: current
+    owner: per-ines-castell
+    body: |
+      ## Content
+      Weight 7.9 kg, 20-inch wheels, single gear, short-reach brake levers, reflectors and a bell.
+
+  - id: doc-wheel-building-standard
+    title: Wheel building standard
+    created: 2026-03-17
+    updated: 2026-07-16
+    status: current
+    owner: per-chloe-dumont
+    body: |
+      ## Content
+      Spoke tension within 10% around the wheel, lateral true within 0.3 mm, every wheel stress-relieved twice.
+
+  - id: doc-paint-line-process-sheet
+    title: Paint line process sheet
+    created: 2026-07-20
+    updated: 2026-09-26
+    status: current
+    owner: per-ben-brook
+    body: |
+      ## Content
+      Degrease, rinse, pre-treat, dry, powder, cure at 190 °C for 15 minutes. Check film thickness on every tenth frame.
+
+  - id: doc-freight-rates-2026
+    title: Freight rates 2026
+    created: 2025-09-04
+    updated: 2025-11-15
+    status: current
+    owner: per-uma-sethi
+    body: |
+      ## Content
+      Pallet rates to every dealer region, with the carrier for each one. UK next day, Germany two days.
+
+  - id: doc-customer-service-scripts
+    title: Customer service scripts
+    created: 2025-01-18
+    updated: 2025-05-29
+    status: current
+    owner: per-lou-marsh
+    body: |
+      ## Content
+      Answers to the twenty most frequent rider questions, from charging to tyre pressure.
+
+  - id: doc-dealer-training-syllabus
+    title: Dealer training syllabus
+    created: 2025-12-19
+    updated: 2026-01-30
+    status: current
+    owner: per-femi-rowe
+    body: |
+      ## Content
+      Day one: e-bike systems and diagnostics. Day two: frames, suspension set-up and the service schedule.
+
+  - id: doc-production-plan-2027
+    title: Production plan 2027
+    created: 2025-08-10
+    updated: 2025-08-27
+    status: current
+    owner: per-ewa-ekberg
+    body: |
+      ## Content
+      Monthly build targets for 2027 by model, with the Kids 20 from June and the Ridgeline from March.
+
+  - id: doc-competitor-overview-2026
+    title: Competitor overview 2026
+    created: 2025-09-15
+    updated: 2025-10-04
+    status: current
+    owner: per-hana-ivarsson
+    body: |
+      ## Content
+      How our commuter bikes compare on price, weight and features with five other brands sold by our dealers.
+
+  - id: doc-fit-studio-proposal
+    title: Fit studio proposal
+    created: 2025-09-14
+    updated: 2026-02-03
+    status: current
+    owner: per-wren-galloway
+    body: |
+      ## Content
+      A room at the factory with a fit bike, a camera and a test track outside. Cost and bookings for the first year.

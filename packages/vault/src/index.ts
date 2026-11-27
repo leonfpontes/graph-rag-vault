@@ -67,3 +67,5 @@ export const isIsoDate = (value: unknown): value is string =>
   typeof value === 'string' &&
   DATE.test(value) &&
   new Date(`${value}T00:00:00Z`).toISOString().slice(0, 10) === value
+
+export { danglingLinks, NoteError, parseNote, WIKILINK, wikilinkTargets } from './parse.js'

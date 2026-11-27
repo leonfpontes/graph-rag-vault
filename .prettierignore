@@ -3,3 +3,5 @@ dist/
 coverage/
 playwright-report/
 test-results/
+# Rendered from examples/tarnwick/world.yaml by the generator; a test compares them byte by byte.
+examples/tarnwick/vault/

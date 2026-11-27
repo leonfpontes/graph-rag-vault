@@ -9,6 +9,7 @@ const src = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 export default defineConfig({
   resolve: {
     alias: [
+      { find: /^@graph-rag\/vault\/node$/, replacement: src('./packages/vault/src/node.ts') },
       { find: /^@graph-rag\/vault$/, replacement: src('./packages/vault/src/index.ts') },
       { find: /^@graph-rag\/index$/, replacement: src('./packages/index/src/index.ts') },
       { find: /^@graph-rag\/search$/, replacement: src('./packages/search/src/index.ts') },
