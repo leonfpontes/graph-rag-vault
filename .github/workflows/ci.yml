@@ -10,9 +10,9 @@ jobs:
     name: Types, lint, format, tests with coverage, build and end-to-end
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with: { node-version-file: .nvmrc, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - name: No high-severity vulnerabilities in production dependencies
@@ -29,5 +29,5 @@ jobs:
         run: pnpm e2e
       - name: Playwright report when something fails
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with: { name: playwright-report, path: playwright-report, retention-days: 7 }
