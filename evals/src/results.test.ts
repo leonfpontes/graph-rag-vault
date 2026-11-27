@@ -111,6 +111,8 @@ describe.runIf(has)('the committed scoreboard', () => {
       expect(results.secondJudge).toEqual(JSON.parse(JSON.stringify(secondJudgeCheck(items, second))))
       const s = results.secondJudge!
       expect(readme).toContain(`${Math.round(s.observed * 100)}%, Cohen's kappa ${s.kappa!.toFixed(2)}`)
+      expect(readme).toContain(`All ${s.disagreements.length} disagreements go the same way`)
+      expect(readme).toContain(`only ${s.judgeFlagged} of ${s.items} sentences`)
     } else expect(results.secondJudge).toBeUndefined()
   })
 

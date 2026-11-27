@@ -331,6 +331,7 @@
     "observed": 0.7619047619047619,
     "kappa": 0.2222222222222221,
     "answers": 10,
+    "judgeFlagged": 6,
     "disagreements": [
       {
         "item": "S01",

@@ -32,7 +32,11 @@ Against vectors only (78%), hybrid search is +13.1 points: what the graph adds t
 
 **Agreement between 2 automatic judges (not a human check):** claude-opus-5-5 labelled the same 21 sentences from 10 answers of the judge-check sample (stratified, not random: see the note above) on 2026-11-27, with the same prompt and passages and without seeing the first verdicts. Agreement 76%, Cohen's kappa 0.22.
 
-They differ on 5 sentences; claude-haiku-5-5 is the stricter on 5, so if claude-opus-5-5 is right, the faithfulness above is understated:
+All 5 disagreements go the same way: the main judge (claude-haiku-5-5) said partial, the second judge said supported, so the faithfulness above is a conservative estimate.
+
+A low kappa is expected here: the main judge marked only 6 of 21 sentences as not fully supported, and with so few cases, 5 disagreements that all go one way pull kappa down even at 76% agreement. The main judge stays claude-haiku-5-5.
+
+The disagreements:
 
 - S01 (Vectors only, q-021): claude-haiku-5-5 partial, claude-opus-5-5 supported (“Passage names Chloé Dumont as owner and names no author.”). Sentence: "The passages name Chloé Dumont as the owner of the Wheel building standard, not as its author."
 - S02 (Vectors only, q-021): claude-haiku-5-5 partial, claude-opus-5-5 supported (“Passage states Chloé Dumont reports to Hiro Sato; the conclusion is explicitly hedged.”). Sentence: "Chloé Dumont reports to Hiro Sato, so on that basis the answer is Hiro Sato."

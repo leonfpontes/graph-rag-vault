@@ -60,8 +60,11 @@ Answers by Claude Haiku 5.5, mean of 3 rounds.
   sentences**, stratified sample (half of the 10 answers from those with a sentence the judge did
   not fully support). No kappa: the person saw the judge's verdicts.
 - **Agreement between two automatic judges:** Claude Opus 5.5, blind, on the same 21 sentences:
-  76%, Cohen's kappa 0.22. On all 5 differences the first judge said partial and Opus said
-  supported, so the faithfulness above is, if anything, understated.
+  76%, Cohen's kappa 0.22. All 5 disagreements go the same way: the main judge said partial, the
+  second judge said supported, so the faithfulness above is a conservative estimate. A low kappa
+  is expected here: the main judge marked only 6 of 21 sentences as not fully supported, and with
+  so few cases, 5 disagreements that all go one way pull kappa down even at 76% agreement. The
+  main judge stays Claude Haiku 5.5.
 - **Cost:** $0.17 for the whole run (370 answers and their judgments), plus $0.11 for the second
   judge.
 

@@ -71,6 +71,7 @@ export interface Results {
     answers: number
     observed: number
     kappa: number | undefined
+    judgeFlagged: number
     disagreements: {
       item: string
       questionId: string
@@ -228,10 +229,19 @@ function secondJudgeLines(s: NonNullable<Results['secondJudge']>, judge: string)
     `**Agreement between 2 automatic judges (not a human check):** ${s.model} labelled the same ${s.items} sentences from ${s.answers} answers of the judge-check sample (stratified, not random: see the note above) on ${s.judgedAt}, with the same prompt and passages and without seeing the first verdicts. Agreement ${pct(s.observed)}, Cohen's kappa ${s.kappa?.toFixed(2) ?? '— (one label only)'}.`,
   ]
   if (s.disagreements.length === 0) return lines
-  const stricter = s.disagreements.filter((d) => VERDICT_SCORE[d.judge] < VERDICT_SCORE[d.second]).length
+  const n = s.disagreements.length
+  const first = s.disagreements[0]!
+  const oneWay = s.disagreements.every((d) => d.judge === first.judge && d.second === first.second)
+  const stricter = VERDICT_SCORE[first.judge] < VERDICT_SCORE[first.second]
   lines.push(
     '',
-    `They differ on ${s.disagreements.length} sentences; ${judge} is the stricter on ${stricter}${stricter === s.disagreements.length ? `, so if ${s.model} is right, the faithfulness above is understated` : ''}:`,
+    oneWay
+      ? `All ${n} disagreements go the same way: the main judge (${judge}) said ${first.judge}, the second judge said ${first.second}${stricter ? ', so the faithfulness above is a conservative estimate' : ''}.`
+      : `They differ on ${n} sentences; ${judge} is the stricter on ${s.disagreements.filter((d) => VERDICT_SCORE[d.judge] < VERDICT_SCORE[d.second]).length}.`,
+    '',
+    `A low kappa is expected here: the main judge marked only ${s.judgeFlagged} of ${s.items} sentences as not fully supported, and with so few cases, ${n} disagreements${oneWay ? ' that all go one way' : ''} pull kappa down even at ${pct(s.observed)} agreement. The main judge stays ${judge}.`,
+    '',
+    'The disagreements:',
     '',
     ...s.disagreements.map(
       (d) =>

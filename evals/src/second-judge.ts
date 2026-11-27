@@ -100,6 +100,8 @@ export function secondJudgeCheck(items: readonly SampleItem[], file: SecondJudge
     promptVersion: file.promptVersion,
     costUsd: file.costMicros / 1e6,
     ...measured,
+    /** Sentences the first judge did not fully support: few of them make kappa jumpy. */
+    judgeFlagged: items.filter((it) => file.verdicts[it.item] && it.judge !== 'supported').length,
     disagreements: disagreements.map(({ other, ...d }) => ({
       ...d,
       second: other,

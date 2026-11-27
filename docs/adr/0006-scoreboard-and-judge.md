@@ -52,7 +52,9 @@ whole run (370 answers and their judgments) cost $0.17.
 Judge check (2026-11-27, 21 sentences from 10 answers): the person reviewed the verdicts, not
 blind, and agreed with all 21. Claude Opus 5.5, blind, agreed with Haiku 5.5 on 76% (kappa 0.22).
 On all 5 differences Haiku said partial and Opus supported, so Haiku is the stricter judge. The
-second judge cost $0.11.
+second judge cost $0.11. The product owner kept Haiku 5.5 as the main judge: its faithfulness is
+a conservative estimate, and a low kappa is expected with 6 flagged sentences and one-way
+disagreements.
 
 ## Consequences
 
