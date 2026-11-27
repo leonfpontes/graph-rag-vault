@@ -1,5 +1,5 @@
 // Q1 bugs 1 and 2 at unit level (the e2e tests in e2e/q1-bugs.e2e.ts check them in a real browser).
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { App } from '../App'
