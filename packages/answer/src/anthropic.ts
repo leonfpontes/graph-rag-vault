@@ -23,8 +23,11 @@ export const MODEL_SETTINGS: Readonly<Record<string, { effort?: 'low' | 'medium'
 /**
  * The cost allowlist: the models a call may use. By default the light models priced in PRICES; a
  * model outside it is refused before any call, so a typo or a larger model can't reach the bill.
+ * A larger model (Opus, only as the evaluation's second judge) needs an explicit `allowedModels`.
  */
-export const DEFAULT_ALLOWED_MODELS: readonly string[] = Object.keys(PRICES)
+export const DEFAULT_ALLOWED_MODELS: readonly string[] = Object.keys(PRICES).filter((m) =>
+  m.includes('haiku'),
+)
 
 export function assertAllowedModel(model: string, allowed: readonly string[] = DEFAULT_ALLOWED_MODELS): void {
   if (!allowed.includes(model))

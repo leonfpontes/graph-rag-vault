@@ -442,7 +442,9 @@ describe('parseEvalArgs', () => {
       demoExtras: true,
       out: 'evals/results',
       report: false,
+      secondJudge: false,
     })
+    expect(parseEvalArgs(['--second-judge']).secondJudge).toBe(true)
   })
 
   it('treats any run without the test split as a rehearsal, and reads the lists', () => {

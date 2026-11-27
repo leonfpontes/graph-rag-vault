@@ -154,7 +154,8 @@ describe('createAnthropicProvider', () => {
     )
     expect(fetch).not.toHaveBeenCalled()
     expect(() => createAnthropicProvider({ apiKey: '' })).toThrow('ANTHROPIC_API_KEY is missing')
-    expect(DEFAULT_ALLOWED_MODELS).toEqual(Object.keys(PRICES))
+    expect(DEFAULT_ALLOWED_MODELS).toEqual(Object.keys(PRICES).filter((m) => m.includes('haiku')))
+    expect(DEFAULT_ALLOWED_MODELS).not.toContain('claude-opus-5-5')
     expect(DEFAULT_ALLOWED_MODELS.join(' ')).not.toMatch(/sonnet/)
   })
 

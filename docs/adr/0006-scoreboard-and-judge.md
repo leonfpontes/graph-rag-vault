@@ -1,4 +1,4 @@
-# 0006 · A scoreboard on questions never used for tuning, with a judge checked by a person
+# 0006 · A scoreboard on questions never used for tuning, with a judge that is checked
 
 **Status:** accepted · 2026-11-27
 
@@ -24,11 +24,19 @@ faithfulness judged and the judge itself checked.
   answerable questions answered, expected notes cited, cost and latency.
 - **Judge:** Claude Haiku 5.5, one call per answer, a verdict per sentence through a tool, against
   the passages that sentence cites only (`evals/prompts/judge.md`).
-- **Human check:** about 10 answers from round 1, half among those with a sentence the judge did not
-  fully support (a random sample would be almost all `supported`, and kappa would measure
-  nothing). The person sees the question, the sentence and the cited passages, not the verdict.
-  Agreement and Cohen's kappa go on the scoreboard. Below a kappa of 0.8, the judge moves to a
-  larger model, within the cap.
+- **Judge check sample:** about 10 answers from round 1, half among those with a sentence the judge
+  did not fully support (a random sample would be almost all `supported`, and kappa would measure
+  nothing): `evals/results/judge-sample.json`.
+- **Human check:** a blind one (the person sees the question, the sentence and the cited passages,
+  not the verdict) gives agreement and Cohen's kappa. A review where the person sees the verdicts
+  (`"blind": false` in `human-labels.json`) is published as a review, with how many verdicts the
+  person agreed with and no kappa.
+- **Second judge:** Claude Opus 5.5 (never Sonnet) labels the same sample blind, with the same
+  prompt, passages and tool, under the remaining cap (`pnpm eval --second-judge`,
+  `second-judge.json`). Its agreement and kappa with the first judge are published as agreement
+  between two automatic judges, never as a human check. Opus is priced in `PRICES` but outside the
+  default allowlist, so it can't answer questions. Below a kappa of 0.8, moving the main judge is
+  decided by the product owner, not by the script.
 - **Cost:** a hard cap (default $5); each job reserves its worst case at the fallback model's price
   before it starts.
 
@@ -41,9 +49,14 @@ questions answered against 79% on vectors, 84% of the expected notes cited again
 faithfulness 94–97% in every variant, every unanswerable question answered "I don't know". The
 whole run (370 answers and their judgments) cost $0.17.
 
+Judge check (2026-11-27, 21 sentences from 10 answers): the person reviewed the verdicts, not
+blind, and agreed with all 21. Claude Opus 5.5, blind, agreed with Haiku 5.5 on 76% (kappa 0.22).
+On all 5 differences Haiku said partial and Opus supported, so Haiku is the stricter judge. The
+second judge cost $0.11.
+
 ## Consequences
 
 - Any change to the vault, the questions or the search makes the scoreboard stale; a test fails
   until `pnpm eval` runs again (about $0.20).
-- The judge's verdicts count only after the human check; until then the scoreboard says it is
-  pending.
+- The scoreboard says which check the judge had: blind, a review that was not blind, a second
+  automatic judge, or none.

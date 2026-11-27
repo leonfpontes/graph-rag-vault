@@ -1,5 +1,5 @@
 // Prices in USD per million tokens, so a cost in micros (USD millionths) is tokens × price.
-// Source: https://platform.claude.com/docs/en/about-claude/pricing (checked 2026-11-26).
+// Source: https://platform.claude.com/docs/en/about-claude/pricing (checked 2026-11-26; Opus 5.5 on 2026-11-27).
 import type { TokenUsage } from './provider.js'
 
 export interface Rates {
@@ -24,6 +24,8 @@ export const PRICES: Readonly<Record<string, ModelPrice>> = {
     longPrompt: { tokens: 100_000, input: 0.5, cacheWrite: 0.625, cacheRead: 0.05, output: 2.5 },
   },
   'claude-haiku-4-5-20251001': { input: 1, cacheWrite: 1.25, cacheRead: 0.1, output: 5 },
+  // Only as the second judge of the evaluation, never to answer: it is outside DEFAULT_ALLOWED_MODELS.
+  'claude-opus-5-5': { input: 4, cacheWrite: 5, cacheRead: 0.2, output: 20 },
 }
 
 export const promptTokens = (u: TokenUsage) => u.inputTokens + u.cacheReadTokens + u.cacheWriteTokens

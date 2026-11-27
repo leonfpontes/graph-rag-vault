@@ -5,7 +5,7 @@ search (the graph plus embeddings), every sentence of an answer cites the note i
 evaluation measures what the graph adds over vector search alone.
 
 > **Status: in development.** The skeleton, the contracts and CI are in place; the vault, the
-> search, the app and the scoreboard come next. Numbers will appear here only once they are measured.
+> search, the app and the scoreboard come next. Every number here is measured: [the scoreboard](evals/results/latest.md).
 
 ## Quickstart
 
@@ -40,6 +40,30 @@ flowchart LR
   each result came in: a vector match, a title, a keyword, or a link from another result.
 - **The evaluation** compares three variants (vectors only, graph only, hybrid) on questions with
   known source notes.
+
+## Scoreboard
+
+40 questions never used for tuning, measured on 2026-11-27 ([full scoreboard](evals/results/latest.md)).
+Answers by Claude Haiku 5.5, mean of 3 rounds.
+
+| Variant      | Expected notes in the top 5 | MRR  | Answerable questions answered | Expected notes cited | Faithfulness |
+| ------------ | --------------------------- | ---- | ----------------------------- | -------------------- | ------------ |
+| Hybrid       | 91%                         | 0.87 | 96%                           | 84%                  | 94%          |
+| Graph only   | 93%                         | 0.78 | 94%                           | 82%                  | 97%          |
+| Vectors only | 78%                         | 0.73 | 79%                           | 67%                  | 96%          |
+
+- **Search:** hybrid and graph only tie (2 points apart, under the 5-point tie line); against
+  vectors only, hybrid is +13 points, most of it on multi-hop questions (79% against 55%).
+- **Faithfulness** comes from an automatic judge (Claude Haiku 5.5), sentence by sentence, against
+  the passages each sentence cites.
+- **Reviewed by a person (Leonardo Pontes), not blind: agreed with the judge on 21 of 21
+  sentences**, stratified sample (half of the 10 answers from those with a sentence the judge did
+  not fully support). No kappa: the person saw the judge's verdicts.
+- **Agreement between two automatic judges:** Claude Opus 5.5, blind, on the same 21 sentences:
+  76%, Cohen's kappa 0.22. On all 5 differences the first judge said partial and Opus said
+  supported, so the faithfulness above is, if anything, understated.
+- **Cost:** $0.17 for the whole run (370 answers and their judgments), plus $0.11 for the second
+  judge.
 
 ## Repository
 

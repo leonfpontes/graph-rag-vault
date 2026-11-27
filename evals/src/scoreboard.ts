@@ -3,6 +3,7 @@
 // is the source the README, the site and the share images read; latest.md is the same in prose.
 import type { BaselineScore } from './baselines.js'
 import type { GenerationScore, Spread } from './generation.js'
+import { VERDICT_SCORE, type Verdict } from './judge.js'
 import type { RetrievalScore, RetrievalVariant } from './retrieval.js'
 import type { Question, Split } from './types.js'
 
@@ -57,7 +58,29 @@ export interface Results {
     kappa: number | undefined
     labeledBy: string
     labeledAt: string
+    /** False when the person reviewed the judge's verdicts rather than labelling without them. */
+    blind?: boolean
   } | null
+  /** A second automatic judge on the same sample: agreement between 2 models, not a human check. */
+  secondJudge?: {
+    model: string
+    judgedAt: string
+    promptVersion: string
+    costUsd: number
+    items: number
+    answers: number
+    observed: number
+    kappa: number | undefined
+    disagreements: {
+      item: string
+      questionId: string
+      variant: string
+      sentence: string
+      judge: Verdict
+      second: Verdict
+      reason: string
+    }[]
+  }
   notes: string[]
 }
 
@@ -184,13 +207,36 @@ export function toMarkdown(r: Results): string {
         return `| ${VARIANT_NAMES[variant]} | ${pm(g.faithfulness)} | ${pm(g.citationPrecision)} | ${pm(g.removedShare)} | ${pm(g.correctUnknown)} | ${pm(g.answered)} | ${pm(g.sourceRecall)} | ${usd(g.costPerAnswerUsd)} | ${g.medianLatencyMs === undefined ? '—' : `${(g.medianLatencyMs / 1000).toFixed(1)} s`} |`
       }),
     '',
-    r.human
-      ? `**Judge checked by a human:** ${r.human.items} sentences from ${r.human.answers} answers; agreement ${pct(r.human.observed)}, Cohen's kappa ${r.human.kappa?.toFixed(2) ?? '— (one label only)'}.`
-      : '**Judge checked by a human:** pending.',
+    r.human?.blind === false
+      ? `**Judge reviewed by a person (${r.human.labeledBy}), not blind:** agreed with the judge on ${Math.round(r.human.observed * r.human.items)} of ${r.human.items} sentences, stratified sample (half of the ${r.human.answers} answers from those with a sentence the judge did not fully support). No kappa: the person saw the judge's verdicts.`
+      : r.human
+        ? `**Judge checked by a human:** ${r.human.items} sentences from ${r.human.answers} answers; agreement ${pct(r.human.observed)}, Cohen's kappa ${r.human.kappa?.toFixed(2) ?? '— (one label only)'}.`
+        : `**Judge not checked by a person:** the faithfulness above comes from the automatic judge (${r.models.judge}), sentence by sentence.`,
+    ...(r.secondJudge ? secondJudgeLines(r.secondJudge, r.models.judge) : []),
     '',
-    `**Cost:** ${usd(r.cost.spentUsd, 2)} of a ${usd(r.cost.capUsd, 2)} cap (answers ${usd(r.cost.answerUsd, 2)}, judge ${usd(r.cost.judgeUsd, 2)})${r.cost.stoppedEarly ? `; stopped at the cap with ${r.cost.skipped} answers not run` : ''}.`,
+    `**Cost:** ${usd(r.cost.spentUsd, 2)} of a ${usd(r.cost.capUsd, 2)} cap (answers ${usd(r.cost.answerUsd, 2)}, judge ${usd(r.cost.judgeUsd, 2)})${r.cost.stoppedEarly ? `; stopped at the cap with ${r.cost.skipped} answers not run` : ''}${r.secondJudge ? `; the second judge added ${usd(r.secondJudge.costUsd, 2)}` : ''}.`,
     '',
     `Run ${r.runAt.slice(0, 10)} · answer prompt ${r.promptVersions.answer} · judge prompt ${r.promptVersions.judge} · index ${r.index.sourceHash.slice(0, 12)}. Faithfulness: supported 1, partial 0.5, unsupported 0, per sentence kept. "Citations kept": the share of the sources the model gave whose quote is in the cited passage (checked by code).`,
   )
   return `${lines.join('\n')}\n`
+}
+
+/** The second automatic judge: agreement with the first and, sentence by sentence, where they differ. */
+function secondJudgeLines(s: NonNullable<Results['secondJudge']>, judge: string): string[] {
+  const lines = [
+    '',
+    `**Agreement between 2 automatic judges (not a human check):** ${s.model} labelled the same ${s.items} sentences from ${s.answers} answers of the judge-check sample (stratified, not random: see the note above) on ${s.judgedAt}, with the same prompt and passages and without seeing the first verdicts. Agreement ${pct(s.observed)}, Cohen's kappa ${s.kappa?.toFixed(2) ?? '— (one label only)'}.`,
+  ]
+  if (s.disagreements.length === 0) return lines
+  const stricter = s.disagreements.filter((d) => VERDICT_SCORE[d.judge] < VERDICT_SCORE[d.second]).length
+  lines.push(
+    '',
+    `They differ on ${s.disagreements.length} sentences; ${judge} is the stricter on ${stricter}${stricter === s.disagreements.length ? `, so if ${s.model} is right, the faithfulness above is understated` : ''}:`,
+    '',
+    ...s.disagreements.map(
+      (d) =>
+        `- ${d.item} (${VARIANT_NAMES[d.variant as RetrievalVariant] ?? d.variant}, ${d.questionId}): ${judge} ${d.judge}, ${s.model} ${d.second}${d.reason ? ` (“${d.reason}”)` : ''}. Sentence: "${d.sentence}"`,
+    ),
+  )
+  return lines
 }

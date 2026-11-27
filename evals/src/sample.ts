@@ -22,6 +22,11 @@ export interface SampleItem {
 export interface HumanLabels {
   labeledBy: string
   labeledAt: string
+  /**
+   * False when the person reviewed the judge's verdicts instead of labelling without them: the
+   * agreement is then a review, and no kappa is computed. Absent means blind.
+   */
+  blind?: boolean
   labels: Record<string, Verdict>
 }
 
@@ -108,6 +113,34 @@ export function sampleSheet(items: readonly SampleItem[], intro: string): string
   return parts.join('\n')
 }
 
+/**
+ * The judge's verdicts against another rater's labels (a second judge), item by item: agreement,
+ * kappa, the labels the other rater used and the items where the two differ.
+ */
+export function compareLabels(items: readonly SampleItem[], other: Readonly<Record<string, Verdict>>) {
+  for (const key of Object.keys(other))
+    if (!items.some((it) => it.item === key)) throw new Error(`The label ${key} matches no sample item.`)
+  const labelled = items.filter((it) => other[it.item])
+  return {
+    ...agreement(
+      labelled.map((it) => it.judge),
+      labelled.map((it) => other[it.item]!),
+    ),
+    answers: new Set(labelled.map((it) => `${it.questionId}|${it.variant}`)).size,
+    otherLabels: VERDICTS.filter((v) => labelled.some((it) => other[it.item] === v)),
+    disagreements: labelled
+      .filter((it) => other[it.item] !== it.judge)
+      .map((it) => ({
+        item: it.item,
+        questionId: it.questionId,
+        variant: it.variant,
+        sentence: it.sentence,
+        judge: it.judge,
+        other: other[it.item]!,
+      })),
+  }
+}
+
 /** Agreement of the judge with the person's labels, over the items the person labelled. */
 export function humanAgreement(items: readonly SampleItem[], labels: HumanLabels) {
   for (const [key, v] of Object.entries(labels.labels)) {
@@ -116,13 +149,18 @@ export function humanAgreement(items: readonly SampleItem[], labels: HumanLabels
       throw new Error(`The label of ${key} is "${v}", not a verdict.`)
   }
   const labelled = items.filter((it) => labels.labels[it.item])
+  const blind = labels.blind ?? true
+  const measured = agreement(
+    labelled.map((it) => it.judge),
+    labelled.map((it) => labels.labels[it.item]!),
+  )
   return {
-    ...agreement(
-      labelled.map((it) => it.judge),
-      labelled.map((it) => labels.labels[it.item]!),
-    ),
+    ...measured,
+    // A person who saw the verdicts was not an independent rater: kappa would measure nothing.
+    kappa: blind ? measured.kappa : undefined,
     answers: new Set(labelled.map((it) => `${it.questionId}|${it.variant}`)).size,
     labeledBy: labels.labeledBy,
     labeledAt: labels.labeledAt,
+    blind,
   }
 }

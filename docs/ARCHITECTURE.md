@@ -190,9 +190,12 @@ nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each s
   writes `evals/results/latest.json` (the source the README, the site and the share images read),
   `latest.md` and `answers.json` (every answer, plus one hybrid answer per tuning question for the
   demo to replay). A run without the test split is a rehearsal (`rehearsal.*`, not committed) and
-  never answers a test question. `pnpm eval --sheet <file>` picks about 10 round-1 answers for a
-  human check (`human-sample.json`, the judge hidden on the sheet); `human-labels.json` with the
-  person's labels and `pnpm eval --report` add the agreement and Cohen's kappa to the scoreboard.
+  never answers a test question. `pnpm eval --sheet <file>` picks about 10 round-1 answers for the
+  judge check (`judge-sample.json`, the judge hidden on the sheet); `human-labels.json` with the
+  person's labels (`"blind": false` for a review that saw the verdicts: no kappa) and
+  `pnpm eval --report` add the check to the scoreboard. `pnpm eval --second-judge` labels the same
+  sample blind with Claude Opus 5.5 (`second-judge.json`, `secondJudge` in `latest.json`): agreement
+  between two automatic judges, never a human check.
 
 ## Servers and ports
 
@@ -225,4 +228,4 @@ scoreboard with the share pieces.
 - [ADR 0005](adr/0005-hybrid-search-score-propagation.md): hybrid search, fused entry lists and
   scores spread along typed links, tuned on probe and dev only.
 - [ADR 0006](adr/0006-scoreboard-and-judge.md): the scoreboard on the 40 test questions, 3 rounds
-  of answers, a faithfulness judge and a blind human check with Cohen's kappa.
+  of answers, a faithfulness judge, a person's review and a second automatic judge with Cohen's kappa.

@@ -6,6 +6,11 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- The judge check on the scoreboard and in the README: the person's review, not blind (agreed with
+  the judge on 21 of 21 sentences, no kappa), and a blind second judge, Claude Opus 5.5, on the same
+  stratified sample (`pnpm eval --second-judge`): agreement between two automatic judges 76%,
+  Cohen's kappa 0.22, $0.11. Opus is priced but outside the default allowlist. The sample file is
+  now `judge-sample.json`.
 - The demo with no key and the local API. `@graph-rag/client` loads the search index, the
   scoreboard (`latest.json` as it is), the questions and the recorded answers in the browser: the
   first search answers in under 2 s, the 50 questions replay their answers at once, and a new
@@ -15,8 +20,8 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
   paths, and `vercel.json` for a static deploy with `SITE_URL` for the social cards.
 - The scoreboard (`pnpm eval`): retrieval of the three variants and vector baselines with each
   embedding model; answers and a faithfulness judge over 3 rounds with mean ± deviation; citations
-  kept, sentences removed, "I don't know", cost and latency; a hard $5 cap; a blind human check of
-  the judge with Cohen's kappa. Answers read a "Links" passage per note that words its typed links
+  kept, sentences removed, "I don't know", cost and latency; a hard $5 cap; a check of the judge
+  with Cohen's kappa. Answers read a "Links" passage per note that words its typed links
   and aliases, which live in the frontmatter.
 - Hybrid search with the reason for every result (vector, title, keyword, typed link, replacement,
   recency, stale): entry lists fused by RRF, then scores spread along typed links; the same code in

@@ -10,12 +10,16 @@ import { describe, expect, it } from 'vitest'
 
 import {
   bestBaseline,
+  humanAgreement,
+  secondJudgeCheck,
   loadQuestions,
   verdictOf,
   retrievalReport,
   summarizeGeneration,
   toMarkdown,
   type AnswerRecord,
+  type HumanLabels,
+  type SecondJudgeFile,
   type Results,
   type SampleItem,
 } from './index.js'
@@ -74,7 +78,7 @@ describe.runIf(has)('the committed scoreboard', () => {
   })
 
   it('samples the human check from its recorded answers', () => {
-    const { items } = json<{ items: SampleItem[] }>('evals/results/human-sample.json')
+    const { items } = json<{ items: SampleItem[] }>('evals/results/judge-sample.json')
     for (const it of items) {
       const record = answers.find(
         (r) => r.questionId === it.questionId && r.variant === it.variant && r.round === it.round,
@@ -86,6 +90,28 @@ describe.runIf(has)('the committed scoreboard', () => {
       for (const c of it.cited)
         expect(normalize(c.text), `${it.item} ${c.chunkId}`).toContain(normalize(c.quote))
     }
+  })
+
+  it('states the judge checks their files give, and the README says the same', () => {
+    const file = (p: string) => existsSync(at(`evals/results/${p}`))
+    const { items } = json<{ items: SampleItem[] }>('evals/results/judge-sample.json')
+    const readme = readFileSync(at('README.md'), 'utf8').replace(/\s+/g, ' ')
+    if (file('human-labels.json')) {
+      const labels = json<HumanLabels>('evals/results/human-labels.json')
+      expect(results.human).toEqual(JSON.parse(JSON.stringify(humanAgreement(items, labels))))
+      if (labels.blind === false) {
+        expect(results.human?.kappa).toBeUndefined()
+        expect(readme).toContain(
+          `Reviewed by a person (${labels.labeledBy}), not blind: agreed with the judge on ${Math.round(results.human!.observed * results.human!.items)} of ${results.human!.items} sentences`,
+        )
+      }
+    } else expect(results.human).toBeNull()
+    if (file('second-judge.json')) {
+      const second = json<SecondJudgeFile>('evals/results/second-judge.json')
+      expect(results.secondJudge).toEqual(JSON.parse(JSON.stringify(secondJudgeCheck(items, second))))
+      const s = results.secondJudge!
+      expect(readme).toContain(`${Math.round(s.observed * 100)}%, Cohen's kappa ${s.kappa!.toFixed(2)}`)
+    } else expect(results.secondJudge).toBeUndefined()
   })
 
   it('states the verdict the rule gives for its retrieval and baselines', () => {

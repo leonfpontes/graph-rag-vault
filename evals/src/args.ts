@@ -28,6 +28,8 @@ export interface EvalArgs {
   report: boolean
   /** Write the human sample and its sheet to this path. */
   sheet?: string
+  /** Label the judge-check sample with a second automatic judge (Opus 5.5), then rebuild the report. */
+  secondJudge: boolean
 }
 
 const positive = (name: string, raw: string): number => {
@@ -67,6 +69,7 @@ export function parseEvalArgs(argv: string[]): EvalArgs {
       out: { type: 'string', default: 'evals/results' },
       report: { type: 'boolean', default: false },
       sheet: { type: 'string' },
+      'second-judge': { type: 'boolean', default: false },
       'confirm-budget': { type: 'boolean', default: false },
     },
   })
@@ -102,5 +105,6 @@ export function parseEvalArgs(argv: string[]): EvalArgs {
     out: values.out,
     report: values.report,
     sheet: values.sheet,
+    secondJudge: values['second-judge'],
   }
 }

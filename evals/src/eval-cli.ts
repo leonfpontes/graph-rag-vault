@@ -2,7 +2,8 @@
 // pnpm eval [--split test] [--rounds 3] [--budget 5] [--concurrency 4] [--variants vector,graph,hybrid]
 //           [--questions q-011,q-012] [--no-baselines] [--no-demo-extras] [--out evals/results]
 // pnpm eval --report            rebuild latest.md and the human check from the files, no model call
-// pnpm eval --sheet <file.md>   write the human sample (answers.json → human-sample.json) and its sheet
+// pnpm eval --sheet <file.md>   write the judge-check sample (answers.json → judge-sample.json) and a sheet
+// pnpm eval --second-judge      label that sample with Opus 5.5 (second-judge.json), then --report
 // The test split writes the scoreboard (latest.json, latest.md, answers.json); any other split is a
 // rehearsal (rehearsal.*). The key comes from ANTHROPIC_API_KEY or .env.local and is never printed.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
@@ -18,6 +19,7 @@ import { evaluate } from './evaluate.js'
 import type { AnswerRecord } from './generation.js'
 import { loadQuestions } from './questions.js'
 import { humanAgreement, pickSample, sampleSheet, type HumanLabels, type SampleItem } from './sample.js'
+import { runSecondJudge, SECOND_JUDGE_MODEL, secondJudgeCheck, type SecondJudgeFile } from './second-judge.js'
 import { bestBaseline } from './baselines.js'
 import { toMarkdown, verdictOf, type Results } from './scoreboard.js'
 
@@ -30,8 +32,9 @@ const files = {
   results: path.join(out, `${stem}.json`),
   markdown: path.join(out, `${stem}.md`),
   answers: path.join(out, args.rehearsal ? 'rehearsal-answers.json' : 'answers.json'),
-  sample: path.join(out, 'human-sample.json'),
+  sample: path.join(out, 'judge-sample.json'),
   labels: path.join(out, 'human-labels.json'),
+  secondJudge: path.join(out, 'second-judge.json'),
 }
 
 async function write(file: string, text: string) {
@@ -62,8 +65,24 @@ if (args.sheet) {
   mkdirSync(path.dirname(path.resolve(args.sheet)), { recursive: true })
   writeFileSync(path.resolve(args.sheet), sheet)
   console.log(`${items.length} sentences → ${files.sample} and ${path.resolve(args.sheet)}`)
-} else if (args.report) {
+} else if (args.report || args.secondJudge) {
   const results = readJson<Results>(files.results)
+  if (args.secondJudge) {
+    if (!process.env.ANTHROPIC_API_KEY && existsSync(at('.env.local'))) process.loadEnvFile(at('.env.local'))
+    const { items } = readJson<{ items: SampleItem[] }>(files.sample)
+    const file = await runSecondJudge({
+      items,
+      records: readJson<AnswerRecord[]>(files.answers),
+      index,
+      provider: createAnthropicProvider({
+        apiKey: process.env.ANTHROPIC_API_KEY ?? '',
+        allowedModels: [SECOND_JUDGE_MODEL],
+      }),
+      capMicros: Math.round((results.cost.capUsd - results.cost.spentUsd) * 1e6),
+    })
+    await write(files.secondJudge, JSON.stringify(file, null, 2))
+    console.error(`second judge: $${(file.costMicros / 1e6).toFixed(4)}`)
+  }
   // The verdict follows the current rule, from the stored retrieval and baselines (no new run).
   results.verdict = verdictOf(results.retrieval, bestBaseline(results.baselines))
   if (existsSync(files.labels) && existsSync(files.sample)) {
@@ -75,8 +94,13 @@ if (args.sheet) {
       answers,
       labeledBy,
       labeledAt,
+      blind,
     } = humanAgreement(items, readJson<HumanLabels>(files.labels))
-    results.human = { items: n, answers, observed, kappa, labeledBy, labeledAt }
+    results.human = { items: n, answers, observed, kappa, labeledBy, labeledAt, blind }
+  }
+  if (existsSync(files.secondJudge) && existsSync(files.sample)) {
+    const { items } = readJson<{ items: SampleItem[] }>(files.sample)
+    results.secondJudge = secondJudgeCheck(items, readJson<SecondJudgeFile>(files.secondJudge))
   }
   await write(files.results, JSON.stringify(results, null, 2))
   await write(files.markdown, toMarkdown(results))
