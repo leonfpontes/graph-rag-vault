@@ -15,7 +15,12 @@ export default defineConfig({
   use: { baseURL: `http://127.0.0.1:${port}`, trace: 'on-first-retry' },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } },
-    { name: 'mobile', use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 812 } } },
+    {
+      name: 'mobile',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 812 } },
+      // Ranking parity doesn't depend on the viewport: one browser run is enough.
+      testIgnore: '**/search-parity.e2e.ts',
+    },
   ],
   webServer: {
     command: `node packages/api/dist/cli.js serve --port ${port}`,

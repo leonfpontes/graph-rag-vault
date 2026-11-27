@@ -15,5 +15,11 @@
   "scripts": {
     "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@graph-rag/embeddings": "workspace:*",
+    "@graph-rag/search": "workspace:*",
+    "@graph-rag/vault": "workspace:*",
+    "yaml": "2.9.1"
   }
 }

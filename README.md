@@ -57,6 +57,8 @@ flowchart LR
 | `pnpm check`             | types, lint, formatting, tests and build                            |
 | `pnpm qa`                | `pnpm check`, then the end-to-end tests (`E2E_PORT` picks the port) |
 | `pnpm test --coverage`   | the tests with the coverage floors, as CI runs them                 |
+| `pnpm index`             | rebuilds the search index from the vault (downloads the model once) |
+| `pnpm retrieval`         | recall@5 and MRR of the three variants on the tuning questions      |
 
 Every server listens on 127.0.0.1. `--port` or the `PORT` variable picks the port; a busy port
 stops the server with an error, it never moves to the next one.

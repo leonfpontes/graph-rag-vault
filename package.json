@@ -20,7 +20,9 @@
     "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm build",
     "qa": "pnpm check && pnpm e2e",
     "serve": "pnpm -s --filter @graph-rag/api build && node packages/api/dist/cli.js serve",
-    "demo": "pnpm build && node packages/api/dist/cli.js serve"
+    "demo": "pnpm build && node packages/api/dist/cli.js serve",
+    "index": "pnpm -s --filter \"@graph-rag/index...\" build && node packages/index/dist/cli.js",
+    "retrieval": "pnpm -s --filter \"@graph-rag/evals...\" build && node evals/dist/retrieval-cli.js"
   },
   "license": "MIT",
   "devDependencies": {

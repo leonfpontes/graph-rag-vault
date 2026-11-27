@@ -16,6 +16,8 @@ pnpm test --coverage            # with the coverage floors, as CI
 pnpm --filter <package> build   # one package (names in docs/ARCHITECTURE.md)
 E2E_PORT=4300 pnpm e2e          # end-to-end tests on your own port
 pnpm demo --port 8787           # build, then serve app + API on 127.0.0.1
+pnpm index                      # vault → .graph-rag/index.sqlite → apps/web/public/data/index.bin (model cached once)
+pnpm retrieval                  # recall@5 and MRR of the 3 variants on probe + dev, free (--split test for the scoreboard)
 ```
 
 ## What the code doesn't tell you
@@ -38,6 +40,8 @@ pnpm demo --port 8787           # build, then serve app + API on 127.0.0.1
 - Never read, print or commit secrets (`.env*`, tokens). A new variable goes in `.env.example` with
   no value. gitleaks runs before each commit (`.githooks/pre-commit`) and in CI.
 - Every migration of the index has a `down` that undoes its `up` (test: `migrate.test.ts`).
+- Search weights are tuned on the probe and dev questions only, never on test
+  (`retrievalReport` refuses it).
 - Decisions that are hard to undo get an ADR in `docs/adr/`.
 
 ## Done means
@@ -55,6 +59,7 @@ pnpm demo --port 8787           # build, then serve app + API on 127.0.0.1
 | `Cannot find module '@graph-rag/…'` on a clone  | `dist/` doesn't exist before the build; see the `graph-rag-source` condition above                      |
 | CI fails on Linux where macOS passed            | Run the suite as CI does before a push: `docker run node:24` with `pnpm test --coverage`                |
 | A commit shows a personal e-mail                | A new clone doesn't carry the local `git config user.email`; set the GitHub noreply right after cloning |
+| `index.bin` test fails after a vault edit       | The demo's index is generated: run `pnpm index` (it re-embeds only what changed) and commit the file    |
 
 ## Publishing
 

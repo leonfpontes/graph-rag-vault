@@ -45,6 +45,10 @@ export default defineConfig({
         'apps/web/src/main.tsx',
         // Command-line entry points: argv to tested functions. The end-to-end tests start the server.
         'packages/api/src/cli.ts',
+        // pnpm index downloads the model; pnpm retrieval reads the committed index. Their parts
+        // (ingest, exportIndex, sourceHash, retrievalReport) are tested, and so is the file they write.
+        'packages/index/src/cli.ts',
+        'evals/src/retrieval-cli.ts',
       ],
       // Floors that only go up: packages and rules 80%, screens 60%.
       thresholds: {

@@ -81,16 +81,29 @@ flowchart LR
   prefix and refuses a passage over `model.maxTokens`. Both return unit `Float32Array`s of
   `model.dims` (384). `EmbeddingModel` pins `id`, `revision`, `pooling`, `queryPrefix`, `dims` and
   `maxTokens`; `DEFAULT_EMBEDDING_MODEL` is the one the index and the browser share.
-- **Ingestion** (`packages/index`, B2) wires them together. Each note goes through
-  `chunkNote(note, { countTokens: embedder.countTokens })`, then
-  `embedder.embedPassages(chunks.map((c) => c.embedText))`, then `toBlob`, into `embeddings` keyed
-  by `(model, chunk_id)`. Only notes whose `content_hash` changed are re-chunked and re-embedded.
-  At search time, `embedQuery(question)` goes to `topK` over the same model's vectors, in Node or in
-  the browser.
-- **Search** (`packages/search`): variants `vector`, `graph` and `hybrid`. Every hit carries the
-  reasons it came in: `vector` (similarity), `title` (matched alias), `keyword` (terms), `link`
-  (from, relation, 1 or 2 hops) or `same-project`. Lists are fused with reciprocal rank fusion
-  (k = 60). The package imports nothing from Node.
+- **Ingestion** (`packages/index`, `ingest(db, notes, embedder)`): every note is chunked on every
+  run (cheap); only chunks whose embedded text is new or changed, or that have no vector for this
+  model, go to `embedder.embedPassages`, stored with `toBlob` in `embeddings` keyed by
+  `(model, chunk_id)`. Notes whose `content_hash` didn't change keep their rows; removed notes take
+  their links, chunks and vectors with them. The model runs before any write, and one transaction
+  writes everything. Chunks are cut with the default token estimate, so a test can rebuild them
+  with no model.
+- **Index file** (`apps/web/public/data/index.bin`, `encodeIndex`/`decodeIndex`): `pnpm index`
+  ingests into `.graph-rag/index.sqlite` and exports a `SearchIndex`: notes, links between existing
+  notes, chunks, one unit vector per chunk and the 50 recorded questions with their vectors, plus a
+  `sourceHash` of the vault, the questions, the chunker and the model. A test fails when the file is
+  behind (`pnpm index` fixes it); `pnpm index --check` says the same with no model.
+- **Search** (`packages/search`, ADR 0005): `createSearch(index, weights?)` →
+  `search({ question, variant, queryVector?, k? })` → `SearchHit[]` (`noteId`, best `chunkId`,
+  `score`, `reasons`). Variants: `vector`, `graph` (no embedding needed) and `hybrid`. Reasons:
+  `vector` (similarity, chunk), `title` (matched name), `keyword` (terms, chunk), `link` (from,
+  relation, direction, 1 or 2 hops), `supersedes` (older note), `recency` (factor) and `stale`
+  (status, replacing note, factor). Entry lists are fused by weighted RRF, then scores spread along
+  typed links. BM25 is in TypeScript, so Node and the browser rank the same. `DEFAULT_WEIGHTS` is
+  tuned on probe and dev only. The package imports nothing from Node.
+- **Retrieval scores** (`evals`, `retrievalReport`, `pnpm retrieval`): recall@5 and MRR per
+  variant and kind, from the recorded question vectors in the index file (no model, no cost).
+  Custom weights are refused on the test split.
 - **Answer** (`packages/answer`, ADR 0004): `answerQuestion({ question, passages, provider })`, where a
   `Passage` is `{ chunkId, noteId, title, heading?, text, updated, status? }` (the search results,
   best first, at most 12 read). It returns `{ status: 'answered' | 'unknown', sentences, removed,
@@ -131,3 +144,5 @@ port. `pnpm demo` and `pnpm serve` default to 8787, `pnpm dev` to 5173 (it proxi
   their passages, checked by code; a sentence without a source is removed.
 - [ADR 0003](adr/0003-local-embedding-model.md): one open embedding model (bge-small-en-v1.5),
   pinned to a revision, the same in Node and in the browser.
+- [ADR 0005](adr/0005-hybrid-search-score-propagation.md): hybrid search, fused entry lists and
+  scores spread along typed links, tuned on probe and dev only.

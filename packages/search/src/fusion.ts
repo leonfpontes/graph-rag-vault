@@ -10,18 +10,20 @@ export interface Fused {
 }
 
 /**
- * Each id scores the sum of 1 / (k + rank) over the lists it appears in (rank from 1). An id
- * repeated inside one list counts once, at its best rank. Ties keep the order of first appearance.
+ * Each id scores the sum of weight / (k + rank) over the lists it appears in (rank from 1; weight 1
+ * unless `weights` gives one per list). An id repeated inside one list counts once, at its best
+ * rank. Ties keep the order of first appearance.
  */
-export function rrf(lists: readonly (readonly string[])[], k = RRF_K): Fused[] {
+export function rrf(lists: readonly (readonly string[])[], k = RRF_K, weights?: readonly number[]): Fused[] {
   const scores = new Map<string, number>()
-  for (const list of lists) {
+  lists.forEach((list, l) => {
+    const weight = weights?.[l] ?? 1
     const seen = new Set<string>()
     list.forEach((id, i) => {
       if (seen.has(id)) return
       seen.add(id)
-      scores.set(id, (scores.get(id) ?? 0) + 1 / (k + i + 1))
+      scores.set(id, (scores.get(id) ?? 0) + weight / (k + i + 1))
     })
-  }
+  })
   return [...scores].map(([id, score]) => ({ id, score })).sort((a, b) => b.score - a.score)
 }

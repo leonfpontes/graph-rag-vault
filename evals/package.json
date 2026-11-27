@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@graph-rag/search": "workspace:*",
     "@graph-rag/vault": "workspace:*",
     "yaml": "2.9.1"
   }

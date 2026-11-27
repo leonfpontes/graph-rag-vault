@@ -6,6 +6,10 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- Hybrid search with the reason for every result (vector, title, keyword, typed link, replacement,
+  recency, stale): entry lists fused by RRF, then scores spread along typed links; the same code in
+  Node and the browser (ADR 0005). Incremental ingestion into SQLite, the search index file for the
+  demo (`pnpm index`) and free retrieval scores on the tuning questions (`pnpm retrieval`).
 - `@graph-rag/answer`: answers from the retrieved passages only, on Claude Haiku 5.5 with a
   fallback; every sentence cites and quotes a passage, checked by code; unsupported sentences are
   removed and shown as removed; with no basis the answer says it doesn't know (ADR 0004).

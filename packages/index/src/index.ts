@@ -1,4 +1,8 @@
 export * from './chunk.js'
+export * from './export.js'
+export * from './ingest.js'
 export * from './migrate.js'
 export { MIGRATIONS } from './migrations.js'
 export { openIndex } from './open.js'
+export * from './source.js'
+export * from './questions.js'

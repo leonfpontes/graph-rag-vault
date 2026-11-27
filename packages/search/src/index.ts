@@ -1,3 +1,6 @@
+export * from './bm25.js'
+export * from './codec.js'
+export * from './engine.js'
 export * from './fusion.js'
 export * from './types.js'
 export * from './vectors.js'
