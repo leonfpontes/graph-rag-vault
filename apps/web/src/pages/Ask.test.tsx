@@ -30,6 +30,16 @@ beforeEach(() => {
 })
 
 describe('Ask', () => {
+  it('says how many recorded questions answer at once, scored and for tuning, from questions.json', async () => {
+    renderAt('/ask')
+    expect(
+      await screen.findByText(
+        /^The 50 recorded questions \(40 scored, 10 for tuning\) answer at once from the recorded run\./,
+      ),
+    ).toBeTruthy()
+    expect(screen.getByText('· 50 answer at once (40 scored, 10 for tuning)')).toBeTruthy()
+  })
+
   it('starts with recorded questions by kind, open, and the graph waiting for a path', async () => {
     const { container } = renderAt('/ask')
     expect(screen.getByRole('heading', { level: 1, name: 'Ask the vault' })).toBeTruthy()

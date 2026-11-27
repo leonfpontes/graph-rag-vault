@@ -27,7 +27,7 @@ import {
   cn,
 } from '@leonfpontes/atlas-ui'
 import { ChevronDown, Filter, MessageCircleQuestionMark, Search, TriangleAlert } from 'lucide-react'
-import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Fragment, useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react'
 
 import { GraphCanvas } from '../graph/GraphCanvas'
 import { constellations, layout } from '../graph/layout'
@@ -730,16 +730,15 @@ function NotePreview({ view }: { view: NoteView }) {
         <TypeTag type={note.type} />
         <h2 className="text-lg leading-snug font-semibold">{note.title}</h2>
         <p className="n text-[13px] text-muted-foreground">
-          {/* Breaks only after a "/" (or at a hyphen), never inside a word. */}
+          {/* Breaks only after a "/", never inside the file name (not even at its hyphens). */}
           {note.path.split('/').map((part, i, all) => (
-            <span key={i}>
-              {part}
-              {i < all.length - 1 && (
-                <>
-                  /<wbr />
-                </>
-              )}
-            </span>
+            <Fragment key={i}>
+              <span className="whitespace-nowrap">
+                {part}
+                {i < all.length - 1 && '/'}
+              </span>
+              {i < all.length - 1 && <wbr />}
+            </Fragment>
           ))}
         </p>
       </div>

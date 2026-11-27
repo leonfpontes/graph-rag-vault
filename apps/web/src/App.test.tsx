@@ -40,6 +40,10 @@ describe('App shell', () => {
     const panel = screen.getByRole('region', { name: 'Demo mode: runs in your browser' })
     expect(within(panel).getByText(/only when you run it locally/)).toBeTruthy()
     expect(within(panel).getByText(/pnpm demo/)).toBeTruthy()
+    // The recorded questions, scored and for tuning, from questions.json.
+    expect(
+      await within(panel).findByText('The 50 recorded questions (40 scored, 10 for tuning): instant answers'),
+    ).toBeTruthy()
     await user.keyboard('{Escape}')
     expect(button.getAttribute('aria-expanded')).toBe('false')
     expect(document.activeElement).toBe(button)
