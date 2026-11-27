@@ -6,7 +6,7 @@
 // the app would give.
 import type { SearchHit, SearchIndex } from '@graph-rag/search'
 
-import { MAX_PASSAGES, type Passage } from './answer.js'
+import { MAX_PASSAGES, type Passage } from './types.js'
 
 /** Notes of the result list whose passages the answer reads (the evaluation reports recall@5). */
 export const ANSWER_NOTES = 5

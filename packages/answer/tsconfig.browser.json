@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.base.json",
+  // The browser entry (@graph-rag/answer/passages): no Node types, so a Node API fails the typecheck.
+  "compilerOptions": { "noEmit": true, "types": [], "lib": ["ES2023"] },
+  "files": ["src/browser.ts", "../search/src/globals.d.ts"]
+}
