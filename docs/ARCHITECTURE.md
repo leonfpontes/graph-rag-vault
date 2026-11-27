@@ -22,15 +22,16 @@ flowchart LR
 
 ## Packages
 
-| Package                 | Folder                | Owns                                                                               |
-| ----------------------- | --------------------- | ---------------------------------------------------------------------------------- |
-| `@graph-rag/vault`      | `packages/vault`      | `Note`, `Link`, the 6 note types and the 7 relations; the parser; the world        |
-| `@graph-rag/index`      | `packages/index`      | `openIndex`, reversible `migrate` (PRAGMA `user_version`), the schema              |
-| `@graph-rag/search`     | `packages/search`     | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf`           |
-| `@graph-rag/embeddings` | `packages/embeddings` | `createEmbedder`: the pinned model, query prefix, token counter (Node and browser) |
-| `@graph-rag/api`        | `packages/api`        | The fetch handler (`createApi`) and the Node server (`serveHttp`)                  |
-| `@graph-rag/web`        | `apps/web`            | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                             |
-| `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), traps, `recallAtK`, MRR, mean ± sd     |
+| Package                 | Folder                | Owns                                                                                      |
+| ----------------------- | --------------------- | ----------------------------------------------------------------------------------------- |
+| `@graph-rag/vault`      | `packages/vault`      | `Note`, `Link`, the 6 note types and the 7 relations; the parser; the world               |
+| `@graph-rag/index`      | `packages/index`      | `openIndex`, reversible `migrate` (PRAGMA `user_version`), the schema                     |
+| `@graph-rag/search`     | `packages/search`     | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf`                  |
+| `@graph-rag/embeddings` | `packages/embeddings` | `createEmbedder`: the pinned model, query prefix, token counter (Node and browser)        |
+| `@graph-rag/answer`     | `packages/answer`     | `answerQuestion`: cited, quoted sentences, removed ones, "I don't know"; the model client |
+| `@graph-rag/api`        | `packages/api`        | The fetch handler (`createApi`) and the Node server (`serveHttp`)                         |
+| `@graph-rag/web`        | `apps/web`            | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                                    |
+| `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), traps, `recallAtK`, MRR, mean ± sd            |
 
 ## Contracts
 
@@ -90,6 +91,12 @@ flowchart LR
   reasons it came in: `vector` (similarity), `title` (matched alias), `keyword` (terms), `link`
   (from, relation, 1 or 2 hops) or `same-project`. Lists are fused with reciprocal rank fusion
   (k = 60). The package imports nothing from Node.
+- **Answer** (`packages/answer`, ADR 0004): `answerQuestion({ question, passages, provider })`, where a
+  `Passage` is `{ chunkId, noteId, title, heading?, text, updated, status? }` (the search results,
+  best first, at most 12 read). It returns `{ status: 'answered' | 'unknown', sentences, removed,
+nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each sentence carries
+  `citations: { chunkId, noteId, quote }[]`, and each removed one a `reason`. Local mode only:
+  `createAnthropicProvider({ apiKey })` reads no environment itself, the caller passes the key.
 - **API** (`packages/api`): read-only, GET and HEAD; other methods get 405. Errors are JSON
   `{ "error": "…" }` and never echo the request. `GET /api/meta` → `{ name, mode }`, where `mode` is
   `demo` (never calls a model) or `local`. The search, note, graph and answer routes come with the
@@ -115,5 +122,7 @@ port. `pnpm demo` and `pnpm serve` default to 8787, `pnpm dev` to 5173 (it proxi
 - [ADR 0001](adr/0001-pnpm-typescript-atlas.md): one pnpm monorepo in TypeScript, Atlas UI from npm.
 - [ADR 0002](adr/0002-sqlite-brute-force-vectors-and-static-demo.md): SQLite with brute-force
   vectors, and a static demo that searches in the browser.
+- [ADR 0004](adr/0004-answers-cite-and-quote.md): answers on Claude Haiku 5.5 that cite and quote
+  their passages, checked by code; a sentence without a source is removed.
 - [ADR 0003](adr/0003-local-embedding-model.md): one open embedding model (bge-small-en-v1.5),
   pinned to a revision, the same in Node and in the browser.

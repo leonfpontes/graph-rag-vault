@@ -1,0 +1,23 @@
+{
+  "name": "@graph-rag/answer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Answers a question from the retrieved passages only: every sentence cites a passage and quotes it, a sentence without a source is removed and shown as removed, and with no basis the answer says it doesn't know.",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "prompts"
+  ],
+  "exports": {
+    ".": {
+      "graph-rag-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  }
+}
