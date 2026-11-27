@@ -183,7 +183,7 @@ function Results({ demo, sb }: { demo: Demo; sb: Scoreboard }) {
       </Section>
 
       <Section id="judge" title="Faithfulness judge">
-        <JudgeCard sb={sb} />
+        <JudgeCard sb={sb} demoAnswers={demo.questions.filter((q) => q.split !== 'test').length} />
       </Section>
 
       <Section id="questions" title="Questions">
@@ -421,41 +421,81 @@ function ScoreTable({ sb }: { sb: Scoreboard }) {
   )
 }
 
-function JudgeCard({ sb }: { sb: Scoreboard }) {
+const ORDINAL = [
+  'first',
+  'second',
+  'third',
+  'fourth',
+  'fifth',
+  'sixth',
+  'seventh',
+  'eighth',
+  'ninth',
+  'tenth',
+]
+
+/**
+ * The judge check in words, from latest.json (the same sentences as the README). `demoAnswers`: the
+ * recorded answers beyond the scoreboard's (one per tuning question, for the demo).
+ */
+export function judgeLines(sb: Scoreboard, demoAnswers = 0): string[] {
   const hu = sb.human
   const sj = sb.secondJudge
-  const agreed = hu ? Math.round(hu.observed * hu.items) : undefined
-  const oneWay =
-    sj &&
-    sj.disagreements.length > 0 &&
-    sj.disagreements.every(
-      (d) => d.judge === sj.disagreements[0]!.judge && d.second === sj.disagreements[0]!.second,
-    )
   const lines: string[] = []
-  if (hu && hu.blind === false)
-    lines.push(
-      `Reviewed by a person (${hu.labeledBy}), not blind: agreed with the judge on ${agreed} of ${hu.items} sentences, stratified sample (half of the ${hu.answers} answers from those with a sentence the judge did not fully support). No kappa: the person saw the judge's verdicts.`,
-    )
-  else if (hu)
-    lines.push(
-      `Checked by ${hu.labeledBy} without seeing the judge: ${hu.items} sentences from ${hu.answers} answers, stratified sample; agreement ${pct(hu.observed)}${hu.kappa === undefined ? '' : `, Cohen's kappa ${hu.kappa.toFixed(2)}`}.`,
-    )
-  if (sj) {
-    lines.push(
-      `Agreement between two automatic judges: ${modelLabel(sj.model)}, blind, on the same ${sj.items} sentences: ${pct(sj.observed)}, Cohen's kappa ${sj.kappa?.toFixed(2) ?? '—'}.`,
-    )
-    const d0 = sj.disagreements[0]
-    if (oneWay && d0)
+  if (hu) {
+    const blind = hu.blindPart
+    const agreedAll = Math.round(hu.observed * hu.items)
+    const reviewed = hu.items - (blind?.items ?? 0)
+    const reviewedAgreed = agreedAll - (blind?.agreed ?? 0)
+    const sample = `on a stratified sample of ${hu.sampleAnswers ?? hu.answers} answers (half from those with a sentence the judge did not fully support)`
+    if (hu.blind === false) {
+      let text = `Checked by a person (${hu.labeledBy}) ${sample}. Reviewed not blind: agreed with the judge on ${reviewedAgreed} of ${reviewed} sentences.`
+      if (blind) {
+        text += ` Labelled blind, without the judge's verdicts: agreed on ${blind.agreed} of ${blind.items} sentences (the answers that changed in the index rebuild)`
+        const d = blind.disagreements[0]
+        if (blind.disagreements.length === 1 && d) {
+          const same = sj?.disagreements.some((x) => x.judge === d.judge && x.second === d.human)
+          text += `; on the ${ORDINAL[blind.items - 1] ?? 'other'} the judge said ${d.judge} and the person ${d.human}${same ? ', the same direction as the second judge' : ''}`
+        }
+        text += `. No kappa: the review saw the verdicts, and ${blind.items} blind sentences are too few for one.`
+      } else text += " No kappa: the person saw the judge's verdicts."
+      if (hu.pendingAnswers)
+        text += ` Review pending for ${hu.pendingAnswers} of ${hu.sampleAnswers ?? hu.answers} answers.`
+      lines.push(text)
+    } else
       lines.push(
-        `All ${sj.disagreements.length} disagreements go the same way: the main judge said ${d0.judge}, the second judge said ${d0.second}, so the faithfulness above is a ${d0.second === 'supported' ? 'conservative' : 'generous'} estimate.`,
+        `Checked by a person (${hu.labeledBy}) without the judge's verdicts, ${sample}: agreement ${pct(hu.observed)} on ${hu.items} sentences${hu.kappa === undefined ? '' : `, Cohen's kappa ${hu.kappa.toFixed(2)}`}.`,
       )
-    lines.push(
-      `A low kappa is expected here: the main judge marked only ${sj.judgeFlagged} of ${sj.items} sentences as not fully supported, and with so few cases, ${sj.disagreements.length} disagreements${oneWay ? ' that all go one way' : ''} pull kappa down even at ${pct(sj.observed)} agreement. The main judge stays ${modelLabel(sb.models.judge)}.`,
-    )
   }
+  if (sj) {
+    let text = `Agreement between two automatic judges: ${modelLabel(sj.model)}, blind, on the same ${sj.items} sentences: ${pct(sj.observed)}, Cohen's kappa ${sj.kappa?.toFixed(2) ?? '—'}.`
+    const d0 = sj.disagreements[0]
+    const oneWay = !!d0 && sj.disagreements.every((d) => d.judge === d0.judge && d.second === d0.second)
+    if (oneWay)
+      text += ` All ${sj.disagreements.length} disagreements go the same way: the main judge said ${d0.judge}, the second judge said ${d0.second}, so the faithfulness above is a ${d0.second === 'supported' ? 'conservative' : 'generous'} estimate.`
+    if (sj.secondLabels?.length === 1)
+      text += ` Kappa says little here: the second judge marked all ${sj.items} sentences ${sj.secondLabels[0]}, and with one judge on a single label, kappa is 0 whatever the other does.`
+    else
+      text += ` A low kappa is expected here: the main judge marked only ${sj.judgeFlagged} of ${sj.items} sentences as not fully supported, and with so few cases, ${sj.disagreements.length} disagreements${oneWay ? ' that all go one way' : ''} pull kappa down even at ${pct(sj.observed)} agreement.`
+    text += ` The main judge stays ${modelLabel(sb.models.judge)}.`
+    lines.push(text)
+  }
+  const c = sb.cost
+  const all = Object.values(sb.generation).reduce((n, g) => n + g.answers, 0) + demoAnswers
   lines.push(
-    `${usd(sb.cost.spentUsd)} for the whole run${sj ? `, plus ${usd(sj.costUsd)} for the second judge` : ''}.`,
+    c.reused
+      ? `Cost: ${usd(c.answerUsd + c.judgeUsd)} for all recorded answers and their judgments (${all}); the index rebuild asked again the ${all - c.reused} whose search notes changed, for ${usd(c.spentUsd)}${sj ? `; the second judge cost ${usd(sj.costUsd)}` : ''}.`
+      : `Cost: ${usd(c.spentUsd)} for the whole run${sj ? `, plus ${usd(sj.costUsd)} for the second judge` : ''}.`,
   )
+  return lines
+}
+
+function JudgeCard({ sb, demoAnswers }: { sb: Scoreboard; demoAnswers: number }) {
+  const hu = sb.human
+  const sj = sb.secondJudge
+  const reviewed = hu ? hu.items - (hu.blindPart?.items ?? 0) : 0
+  const reviewedAgreed = hu ? Math.round(hu.observed * hu.items) - (hu.blindPart?.agreed ?? 0) : 0
+  const lines = judgeLines(sb, demoAnswers)
   return (
     <Card className="gap-0 overflow-hidden py-0">
       <div className="grid md:grid-cols-3">
@@ -465,14 +505,16 @@ function JudgeCard({ sb }: { sb: Scoreboard }) {
             sentence by sentence: supported, partial or not supported
           </span>
         </Cell>
-        <Cell k={hu?.blind === false ? 'Reviewed by a person, not blind' : 'Checked by a person'}>
+        <Cell k="Checked by a person">
           {hu ? (
             <>
               <span className="n text-[22px] font-medium">
-                {agreed} of {hu.items}
+                {hu.blind === false ? `${reviewedAgreed} of ${reviewed}` : pct(hu.observed)}
               </span>
               <span className="text-[13px] text-muted-foreground">
-                sentences agreed · {hu.labeledBy} · stratified sample of {hu.answers} answers
+                {hu.blind === false ? 'sentences agreed, reviewed not blind' : 'agreement, blind'}
+                {hu.blindPart && ` · ${hu.blindPart.agreed} of ${hu.blindPart.items} labelled blind`} ·{' '}
+                {hu.labeledBy} · stratified sample of {hu.sampleAnswers ?? hu.answers} answers
               </span>
             </>
           ) : (

@@ -49,9 +49,11 @@ describe('the scoreboard sentence', () => {
   })
 
   it('names where the graph helps only when it does', () => {
+    const pts = (k: string) =>
+      Math.round((sb.retrieval.hybrid[k]!.recall5! - sb.retrieval.vector[k]!.recall5!) * 100)
     expect(kindLine(sb)).toEqual({
       title: 'Where the graph helps',
-      text: 'Hybrid search adds 24 points on multi-hop and 9 points on temporal questions over vectors only.',
+      text: `Hybrid search adds ${pts('multi-hop')} points on multi-hop and ${pts('temporal')} points on temporal questions over vectors only.`,
     })
     const flat = { ...sb, retrieval: { ...sb.retrieval, hybrid: sb.retrieval.vector } }
     expect(kindLine(flat).title).toBe('Recall@5 by question kind')
@@ -61,7 +63,7 @@ describe('the scoreboard sentence', () => {
       retrieval: { ...sb.retrieval, vector: sb.retrieval.hybrid, hybrid: sb.retrieval.vector },
     }
     expect(kindLine(worse).text).toBe(
-      'Vectors only scores higher on multi-hop (24 points) and temporal (9 points).',
+      `Vectors only scores higher on multi-hop (${pts('multi-hop')} points) and temporal (${pts('temporal')} points).`,
     )
   })
 })

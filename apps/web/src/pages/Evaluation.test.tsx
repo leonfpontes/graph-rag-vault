@@ -2,6 +2,7 @@ import type { Scoreboard } from '@graph-rag/client'
 import { screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
+import { pct, pp } from '../lib/format'
 import { headline, kindLine } from '../lib/headline'
 import { HEADLINE, JUDGE_LINES, JUDGE_NEVER } from '../test/approved'
 import { axe } from '../test/axe'
@@ -33,7 +34,15 @@ describe('Evaluation', () => {
     const cells = within(recall)
       .getAllByRole('cell')
       .map((c) => c.textContent)
-    expect(cells.slice(1)).toEqual(['78%', '93% ✓ best', '91%', '+13 pp'])
+    const r = (v: 'vector' | 'graph' | 'hybrid') => sb.retrieval[v].all!.recall5!
+    const best = Math.max(r('vector'), r('graph'), r('hybrid'))
+    const cell = (v: 'vector' | 'graph' | 'hybrid') => `${pct(r(v))}${r(v) === best ? ' ✓ best' : ''}`
+    expect(cells.slice(1)).toEqual([
+      cell('vector'),
+      cell('graph'),
+      cell('hybrid'),
+      pp(r('hybrid'), r('vector')),
+    ])
     const mrr = within(table).getByText('MRR').closest('tr')!
     expect(within(mrr).getAllByRole('cell')[3]!.textContent).toBe(
       `${sb.retrieval.hybrid.all!.mrr!.toFixed(2)} ✓ best`,
