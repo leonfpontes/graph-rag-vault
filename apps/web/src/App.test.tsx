@@ -1,14 +1,15 @@
 import { screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
+import { HEADLINE } from './test/approved'
 import { axe } from './test/axe'
 import { renderAt } from './test/render'
 
 describe('App shell', () => {
-  it('names the product and the three search variants, with no accessibility violations', async () => {
+  it('opens on the landing page, with no accessibility violations', async () => {
     const { container } = renderAt('/')
-    expect(screen.getByRole('heading', { level: 1, name: 'Graph RAG over a Markdown vault' })).toBeTruthy()
-    for (const variant of ['vector', 'graph', 'hybrid']) expect(screen.getByText(variant)).toBeTruthy()
+    expect(await screen.findByRole('heading', { level: 1, name: HEADLINE.short })).toBeTruthy()
+    expect(document.title).toBe('Graph RAG over a Markdown vault')
     expect(await axe(container)).toEqual([])
   })
 
@@ -24,7 +25,7 @@ describe('App shell', () => {
   })
 
   it('switches the theme and keeps the choice', async () => {
-    const { user } = renderAt('/')
+    const { user } = renderAt('/explore')
     await user.click(screen.getByRole('button', { name: 'Switch to dark theme' }))
     expect(document.documentElement.classList.contains('dark')).toBe(true)
     expect(localStorage.getItem('graph-rag-vault:theme')).toBe('dark')
@@ -53,8 +54,12 @@ describe('App shell', () => {
     expect(await screen.findByRole('button', { name: /Local mode/ })).toBeTruthy()
   })
 
-  it('shows a page for any address outside the routes', () => {
-    renderAt('/nope')
-    expect(screen.getByRole('heading', { level: 1, name: 'This page is not in the vault' })).toBeTruthy()
+  it('shows the 404 page for any address outside the routes, with three ways on', async () => {
+    const { container } = renderAt('/nope')
+    expect(screen.getByRole('heading', { level: 1, name: 'No page at this address' })).toBeTruthy()
+    for (const name of ['Explore the graph', 'Ask the vault', 'How it works'])
+      expect(screen.getByRole('link', { name })).toBeTruthy()
+    expect(document.title).toBe('Page not found · graph-rag-vault')
+    expect(await axe(container)).toEqual([])
   })
 })

@@ -1,4 +1,5 @@
-// The app: one router over the routes of @graph-rag/client, one demo for every screen, one shell.
+// The app: one router over the routes of @graph-rag/client, one demo for every screen; the product
+// screens share one shell, the landing and the 404 are pages of the site.
 import type { DemoOptions } from '@graph-rag/client'
 import { TooltipProvider } from '@leonfpontes/atlas-ui'
 
@@ -10,6 +11,8 @@ import { Explore } from './pages/Explore'
 import { HowItWorks } from './pages/HowItWorks'
 import { Note } from './pages/Note'
 import { NotFound } from './pages/NotFound'
+import { Share } from './pages/Share'
+import { Demo } from './pages/Demo'
 import { AppShell } from './shell/AppShell'
 
 export function App({ demo }: { demo?: DemoOptions }) {
@@ -17,9 +20,7 @@ export function App({ demo }: { demo?: DemoOptions }) {
     <RouterProvider>
       <DemoProvider options={demo}>
         <TooltipProvider>
-          <AppShell>
-            <Screen />
-          </AppShell>
+          <Screen />
         </TooltipProvider>
       </DemoProvider>
     </RouterProvider>
@@ -27,10 +28,28 @@ export function App({ demo }: { demo?: DemoOptions }) {
 }
 
 function Screen() {
+  const { route, location } = useRouter()
+  // The landing and the 404 are pages of the site, with its own header and footer; /share is the
+  // recording stage of the share images and /demo the one of the GIF and the video, only with ?record
+  // (anything else there is the 404).
+  if (route.name === 'how-it-works') return <HowItWorks />
+  if (route.name === 'not-found') {
+    if (location.search.has('record')) {
+      if (location.pathname === '/share') return <Share />
+      if (location.pathname === '/demo') return <Demo />
+    }
+    return <NotFound />
+  }
+  return (
+    <AppShell>
+      <AppScreen />
+    </AppShell>
+  )
+}
+
+function AppScreen() {
   const { route } = useRouter()
   switch (route.name) {
-    case 'how-it-works':
-      return <HowItWorks />
     case 'explore':
       return <Explore />
     case 'ask':

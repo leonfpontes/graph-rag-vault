@@ -43,6 +43,13 @@ export interface ApiError {
  * How to get written answers to new questions: run the app locally with your own key. The app shows
  * these when a question has no recorded answer and there is no key.
  */
+/** The quickstart: three commands, no key (the landing page and the README show these). */
+export const QUICKSTART_COMMANDS: readonly string[] = [
+  'git clone https://github.com/leonfpontes/graph-rag-vault.git && cd graph-rag-vault',
+  'pnpm install',
+  'pnpm demo',
+]
+
 export const LOCAL_ANSWER_COMMANDS: readonly string[] = [
   'git clone https://github.com/leonfpontes/graph-rag-vault.git && cd graph-rag-vault',
   'pnpm install',

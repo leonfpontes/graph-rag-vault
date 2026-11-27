@@ -2,13 +2,15 @@ import { readFileSync } from 'node:fs'
 
 import { expect, test } from '@playwright/test'
 
+import { HEADLINE } from '../apps/web/src/test/approved.js'
+
 // The built app and the API on one server (pnpm demo), at 1440 and 375 px (playwright.config.ts).
 test('opens the app with no console errors and no sideways scroll', async ({ page }) => {
   const errors: string[] = []
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
   page.on('pageerror', (e) => errors.push(e.message))
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1, name: 'Graph RAG over a Markdown vault' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1, name: HEADLINE.short })).toBeVisible()
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg')
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
   expect(overflow).toBeLessThanOrEqual(0)

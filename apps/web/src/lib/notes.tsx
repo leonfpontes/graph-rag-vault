@@ -38,7 +38,7 @@ export const RELATIONS = [
   'mentions',
 ]
 
-const SHAPE_PATH: Record<NoteType, string> = {
+export const SHAPE_PATH: Record<NoteType, string> = {
   person: 'M8 2.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 1 1 0-11z',
   project:
     'M4.25 2.75h7.5a1.5 1.5 0 0 1 1.5 1.5v7.5a1.5 1.5 0 0 1-1.5 1.5h-7.5a1.5 1.5 0 0 1-1.5-1.5v-7.5a1.5 1.5 0 0 1 1.5-1.5z',

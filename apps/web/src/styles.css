@@ -93,3 +93,96 @@ mark {
     animation: none !important;
   }
 }
+
+/* The share composition (share/ShareArt.tsx): README cover 830 × 415, social 1280 × 640, OG 1200 × 630.
+   Units scale with --s (1 at 1280); every text ≥ 24 px at 1280, so ≥ 11 px at 600 px and ≥ 15 px at 830. */
+.sa {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: calc(20px * var(--s));
+  padding: calc(40px * var(--s)) calc(52px * var(--s)) calc(36px * var(--s));
+  background: var(--background);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+.sa-brand {
+  display: flex;
+  gap: calc(14px * var(--s));
+  align-items: center;
+  font: 600 calc(28px * var(--s)) / 1.2 var(--font-sans);
+}
+.sa-tag {
+  margin-left: auto;
+  font: 400 calc(24px * var(--s)) / 1.2 var(--font-sans);
+  color: var(--muted-foreground);
+}
+.sa-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(600px * var(--s));
+  gap: calc(36px * var(--s));
+  align-items: center;
+  min-height: 0;
+}
+.sa-qa {
+  display: grid;
+  gap: calc(18px * var(--s));
+  align-content: center;
+  min-width: 0;
+}
+.sa-q {
+  font: 600 calc(30px * var(--s)) / 1.3 var(--font-sans);
+  letter-spacing: -0.01em;
+}
+.sa-a {
+  font-size: calc(25px * var(--s));
+  line-height: 1.5;
+}
+.sa-cite {
+  display: inline;
+  margin: 0 calc(2px * var(--s));
+  padding: 0 calc(7px * var(--s));
+  border-radius: calc(4px * var(--s));
+  font: 600 calc(24px * var(--s)) / 1 var(--font-mono);
+  background: var(--evidence-subtle);
+  color: var(--evidence);
+  border: 1px solid color-mix(in srgb, var(--evidence) 45%, transparent);
+  vertical-align: calc(1px * var(--s));
+  white-space: nowrap;
+}
+.sa-g {
+  border: 1px solid var(--border);
+  border-radius: calc(12px * var(--s));
+  background: var(--canvas);
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  padding: calc(8px * var(--s));
+}
+.sa-foot {
+  display: flex;
+  gap: calc(16px * var(--s));
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding-top: calc(16px * var(--s));
+  font: 600 calc(26px * var(--s)) / 1.3 var(--font-sans);
+}
+.sa-sub {
+  display: block;
+  font-weight: 400;
+  font-size: calc(24px * var(--s));
+  color: var(--muted-foreground);
+  margin-top: calc(4px * var(--s));
+}
+.sa-ex {
+  flex: none;
+  border: 1px dashed color-mix(in srgb, var(--warning) 50%, transparent);
+  background: var(--warning-subtle);
+  color: var(--warning);
+  border-radius: calc(6px * var(--s));
+  font: 500 calc(24px * var(--s)) / 1.3 var(--font-sans);
+  padding: calc(2px * var(--s)) calc(10px * var(--s));
+}

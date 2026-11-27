@@ -232,7 +232,15 @@ the recorded answers and the scoreboard all run from `apps/web/dist`. Project se
 (the public origin, for `og:url` and `og:image`; without it a production build falls back to
 `VERCEL_PROJECT_PRODUCTION_URL`, and fails with neither) and `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm
 11 from `packageManager`). The OG image is `apps/web/public/og.png`, 1200 × 630, made from the
-scoreboard with the share pieces.
+scoreboard with the share pieces by `pnpm share-images` (`apps/web/scripts/share-images.mjs`: the
+built app on its own port, `/share?record`, a screenshot of each piece, and `docs/share.values.json`
+with the values they show, which `apps/web/src/lib/share.test.tsx` compares with the sources).
+`pnpm record-demo` records the README GIF (20 s, 960 px) and video (60 s, 1280 × 720, H.264) frame by
+frame from `/demo?record`, a stage that is a pure function of the clock (`window.__setTime`), with
+ffmpeg; the captions are drawn in the frame, written as WebVTT and kept in
+`docs/media/graph-rag-demo.numbers.json` (`demo-script.test.tsx`). `pnpm readme` rewrites the README
+scoreboard from `latest.json` (`apps/web/src/lib/readme.ts`; `apps/web/src/lib/readme.test.ts` fails
+when it is behind).
 
 ## Decisions
 

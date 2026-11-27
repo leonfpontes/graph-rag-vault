@@ -1,0 +1,64 @@
+{
+  "runAt": "2026-11-27T10:58:00.689Z",
+  "outcome": "tie",
+  "sentence": "Hybrid search and graph only tie: recall@5 91% and 93%.",
+  "sentenceSub": "Vectors only: 73% (hybrid +18.2 points).",
+  "recall5": {
+    "hybrid": 0.909090909090909,
+    "bestOther": 0.9292929292929292,
+    "vector": 0.7272727272727273
+  },
+  "question": {
+    "id": "q-020",
+    "text": "Who manages the account manager of Velo Lund?"
+  },
+  "answer": [
+    {
+      "text": "Sana Orr is the person who handles the day-to-day accounts, and Velo Lund's owner is listed as Sana Orr.",
+      "cites": [5, 1]
+    },
+    {
+      "text": "Sana Orr reports to Jonah Whitfield.",
+      "cites": [4]
+    }
+  ],
+  "path": [
+    {
+      "from": "mtg-2026-09-12-c27-kickoff",
+      "to": "cus-velo-lund",
+      "relation": "customer"
+    },
+    {
+      "from": "cus-velo-lund",
+      "to": "per-sana-orr",
+      "relation": "owner"
+    },
+    {
+      "from": "per-sana-orr",
+      "to": "per-jonah-whitfield",
+      "relation": "reports_to"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "mtg-2026-09-12-c27-kickoff",
+      "label": "C27 kickoff",
+      "cite": null
+    },
+    {
+      "id": "cus-velo-lund",
+      "label": "Velo Lund",
+      "cite": 1
+    },
+    {
+      "id": "per-sana-orr",
+      "label": "Sana Orr",
+      "cite": 4
+    },
+    {
+      "id": "per-jonah-whitfield",
+      "label": "Jonah Whitfield",
+      "cite": 5
+    }
+  ]
+}

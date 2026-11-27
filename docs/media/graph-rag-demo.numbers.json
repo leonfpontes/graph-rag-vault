@@ -1,0 +1,56 @@
+{
+  "video": [
+    {
+      "from": 0,
+      "to": 8000,
+      "text": "Ask the Tarnwick vault a question. The search runs in your browser, with no key."
+    },
+    {
+      "from": 8000,
+      "to": 19000,
+      "text": "Hybrid search: vectors, words and typed links. Each of the 5 results says why it came in."
+    },
+    {
+      "from": 19000,
+      "to": 35000,
+      "text": "Every sentence cites its source. The path lights the 3 links the answer walked."
+    },
+    {
+      "from": 35000,
+      "to": 43000,
+      "text": "A citation opens the exact passage the answer read."
+    },
+    {
+      "from": 43000,
+      "to": 54000,
+      "text": "Measured on 40 held-out questions. Hybrid search and graph only tie: recall@5 91% and 93%."
+    },
+    {
+      "from": 54000,
+      "to": 60000,
+      "text": "Three commands, no key: github.com/leonfpontes/graph-rag-vault"
+    }
+  ],
+  "gif": [
+    {
+      "from": 0,
+      "to": 3000,
+      "text": "Ask the Tarnwick vault a question. The search runs in your browser, with no key."
+    },
+    {
+      "from": 3000,
+      "to": 7000,
+      "text": "Hybrid search: vectors, words and typed links. Each of the 5 results says why it came in."
+    },
+    {
+      "from": 7000,
+      "to": 15000,
+      "text": "Every sentence cites its source. The path lights the 3 links the answer walked."
+    },
+    {
+      "from": 15000,
+      "to": 20000,
+      "text": "Measured on 40 held-out questions. Hybrid search and graph only tie: recall@5 91% and 93%."
+    }
+  ]
+}
