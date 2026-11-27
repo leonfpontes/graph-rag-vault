@@ -1,0 +1,25 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:08.000
+Ask the Tarnwick vault a question. The search runs in your browser, with no key.
+
+2
+00:00:08.000 --> 00:00:19.000
+Hybrid search: vectors, words and typed links. Each of the 5 results says why it came in.
+
+3
+00:00:19.000 --> 00:00:35.000
+Every sentence cites its source. The path lights the 3 links the answer walked.
+
+4
+00:00:35.000 --> 00:00:43.000
+A citation opens the exact passage the answer read.
+
+5
+00:00:43.000 --> 00:00:54.000
+Measured on 40 held-out questions. Hybrid search and graph only tie: recall@5 91% and 93%.
+
+6
+00:00:54.000 --> 00:01:00.000
+Three commands, no key: github.com/leonfpontes/graph-rag-vault

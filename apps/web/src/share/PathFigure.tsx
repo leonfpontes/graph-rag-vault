@@ -27,13 +27,17 @@ export function PathFigure({
   nodes,
   edges,
   className,
+  lit = edges.length,
 }: {
   nodes: readonly FeaturedNode[]
   edges: readonly PathEdge[]
   className?: string
+  /** How many links are lit, in path order (the demo video lights them one by one); the rest wait in gray. */
+  lit?: number
 }) {
   const placed = layoutPath(nodes, edges)
   const at = new Map(placed.map((n) => [n.id, n]))
+  const litNodes = new Set(edges.slice(0, lit).flatMap((e) => [e.from, e.to]))
   return (
     <svg
       viewBox={`0 0 ${PATH_W} ${PATH_H}`}
@@ -42,7 +46,8 @@ export function PathFigure({
       data-path-figure=""
       style={{ display: 'block', width: '100%', height: 'auto' }}
     >
-      {edges.map((e) => {
+      {edges.map((e, i) => {
+        const on = i < lit
         const a = at.get(e.from)
         const b = at.get(e.to)
         if (!a || !b) return null
@@ -58,8 +63,16 @@ export function PathFigure({
         const ty = my + Math.cos(angle) * off
         return (
           <g key={`${e.from}|${e.to}|${e.relation}`} data-edge={e.relation}>
-            <line x1={p.x} y1={p.y} x2={q.x} y2={q.y} stroke="var(--evidence)" strokeWidth={4} />
+            <line
+              x1={p.x}
+              y1={p.y}
+              x2={q.x}
+              y2={q.y}
+              stroke={on ? 'var(--evidence)' : 'var(--edge)'}
+              strokeWidth={on ? 4 : 2}
+            />
             <text
+              opacity={on ? 1 : 0}
               x={tx.toFixed(1)}
               y={ty.toFixed(1)}
               textAnchor="middle"
@@ -80,9 +93,11 @@ export function PathFigure({
       })}
       {placed.map((n) => {
         const type = isNoteType(n.type) ? n.type : 'document'
+        // The name keeps its place whether the number shows yet or not.
         const width = nameWidth(n.short) + (n.cite ? BADGE + GAP : 0)
         const x0 = labelX(n, width)
         const baseline = n.labelSide === 'below' ? n.y + RING + 12 + TEXT : n.y - RING - 14
+        const cite = litNodes.has(n.id) ? n.cite : undefined
         return (
           <g key={n.id} data-node={n.id}>
             <path
@@ -90,11 +105,11 @@ export function PathFigure({
               fill={`var(--t-${type})`}
               transform={`translate(${n.x - NODE / 2} ${n.y - NODE / 2}) scale(${NODE / 16})`}
             />
-            {n.cite && (
+            {cite && (
               <circle cx={n.x} cy={n.y} r={RING} fill="none" stroke="var(--evidence)" strokeWidth={3} />
             )}
-            {n.cite && (
-              <g data-cite={n.cite}>
+            {cite && (
+              <g data-cite={cite}>
                 <rect
                   x={x0}
                   y={baseline - TEXT + 1}
@@ -109,7 +124,7 @@ export function PathFigure({
                   textAnchor="middle"
                   style={{ font: `600 ${TEXT}px var(--font-mono)`, fill: 'var(--evidence-foreground)' }}
                 >
-                  {n.cite}
+                  {cite}
                 </text>
               </g>
             )}
