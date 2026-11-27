@@ -11,6 +11,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { chromium } from '@playwright/test'
+import { format } from 'prettier'
 
 const root = fileURLToPath(new URL('../../../', import.meta.url))
 const media = path.join(root, 'docs/media')
@@ -118,7 +119,10 @@ try {
     path.join(media, 'graph-rag-demo.en.vtt'),
     `WEBVTT\n\n${captions.video.map((c, i) => `${i + 1}\n${ts(c.from)} --> ${ts(c.to)}\n${c.text}\n`).join('\n')}`,
   )
-  writeFileSync(path.join(media, 'graph-rag-demo.numbers.json'), `${JSON.stringify(captions, null, 2)}\n`)
+  writeFileSync(
+    path.join(media, 'graph-rag-demo.numbers.json'),
+    await format(JSON.stringify(captions, null, 2), { parser: 'json' }),
+  )
   console.log('record-demo: wrote docs/media/graph-rag-demo.mp4, .gif, .en.vtt and .numbers.json')
 } finally {
   await browser.close()

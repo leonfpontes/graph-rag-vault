@@ -11,6 +11,7 @@ import { createServer } from 'node:net'
 import { fileURLToPath } from 'node:url'
 
 import { chromium } from '@playwright/test'
+import { format } from 'prettier'
 
 const root = fileURLToPath(new URL('../../../', import.meta.url))
 const out = (file) => fileURLToPath(new URL(file, `file://${root}`))
@@ -55,7 +56,10 @@ try {
     values = await page.evaluate(() => window.__shareValues)
     await page.close()
   }
-  writeFileSync(out('docs/share.values.json'), `${JSON.stringify(values, null, 2)}\n`)
+  writeFileSync(
+    out('docs/share.values.json'),
+    await format(JSON.stringify(values, null, 2), { parser: 'json' }),
+  )
   console.log('share-images: wrote docs/share.values.json')
 } finally {
   await browser.close()
