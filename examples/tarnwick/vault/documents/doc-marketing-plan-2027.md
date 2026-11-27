@@ -1,8 +1,8 @@
 ---
 id: doc-marketing-plan-2027
 type: document
-created: 2025-03-12
-updated: 2025-04-25
+created: 2026-09-15
+updated: 2026-09-15
 status: current
 owner: "[[per-wren-galloway]]"
 ---

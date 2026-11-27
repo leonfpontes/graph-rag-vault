@@ -1,8 +1,8 @@
 ---
 id: doc-colour-list-2027
 type: document
-created: 2025-05-20
-updated: 2025-11-23
+created: 2026-06-30
+updated: 2026-06-30
 status: current
 owner: "[[per-ines-castell]]"
 ---

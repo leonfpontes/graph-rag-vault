@@ -108,8 +108,13 @@ nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each s
   `checkQuestions` proves them from the vault: `bridge` (typed links from a note the question names
   to the answer; the notes past the start are not named), `supersedes` (a newer note replaces the
   one the question's words point at; `vocabulary: other` when it shares fewer words), `alias` (the
-  question uses only an alias) and `neighbour` (an unanswerable question on a covered topic, with
-  patterns that must match no note).
+  question uses only an alias), `neighbour` (an unanswerable question on a covered topic, with
+  patterns that must match no note) and `newest` (several unlinked notes answer at different dates;
+  the newest wins). Every answerable question names `evidence`, text that must be in one of its
+  expected sources. The set has 50 questions: 10 that may tune the search (`probe` and `dev`: 2
+  fact, 4 multi-hop, 3 temporal, 1 unanswerable) and 40 for the scoreboard (`test`: 8, 14, 11 and
+  7), with at least 12 two-hop questions in the test split. The test questions are written from the
+  rules and the world, never checked against what a search returns.
 
 ## Servers and ports
 

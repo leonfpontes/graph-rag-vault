@@ -1,8 +1,8 @@
 ---
 id: doc-freight-rates-2026
 type: document
-created: 2025-09-04
-updated: 2025-11-15
+created: 2026-01-08
+updated: 2026-01-08
 status: current
 owner: "[[per-uma-sethi]]"
 ---

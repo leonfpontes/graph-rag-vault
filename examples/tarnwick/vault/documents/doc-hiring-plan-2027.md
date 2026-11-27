@@ -1,8 +1,8 @@
 ---
 id: doc-hiring-plan-2027
 type: document
-created: 2025-04-27
-updated: 2025-05-25
+created: 2026-10-12
+updated: 2026-10-12
 status: current
 owner: "[[per-dana-vance]]"
 ---

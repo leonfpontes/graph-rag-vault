@@ -11,11 +11,20 @@ export type Trap =
   | { kind: 'supersedes'; newer: string; older: string; vocabulary: 'other' | 'same' }
   | { kind: 'alias'; note: string; alias: string }
   | { kind: 'neighbour'; near: string[]; absent: string[] }
+  | { kind: 'newest'; newest: string; among: string[] }
 
-export const TRAP_KINDS = ['bridge', 'supersedes', 'alias', 'neighbour'] as const
+export const TRAP_KINDS = ['bridge', 'supersedes', 'alias', 'neighbour', 'newest'] as const
+
+/** Text that must be in an expected source: proof that the answer is in the notes. */
+export interface Evidence {
+  note: string
+  /** A regular expression, matched case-insensitively against the note's title and body. */
+  contains: string
+}
 
 export interface CaseQuestion extends Question {
   traps: Trap[]
+  evidence: Evidence[]
 }
 
 const ID = /^q-\d{3}$/
@@ -34,6 +43,12 @@ export function loadQuestions(text: string): CaseQuestion[] {
     const traps = (q.traps ?? []) as Trap[]
     if (!Array.isArray(traps) || traps.some((t) => !(TRAP_KINDS as readonly unknown[]).includes(t?.kind)))
       throw new Error(`${at}: every trap needs a kind of ${TRAP_KINDS.join(', ')}.`)
+    const evidence = (q.evidence ?? []) as Evidence[]
+    if (
+      !Array.isArray(evidence) ||
+      evidence.some((e) => typeof e?.note !== 'string' || typeof e?.contains !== 'string')
+    )
+      throw new Error(`${at}: evidence is a list of { note, contains }.`)
     return {
       id: q.id,
       kind: q.kind,
@@ -41,6 +56,7 @@ export function loadQuestions(text: string): CaseQuestion[] {
       question: q.question.trim(),
       expectedSources: q.expectedSources as string[],
       traps,
+      evidence,
     } as CaseQuestion
   })
 }
@@ -90,6 +106,21 @@ export function checkQuestion(q: CaseQuestion, notes: readonly Note[]): string[]
     say(q.kind === 'unanswerable' ? 'an unanswerable question has no sources' : 'no expected sources')
   if (q.kind === 'multi-hop' && q.expectedSources.length < 2)
     say('a multi-hop question needs 2 or more sources')
+  if (q.kind !== 'unanswerable' && q.evidence.length === 0) say('no evidence that the answer is in the notes')
+  for (const e of q.evidence) {
+    const n = note(e.note)
+    if (!q.expectedSources.includes(e.note)) say(`evidence note ${e.note} is not an expected source`)
+    else if (n && !new RegExp(e.contains, 'i').test(`${n.title}\n${n.body}`))
+      say(`${e.note} does not contain /${e.contains}/`)
+  }
+  const needs: Partial<Record<Question['kind'], Trap['kind'][]>> = {
+    'multi-hop': ['bridge'],
+    temporal: ['supersedes', 'newest'],
+    unanswerable: ['neighbour'],
+  }
+  const wanted = needs[q.kind]
+  if (wanted && !q.traps.some((t) => wanted.includes(t.kind)))
+    say(`${/^[aeiou]/.test(q.kind) ? 'an' : 'a'} ${q.kind} question needs a ${wanted.join(' or ')} trap`)
 
   for (const trap of q.traps) {
     switch (trap.kind) {
@@ -142,6 +173,21 @@ export function checkQuestion(q: CaseQuestion, notes: readonly Note[]): string[]
         if (!n.aliases.includes(trap.alias)) say(`${trap.note} has no alias "${trap.alias}"`)
         if (!names(q.question, trap.alias)) say(`the question does not use the alias "${trap.alias}"`)
         if (names(q.question, n.title)) say(`the question names ${trap.note} by its title`)
+        break
+      }
+      case 'newest': {
+        const newest = note(trap.newest)
+        const others = trap.among.map(note)
+        if (!newest || others.some((o) => !o)) {
+          say('newest trap names a missing note')
+          break
+        }
+        if (!q.expectedSources.includes(trap.newest))
+          say(`the newest note ${trap.newest} is not an expected source`)
+        for (const o of others as Note[]) {
+          if (o.updated >= newest.updated) say(`${o.id} is not older than ${trap.newest}`)
+          if (q.expectedSources.includes(o.id)) say(`the older note ${o.id} is an expected source`)
+        }
         break
       }
       case 'neighbour': {

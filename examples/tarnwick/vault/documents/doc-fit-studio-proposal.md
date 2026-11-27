@@ -1,8 +1,8 @@
 ---
 id: doc-fit-studio-proposal
 type: document
-created: 2025-09-14
-updated: 2026-02-03
+created: 2025-10-20
+updated: 2025-10-20
 status: current
 owner: "[[per-wren-galloway]]"
 ---

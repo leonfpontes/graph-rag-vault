@@ -9,6 +9,12 @@
 #   with the question than the note it replaces.
 # - alias: the question names a note only by one of its aliases.
 # - neighbour: an unanswerable question about a topic the vault does cover, without the fact asked.
+# - newest: several notes answer it at different dates, with no link between them; the newest wins.
+#
+# `evidence` names text that must be in an expected source: the answer is really in the notes.
+# Splits: `probe` and `dev` (10 questions) may tune the search; `test` (40) makes the scoreboard and
+# is never used for tuning. The test questions were written from these rules and the world, without
+# looking at what any search returns for them.
 #
 # The probe split calibrates the difficulty of the set before the full set is written.
 questions:
@@ -17,6 +23,8 @@ questions:
     split: probe
     question: Which dealer joined the meeting where the C27 frame material was chosen?
     expectedSources: [dec-aluminium-6061, mtg-2026-09-12-c27-kickoff, cus-velo-lund]
+    evidence:
+      - { note: cus-velo-lund, contains: 'Velo Lund' }
     traps:
       - kind: bridge
         from: dec-aluminium-6061
@@ -29,6 +37,8 @@ questions:
     split: probe
     question: Who does the owner of RL-1 report to?
     expectedSources: [prj-ridgeline-emtb, per-tomas-lindqvist, per-maya-okafor]
+    evidence:
+      - { note: per-maya-okafor, contains: 'Maya Okafor' }
     traps:
       - kind: alias
         note: prj-ridgeline-emtb
@@ -44,6 +54,8 @@ questions:
     split: probe
     question: How long is the frame warranty on a new Tarnwick bike?
     expectedSources: [dec-lifetime-frame-cover]
+    evidence:
+      - { note: dec-lifetime-frame-cover, contains: 'whole time its first owner' }
     traps:
       - kind: supersedes
         newer: dec-lifetime-frame-cover
@@ -55,6 +67,8 @@ questions:
     split: probe
     question: Who supplies the battery cells for the Ridgeline?
     expectedSources: [dec-switch-battery-voltaro]
+    evidence:
+      - { note: dec-switch-battery-voltaro, contains: 'Voltaro cells' }
     traps:
       - kind: supersedes
         newer: dec-switch-battery-voltaro
@@ -70,3 +84,526 @@ questions:
       - kind: neighbour
         near: [doc-pricing-sheet-2026, prj-nordic-dealers, cus-velo-lund]
         absent: ['\bSEK\b', '\bkronor\b', '\bkrona\b', 'Sweden[^.]*\bprice', 'Swedish[^.]*\bprice']
+
+  # ---- dev: may tune the search, with the probe ----
+
+  - id: q-006
+    kind: fact
+    split: dev
+    question: How many outside riders took part in the autumn field test?
+    expectedSources: [doc-field-test-autumn-2026]
+    evidence:
+      - { note: doc-field-test-autumn-2026, contains: 'Twelve outside riders' }
+
+  - id: q-007
+    kind: fact
+    split: dev
+    question: What does the Kids 20 weigh?
+    expectedSources: [doc-kids-20-spec]
+    evidence:
+      - { note: doc-kids-20-spec, contains: '7\.9 kg' }
+
+  - id: q-008
+    kind: multi-hop
+    split: dev
+    question: Who does the author of the brake test protocol report to?
+    expectedSources: [doc-brake-test-protocol, per-nora-pell, per-kofi-mensah]
+    evidence:
+      - { note: per-kofi-mensah, contains: 'Kofi Mensah' }
+    traps:
+      - kind: bridge
+        from: doc-brake-test-protocol
+        path:
+          - { relation: owner, to: per-nora-pell }
+          - { relation: reports_to, to: per-kofi-mensah }
+
+  - id: q-009
+    kind: multi-hop
+    split: dev
+    question: Who is the manager of the person who decided to pause the dealer portal?
+    expectedSources: [dec-pause-dealer-portal, per-jonah-whitfield, per-elena-brandt]
+    evidence:
+      - { note: per-elena-brandt, contains: 'Elena Brandt' }
+    traps:
+      - kind: bridge
+        from: dec-pause-dealer-portal
+        path:
+          - { relation: owner, to: per-jonah-whitfield }
+          - { relation: reports_to, to: per-elena-brandt }
+
+  - id: q-010
+    kind: temporal
+    split: dev
+    question: How much energy does the Ridgeline battery pack hold?
+    expectedSources: [doc-battery-spec-v3]
+    evidence:
+      - { note: doc-battery-spec-v3, contains: '750 Wh' }
+    traps:
+      - { kind: supersedes, newer: doc-battery-spec-v3, older: doc-battery-spec-v2, vocabulary: same }
+
+  # ---- test: the scoreboard, never used for tuning ----
+
+  - id: q-011
+    kind: fact
+    split: test
+    question: At what temperature is the powder coat cured on the paint line?
+    expectedSources: [doc-paint-line-process-sheet]
+    evidence:
+      - { note: doc-paint-line-process-sheet, contains: '190 °C' }
+
+  - id: q-012
+    kind: fact
+    split: test
+    question: How many stops does the brake test require?
+    expectedSources: [doc-brake-test-protocol]
+    evidence:
+      - { note: doc-brake-test-protocol, contains: '1,000 stops' }
+
+  - id: q-013
+    kind: fact
+    split: test
+    question: What is the wheelbase of the Cargo Longtail?
+    expectedSources: [doc-cargo-longtail-frame-spec]
+    evidence:
+      - { note: doc-cargo-longtail-frame-spec, contains: '1,350 mm' }
+
+  - id: q-014
+    kind: fact
+    split: test
+    question: Which colours are on the 2027 colour list?
+    expectedSources: [doc-colour-list-2027]
+    evidence:
+      - { note: doc-colour-list-2027, contains: 'harbour blue' }
+
+  - id: q-015
+    kind: fact
+    split: test
+    question: How long do riders who buy online have to return an unridden bike?
+    expectedSources: [doc-return-policy]
+    evidence:
+      - { note: doc-return-policy, contains: '30 days' }
+
+  - id: q-016
+    kind: fact
+    split: test
+    question: What torque goes on the thru-axles of the Gravel GX?
+    expectedSources: [doc-torque-spec-gravel-gx]
+    evidence:
+      - { note: doc-torque-spec-gravel-gx, contains: 'thru-axles 12 Nm' }
+
+  - id: q-017
+    kind: fact
+    split: test
+    question: How big was the first batch of the Gravel GX, and how fast did it sell out?
+    expectedSources: [prj-gravel-gx]
+    evidence:
+      - { note: prj-gravel-gx, contains: '400 in seven weeks' }
+
+  - id: q-018
+    kind: fact
+    split: test
+    question: How is the marketing budget for 2027 split?
+    expectedSources: [doc-marketing-plan-2027]
+    evidence:
+      - { note: doc-marketing-plan-2027, contains: '40% trade show' }
+
+  - id: q-019
+    kind: multi-hop
+    split: test
+    question: Who does the owner of the Kids 20 project report to?
+    expectedSources: [prj-kids-20, per-ines-castell, per-maya-okafor]
+    evidence:
+      - { note: per-maya-okafor, contains: 'Maya Okafor' }
+    traps:
+      - kind: bridge
+        from: prj-kids-20
+        path:
+          - { relation: owner, to: per-ines-castell }
+          - { relation: reports_to, to: per-maya-okafor }
+
+  - id: q-020
+    kind: multi-hop
+    split: test
+    question: Who manages the account manager of Velo Lund?
+    expectedSources: [cus-velo-lund, per-sana-orr, per-jonah-whitfield]
+    evidence:
+      - { note: per-jonah-whitfield, contains: 'Jonah Whitfield' }
+    traps:
+      - kind: bridge
+        from: cus-velo-lund
+        path:
+          - { relation: owner, to: per-sana-orr }
+          - { relation: reports_to, to: per-jonah-whitfield }
+
+  - id: q-021
+    kind: multi-hop
+    split: test
+    question: Who does the author of the wheel building standard report to?
+    expectedSources: [doc-wheel-building-standard, per-chloe-dumont, per-hiro-sato]
+    evidence:
+      - { note: per-hiro-sato, contains: 'Hiro Sato' }
+    traps:
+      - kind: bridge
+        from: doc-wheel-building-standard
+        path:
+          - { relation: owner, to: per-chloe-dumont }
+          - { relation: reports_to, to: per-hiro-sato }
+
+  - id: q-022
+    kind: multi-hop
+    split: test
+    question: In which meeting was the battery decision taken that the Voltaro switch later replaced?
+    expectedSources: [dec-switch-battery-voltaro, dec-keep-ampcore, mtg-2026-03-17-supply-review]
+    evidence:
+      - { note: dec-keep-ampcore, contains: 'Ampcore stays' }
+    traps:
+      - kind: bridge
+        from: dec-switch-battery-voltaro
+        path:
+          - { relation: supersedes, to: dec-keep-ampcore }
+          - { relation: decided_in, to: mtg-2026-03-17-supply-review }
+
+  - id: q-023
+    kind: multi-hop
+    split: test
+    question: Which meeting first set the ERP go-live date that was later moved to April?
+    expectedSources:
+      [
+        dec-go-live-with-the-new-erp-in-april,
+        dec-go-live-with-the-new-erp-in-february,
+        mtg-2026-05-11-finance-review,
+      ]
+    evidence:
+      - { note: dec-go-live-with-the-new-erp-in-february, contains: '1 February 2027' }
+    traps:
+      - kind: bridge
+        from: dec-go-live-with-the-new-erp-in-april
+        path:
+          - { relation: supersedes, to: dec-go-live-with-the-new-erp-in-february }
+          - { relation: decided_in, to: mtg-2026-05-11-finance-review }
+
+  - id: q-024
+    kind: multi-hop
+    split: test
+    question: Who does the owner of the warranty claims project report to?
+    expectedSources: [prj-warranty-flow, per-lena-nyberg, per-maya-okafor]
+    evidence:
+      - { note: per-maya-okafor, contains: 'Maya Okafor' }
+    traps:
+      - kind: bridge
+        from: prj-warranty-flow
+        path:
+          - { relation: owner, to: per-lena-nyberg }
+          - { relation: reports_to, to: per-maya-okafor }
+
+  - id: q-025
+    kind: multi-hop
+    split: test
+    question: Who is the line manager of the person who wrote up the autumn field test?
+    expectedSources: [doc-field-test-autumn-2026, per-yara-dunmore, per-tomas-lindqvist]
+    evidence:
+      - { note: per-tomas-lindqvist, contains: 'Lindqvist' }
+    traps:
+      - kind: bridge
+        from: doc-field-test-autumn-2026
+        path:
+          - { relation: owner, to: per-yara-dunmore }
+          - { relation: reports_to, to: per-tomas-lindqvist }
+
+  - id: q-026
+    kind: multi-hop
+    split: test
+    question: Who is the account manager of the dealer that hosted the dealer day in May 2026?
+    expectedSources: [mtg-2026-05-06-dealer-day, cus-harbor-bikes, per-jonah-whitfield]
+    evidence:
+      - { note: per-jonah-whitfield, contains: 'Jonah Whitfield' }
+    traps:
+      - kind: bridge
+        from: mtg-2026-05-06-dealer-day
+        path:
+          - { relation: customer, to: cus-harbor-bikes }
+          - { relation: owner, to: per-jonah-whitfield }
+
+  - id: q-027
+    kind: multi-hop
+    split: test
+    question: Who owns the decision to replace levers on the affected commuter bikes, and who do they report to?
+    expectedSources: [dec-replace-levers-on-all-affected-commuter-bike, per-kofi-mensah, per-hiro-sato]
+    evidence:
+      - { note: per-hiro-sato, contains: 'Hiro Sato' }
+    traps:
+      - kind: bridge
+        from: dec-replace-levers-on-all-affected-commuter-bike
+        path:
+          - { relation: owner, to: per-kofi-mensah }
+          - { relation: reports_to, to: per-hiro-sato }
+
+  - id: q-028
+    kind: multi-hop
+    split: test
+    question: Who does the person who looks after the Ampcore supply agreement report to?
+    expectedSources: [doc-ampcore-supply-agreement, per-priya-raman, per-elena-brandt]
+    evidence:
+      - { note: per-elena-brandt, contains: 'Elena Brandt' }
+    traps:
+      - kind: bridge
+        from: doc-ampcore-supply-agreement
+        path:
+          - { relation: owner, to: per-priya-raman }
+          - { relation: reports_to, to: per-elena-brandt }
+
+  - id: q-029
+    kind: multi-hop
+    split: test
+    question: Who manages the author of the C27 frame spec?
+    expectedSources: [doc-c27-frame-spec, per-ines-castell, per-maya-okafor]
+    evidence:
+      - { note: per-maya-okafor, contains: 'Maya Okafor' }
+    traps:
+      - kind: bridge
+        from: doc-c27-frame-spec
+        path:
+          - { relation: owner, to: per-ines-castell }
+          - { relation: reports_to, to: per-maya-okafor }
+
+  - id: q-030
+    kind: multi-hop
+    split: test
+    question: In which meeting was the lifetime structural cover decided?
+    expectedSources: [dec-lifetime-frame-cover, mtg-2026-08-28-leadership]
+    evidence:
+      - { note: mtg-2026-08-28-leadership, contains: 'Leadership meeting' }
+    traps:
+      - kind: bridge
+        from: dec-lifetime-frame-cover
+        path:
+          - { relation: decided_in, to: mtg-2026-08-28-leadership }
+
+  - id: q-031
+    kind: multi-hop
+    split: test
+    question: Who owns the project that the second curing oven is part of?
+    expectedSources: [dec-buy-a-second-curing-oven, prj-paint-line-upgrade, per-hiro-sato]
+    evidence:
+      - { note: per-hiro-sato, contains: 'Hiro Sato' }
+    traps:
+      - kind: bridge
+        from: dec-buy-a-second-curing-oven
+        path:
+          - { relation: mentions, to: prj-paint-line-upgrade }
+          - { relation: owner, to: per-hiro-sato }
+
+  - id: q-032
+    kind: multi-hop
+    split: test
+    question: Who owns the project behind the decision to rate the new rear rack for 27 kg?
+    expectedSources: [dec-rear-rack-v2-rated-for-27-kg, prj-rear-rack-v2, per-ines-castell]
+    evidence:
+      - { note: per-ines-castell, contains: 'Ines Castell' }
+    traps:
+      - kind: bridge
+        from: dec-rear-rack-v2-rated-for-27-kg
+        path:
+          - { relation: mentions, to: prj-rear-rack-v2 }
+          - { relation: owner, to: per-ines-castell }
+
+  - id: q-033
+    kind: temporal
+    split: test
+    question: Where will the Commuter 2027 frames be welded from January?
+    expectedSources: [dec-c27-joining-calvane]
+    evidence:
+      - { note: dec-c27-joining-calvane, contains: 'Calvane Tubeworks' }
+    traps:
+      - { kind: supersedes, newer: dec-c27-joining-calvane, older: dec-weld-c27-in-house, vocabulary: other }
+
+  - id: q-034
+    kind: temporal
+    split: test
+    question: When does the new ERP go live?
+    expectedSources: [dec-go-live-with-the-new-erp-in-april]
+    evidence:
+      - { note: dec-go-live-with-the-new-erp-in-april, contains: '6 April 2027' }
+    traps:
+      - kind: supersedes
+        newer: dec-go-live-with-the-new-erp-in-april
+        older: dec-go-live-with-the-new-erp-in-february
+        vocabulary: same
+
+  - id: q-035
+    kind: temporal
+    split: test
+    question: How big is the Tarnwick stand at the 2027 trade show?
+    expectedSources: [dec-book-a-90-square-metre-stand]
+    evidence:
+      - { note: dec-book-a-90-square-metre-stand, contains: '90 square metre' }
+    traps:
+      - kind: supersedes
+        newer: dec-book-a-90-square-metre-stand
+        older: dec-book-a-60-square-metre-stand
+        vocabulary: same
+
+  - id: q-036
+    kind: temporal
+    split: test
+    question: When do dealer orders close each month?
+    expectedSources: [dec-two-order-cut-offs-per-month]
+    evidence:
+      - { note: dec-two-order-cut-offs-per-month, contains: 'first and the third Monday' }
+    traps:
+      - kind: supersedes
+        newer: dec-two-order-cut-offs-per-month
+        older: dec-monthly-order-cut-off-on-the-first-monday
+        vocabulary: same
+
+  - id: q-037
+    kind: temporal
+    split: test
+    question: When will the second curing oven be installed?
+    expectedSources: [dec-move-the-oven-install-to-the-december-shutdo]
+    evidence:
+      - { note: dec-move-the-oven-install-to-the-december-shutdo, contains: 'December shutdown' }
+    traps:
+      - kind: supersedes
+        newer: dec-move-the-oven-install-to-the-december-shutdo
+        older: dec-install-the-oven-in-the-october-shutdown
+        vocabulary: same
+
+  - id: q-038
+    kind: temporal
+    split: test
+    question: How long does the Ridgeline battery take to charge?
+    expectedSources: [doc-battery-spec-v3]
+    evidence:
+      - { note: doc-battery-spec-v3, contains: 'full in four hours' }
+    traps:
+      - { kind: supersedes, newer: doc-battery-spec-v3, older: doc-battery-spec-v2, vocabulary: same }
+
+  - id: q-039
+    kind: temporal
+    split: test
+    question: What was the most recent field return rate in the quality reports?
+    expectedSources: [doc-quality-report-q3-2026]
+    evidence:
+      - { note: doc-quality-report-q3-2026, contains: 'Field returns 0\.8%' }
+    traps:
+      - kind: newest
+        newest: doc-quality-report-q3-2026
+        among: [doc-quality-report-q1-2026, doc-quality-report-q2-2026]
+
+  - id: q-040
+    kind: temporal
+    split: test
+    question: What is the latest on-time delivery rate of the rack supplier?
+    expectedSources: [doc-supplier-scorecard-q3-2026]
+    evidence:
+      - { note: doc-supplier-scorecard-q3-2026, contains: 'racks 85%' }
+    traps:
+      - kind: newest
+        newest: doc-supplier-scorecard-q3-2026
+        among: [doc-supplier-scorecard-q2-2026]
+
+  - id: q-041
+    kind: temporal
+    split: test
+    question: What does the newest firmware release add?
+    expectedSources: [doc-firmware-release-notes-3-3]
+    evidence:
+      - { note: doc-firmware-release-notes-3-3, contains: 'Range estimate' }
+    traps:
+      - kind: newest
+        newest: doc-firmware-release-notes-3-3
+        among: [doc-firmware-release-notes-3-2]
+
+  - id: q-042
+    kind: temporal
+    split: test
+    question: For how long is a frame covered against structural failure if it was bought in October 2026?
+    expectedSources: [dec-lifetime-frame-cover]
+    evidence:
+      - { note: dec-lifetime-frame-cover, contains: 'whole time its first owner' }
+    traps:
+      - { kind: supersedes, newer: dec-lifetime-frame-cover, older: doc-warranty-terms, vocabulary: same }
+
+  - id: q-043
+    kind: temporal
+    split: test
+    question: How often can dealers place top-up orders now?
+    expectedSources: [dec-two-order-cut-offs-per-month]
+    evidence:
+      - { note: dec-two-order-cut-offs-per-month, contains: 'first and the third Monday' }
+    traps:
+      - kind: supersedes
+        newer: dec-two-order-cut-offs-per-month
+        older: dec-monthly-order-cut-off-on-the-first-monday
+        vocabulary: same
+
+  - id: q-044
+    kind: unanswerable
+    split: test
+    question: What is the retail price of the Kids 20?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [doc-pricing-sheet-2026, prj-kids-20, doc-kids-20-spec]
+        absent: ['Kids 20[^.]*[£€]\s?\d', '[£€]\s?[\d,]+[^.]*Kids 20']
+
+  - id: q-045
+    kind: unanswerable
+    split: test
+    question: How many Cargo Longtail bikes has Velo Lund ordered?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [cus-velo-lund, prj-cargo-longtail]
+        absent: ['Velo Lund[^.]*Longtail', 'Longtail[^.]*Velo Lund']
+
+  - id: q-046
+    kind: unanswerable
+    split: test
+    question: What is the price per Voltaro cell?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [dec-switch-battery-voltaro, doc-cell-test-report, doc-battery-spec-v3]
+        absent: ['Voltaro[^.]*[£€$]\s?\d', 'Voltaro[^.]*per cell', 'per cell[^.]*Voltaro']
+
+  - id: q-047
+    kind: unanswerable
+    split: test
+    question: When was Calvane Tubeworks founded?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [dec-c27-joining-calvane, mtg-2026-10-20-ops-sync]
+        absent: ['Calvane[^.]*(founded|established|since \d{4})']
+
+  - id: q-048
+    kind: unanswerable
+    split: test
+    question: How much did the second curing oven cost?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [dec-buy-a-second-curing-oven, prj-paint-line-upgrade]
+        absent: ['oven[^.]*[£€$]\s?\d', '[£€$]\s?[\d,]+[^.]*oven']
+
+  - id: q-049
+    kind: unanswerable
+    split: test
+    question: Up to what speed does the Ridgeline's motor assist the rider?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [prj-ridgeline-emtb, doc-battery-spec-v3]
+        absent: ['(assist|motor)[^.]*km/h', 'km/h[^.]*(assist|motor)', 'top speed']
+
+  - id: q-050
+    kind: unanswerable
+    split: test
+    question: Who replaced Jonah Whitfield as dealer sales manager?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [per-jonah-whitfield, per-sana-orr]
+        absent: ['replaced? Jonah', 'took over from[^.]*Jonah', 'after Jonah']

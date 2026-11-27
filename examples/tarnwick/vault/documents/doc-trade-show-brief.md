@@ -1,8 +1,8 @@
 ---
 id: doc-trade-show-brief
 type: document
-created: 2025-06-04
-updated: 2025-07-06
+created: 2026-09-01
+updated: 2026-09-01
 status: current
 owner: "[[per-wren-galloway]]"
 ---

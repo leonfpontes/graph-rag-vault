@@ -11,4 +11,4 @@ owner: "[[per-ines-castell]]"
 # Kids 20 inch
 
 ## Summary
-A light 20-inch bike for children from six to nine, with a single gear and short-reach brake levers.
+A light 20-inch bike for children from six to nine, with short-reach brake levers.

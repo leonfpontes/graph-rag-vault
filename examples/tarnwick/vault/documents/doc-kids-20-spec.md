@@ -1,8 +1,8 @@
 ---
 id: doc-kids-20-spec
 type: document
-created: 2025-05-24
-updated: 2025-08-01
+created: 2026-10-20
+updated: 2026-10-20
 status: current
 owner: "[[per-ines-castell]]"
 ---

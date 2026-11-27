@@ -1,8 +1,8 @@
 ---
 id: doc-spare-parts-catalogue-2026
 type: document
-created: 2026-10-04
-updated: 2026-11-01
+created: 2026-01-20
+updated: 2026-01-20
 status: current
 owner: "[[per-ivo-kerr]]"
 ---

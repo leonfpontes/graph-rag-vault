@@ -1,8 +1,8 @@
 ---
 id: doc-sustainability-report-2025
 type: document
-created: 2025-12-02
-updated: 2025-12-19
+created: 2026-03-02
+updated: 2026-03-02
 status: current
 owner: "[[per-elena-brandt]]"
 ---

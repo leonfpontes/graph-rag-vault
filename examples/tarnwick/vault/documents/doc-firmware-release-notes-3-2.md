@@ -1,7 +1,7 @@
 ---
 id: doc-firmware-release-notes-3-2
 type: document
-created: 2025-07-31
+created: 2025-11-30
 updated: 2025-11-30
 status: current
 owner: "[[per-dev-kerr]]"

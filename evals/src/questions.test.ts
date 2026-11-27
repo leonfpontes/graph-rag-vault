@@ -9,14 +9,7 @@ import { parseNote } from '@graph-rag/vault'
 import { readVault } from '@graph-rag/vault/node'
 import { describe, expect, it } from 'vitest'
 
-import {
-  checkQuestion,
-  checkQuestions,
-  loadQuestions,
-  overlap,
-  TRAP_KINDS,
-  type CaseQuestion,
-} from './questions.js'
+import { checkQuestion, checkQuestions, loadQuestions, overlap, type CaseQuestion } from './questions.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 const questions = loadQuestions(readFileSync(path.join(root, 'evals', 'questions.yaml'), 'utf8'))
@@ -34,9 +27,40 @@ describe('the question set', () => {
     expect(probe.filter((q) => q.kind === 'multi-hop')).toHaveLength(2)
     expect(probe.filter((q) => q.kind === 'temporal')).toHaveLength(2)
     expect(probe.filter((q) => q.kind === 'unanswerable')).toHaveLength(1)
-    expect([...new Set(probe.flatMap((q) => q.traps.map((t) => t.kind)))].sort()).toEqual(
-      [...TRAP_KINDS].sort(),
-    )
+    const kinds = new Set<string>(probe.flatMap((q) => q.traps.map((t) => t.kind)))
+    for (const kind of ['bridge', 'supersedes', 'alias', 'neighbour'])
+      expect(kinds.has(kind), kind).toBe(true)
+  })
+
+  it('has 50 questions in the planned mix: 10 to tune (the probe among them) and 40 for the scoreboard', () => {
+    expect(questions).toHaveLength(50)
+    expect(questions.map((q) => q.id)).toEqual(questions.map((_, i) => `q-${String(i + 1).padStart(3, '0')}`))
+    const mix = (splits: string[]) =>
+      Object.fromEntries(
+        ['fact', 'multi-hop', 'temporal', 'unanswerable'].map((kind) => [
+          kind,
+          questions.filter((q) => splits.includes(q.split) && q.kind === kind).length,
+        ]),
+      )
+    expect(mix(['probe', 'dev'])).toEqual({ fact: 2, 'multi-hop': 4, temporal: 3, unanswerable: 1 })
+    expect(mix(['test'])).toEqual({ fact: 8, 'multi-hop': 14, temporal: 11, unanswerable: 7 })
+  })
+
+  it('leans on two-hop questions, where the hybrid search is weakest', () => {
+    const test = questions.filter((q) => q.split === 'test' && q.kind === 'multi-hop')
+    const twoHop = test.filter((q) => q.traps.some((t) => t.kind === 'bridge' && t.path.length === 2))
+    expect(twoHop.length).toBeGreaterThanOrEqual(12)
+  })
+
+  it('never repeats a tuning question in the scoreboard', () => {
+    const norm = (text: string) =>
+      text
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim()
+    const tuning = new Set(questions.filter((q) => q.split !== 'test').map((q) => norm(q.question)))
+    for (const q of questions.filter((x) => x.split === 'test'))
+      expect(tuning.has(norm(q.question)), q.id).toBe(false)
   })
 
   it('hides the bridge: the newer note of a vocabulary trap shares fewer words than the note it replaces', () => {
@@ -61,15 +85,22 @@ const NOTES: Note[] = [
   n('cus-shop', 'type: customer\ncreated: 2025-01-01\naliases: [Shopco]', 'A dealer.'),
   n('doc-price', 'type: document\ncreated: 2026-01-01', 'Prices in GBP.'),
 ]
-const q = (extra: Partial<CaseQuestion>): CaseQuestion => ({
-  id: 'q-900',
-  kind: 'temporal',
-  split: 'dev',
-  question: 'How long is the bike warranty?',
-  expectedSources: ['dec-new'],
-  traps: [],
-  ...extra,
-})
+/** A question to check; evidence defaults to its first expected source, so each test shows one problem. */
+const q = (extra: Partial<CaseQuestion>): CaseQuestion => {
+  const question: CaseQuestion = {
+    id: 'q-900',
+    kind: 'fact',
+    split: 'dev',
+    question: 'How long is the bike warranty?',
+    expectedSources: ['dec-new'],
+    traps: [],
+    evidence: [],
+    ...extra,
+  }
+  if (!('evidence' in extra))
+    question.evidence = question.expectedSources.slice(0, 1).map((note) => ({ note, contains: '.' }))
+  return question
+}
 
 describe('checkQuestion', () => {
   it('accepts a question whose traps hold', () => {
@@ -108,10 +139,15 @@ describe('checkQuestion', () => {
     ])
     expect(checkQuestion(q({ kind: 'unanswerable' }), NOTES)).toEqual([
       'q-900: an unanswerable question has no sources',
+      'q-900: an unanswerable question needs a neighbour trap',
     ])
-    expect(checkQuestion(q({ expectedSources: [] }), NOTES)).toEqual(['q-900: no expected sources'])
+    expect(checkQuestion(q({ expectedSources: [] }), NOTES)).toEqual([
+      'q-900: no expected sources',
+      'q-900: no evidence that the answer is in the notes',
+    ])
     expect(checkQuestion(q({ kind: 'multi-hop' }), NOTES)).toEqual([
       'q-900: a multi-hop question needs 2 or more sources',
+      'q-900: a multi-hop question needs a bridge trap',
     ])
     expect(
       checkQuestion(
@@ -168,7 +204,10 @@ describe('checkQuestion', () => {
 
   it('checks aliases and the missing fact of a neighbour question', () => {
     expect(
-      checkQuestion(q({ traps: [{ kind: 'alias', note: 'cus-shop', alias: 'Shopco' }] }), NOTES),
+      checkQuestion(
+        q({ kind: 'fact', traps: [{ kind: 'alias', note: 'cus-shop', alias: 'Shopco' }] }),
+        NOTES,
+      ),
     ).toEqual(['q-900: the question does not use the alias "Shopco"'])
     expect(
       checkQuestion(
@@ -199,6 +238,58 @@ describe('checkQuestion', () => {
     expect(checkQuestion(q({ traps: [{ kind: 'neighbour', near: [], absent: [] }] }), NOTES)).toEqual([
       'q-900: a neighbour trap belongs to an unanswerable question',
     ])
+  })
+
+  it('checks the evidence and the newest note', () => {
+    expect(checkQuestion(q({ evidence: [] }), NOTES)).toEqual([
+      'q-900: no evidence that the answer is in the notes',
+    ])
+    expect(
+      checkQuestion(
+        q({
+          evidence: [
+            { note: 'dec-old', contains: 'five years' },
+            { note: 'dec-new', contains: 'ten years' },
+          ],
+        }),
+        NOTES,
+      ),
+    ).toEqual([
+      'q-900: evidence note dec-old is not an expected source',
+      'q-900: dec-new does not contain /ten years/',
+    ])
+    expect(checkQuestion(q({ kind: 'temporal' }), NOTES)).toEqual([
+      'q-900: a temporal question needs a supersedes or newest trap',
+    ])
+    expect(
+      checkQuestion(
+        q({
+          expectedSources: ['dec-old'],
+          evidence: [],
+          traps: [{ kind: 'newest', newest: 'dec-new', among: ['dec-old'] }],
+        }),
+        NOTES,
+      ),
+    ).toEqual([
+      'q-900: no evidence that the answer is in the notes',
+      'q-900: the newest note dec-new is not an expected source',
+      'q-900: the older note dec-old is an expected source',
+    ])
+    expect(
+      checkQuestion(q({ traps: [{ kind: 'newest', newest: 'dec-old', among: ['dec-new'] }] }), NOTES),
+    ).toEqual([
+      'q-900: the newest note dec-old is not an expected source',
+      'q-900: dec-new is not older than dec-old',
+      'q-900: the older note dec-new is an expected source',
+    ])
+    expect(
+      checkQuestion(q({ traps: [{ kind: 'newest', newest: 'dec-new', among: ['dec-gone'] }] }), NOTES),
+    ).toEqual(['q-900: newest trap names a missing note'])
+    expect(() =>
+      loadQuestions(
+        'questions:\n  - { id: q-001, kind: fact, split: dev, question: Q, expectedSources: [], evidence: [x] }\n',
+      ),
+    ).toThrow(/evidence is a list/)
   })
 
   it('finds a duplicate id in the set', () => {

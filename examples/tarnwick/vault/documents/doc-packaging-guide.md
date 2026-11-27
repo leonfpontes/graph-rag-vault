@@ -1,8 +1,8 @@
 ---
 id: doc-packaging-guide
 type: document
-created: 2025-12-16
-updated: 2026-03-01
+created: 2026-09-10
+updated: 2026-09-10
 status: current
 owner: "[[per-uma-sethi]]"
 ---

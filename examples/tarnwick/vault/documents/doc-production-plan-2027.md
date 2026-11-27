@@ -1,8 +1,8 @@
 ---
 id: doc-production-plan-2027
 type: document
-created: 2025-08-10
-updated: 2025-08-27
+created: 2026-10-15
+updated: 2026-10-15
 status: current
 owner: "[[per-ewa-ekberg]]"
 ---

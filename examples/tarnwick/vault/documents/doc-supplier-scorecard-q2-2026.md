@@ -1,8 +1,8 @@
 ---
 id: doc-supplier-scorecard-q2-2026
 type: document
-created: 2026-03-14
-updated: 2026-05-31
+created: 2026-07-03
+updated: 2026-07-03
 status: current
 owner: "[[per-mateo-ivers]]"
 ---

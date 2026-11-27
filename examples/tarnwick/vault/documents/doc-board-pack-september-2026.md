@@ -1,8 +1,8 @@
 ---
 id: doc-board-pack-september-2026
 type: document
-created: 2025-03-23
-updated: 2025-05-10
+created: 2026-09-24
+updated: 2026-09-24
 status: current
 owner: "[[per-dana-vance]]"
 ---

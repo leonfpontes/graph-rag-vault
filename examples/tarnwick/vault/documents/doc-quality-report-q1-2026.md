@@ -1,8 +1,8 @@
 ---
 id: doc-quality-report-q1-2026
 type: document
-created: 2025-12-06
-updated: 2026-01-05
+created: 2026-04-08
+updated: 2026-04-08
 status: current
 owner: "[[per-kofi-mensah]]"
 ---

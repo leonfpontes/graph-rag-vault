@@ -662,7 +662,7 @@ projects:
     owner: per-ines-castell
     body: |
       ## Summary
-      A light 20-inch bike for children from six to nine, with a single gear and short-reach brake levers.
+      A light 20-inch bike for children from six to nine, with short-reach brake levers.
 
   - id: prj-brake-lever-recall
     title: Brake lever recall 2026
@@ -2285,8 +2285,8 @@ documents:
 
   - id: doc-packaging-guide
     title: Packaging guide
-    created: 2025-12-16
-    updated: 2026-03-01
+    created: 2026-09-10
+    updated: 2026-09-10
     status: current
     owner: per-uma-sethi
     body: |
@@ -2325,8 +2325,8 @@ documents:
 
   - id: doc-supplier-scorecard-q2-2026
     title: Supplier scorecard Q2 2026
-    created: 2026-03-14
-    updated: 2026-05-31
+    created: 2026-07-03
+    updated: 2026-07-03
     status: current
     owner: per-mateo-ivers
     body: |
@@ -2335,8 +2335,8 @@ documents:
 
   - id: doc-supplier-scorecard-q3-2026
     title: Supplier scorecard Q3 2026
-    created: 2026-08-18
-    updated: 2026-09-16
+    created: 2026-10-02
+    updated: 2026-10-02
     status: current
     owner: per-mateo-ivers
     body: |
@@ -2365,8 +2365,8 @@ documents:
 
   - id: doc-quality-report-q1-2026
     title: Quality report Q1 2026
-    created: 2025-12-06
-    updated: 2026-01-05
+    created: 2026-04-08
+    updated: 2026-04-08
     status: current
     owner: per-kofi-mensah
     body: |
@@ -2375,8 +2375,8 @@ documents:
 
   - id: doc-quality-report-q2-2026
     title: Quality report Q2 2026
-    created: 2025-08-05
-    updated: 2025-10-21
+    created: 2026-07-09
+    updated: 2026-07-09
     status: current
     owner: per-kofi-mensah
     body: |
@@ -2385,8 +2385,8 @@ documents:
 
   - id: doc-quality-report-q3-2026
     title: Quality report Q3 2026
-    created: 2025-03-26
-    updated: 2025-06-24
+    created: 2026-10-08
+    updated: 2026-10-08
     status: current
     owner: per-kofi-mensah
     body: |
@@ -2395,8 +2395,8 @@ documents:
 
   - id: doc-marketing-plan-2027
     title: Marketing plan 2027
-    created: 2025-03-12
-    updated: 2025-04-25
+    created: 2026-09-15
+    updated: 2026-09-15
     status: current
     owner: per-wren-galloway
     body: |
@@ -2405,8 +2405,8 @@ documents:
 
   - id: doc-trade-show-brief
     title: Trade show brief
-    created: 2025-06-04
-    updated: 2025-07-06
+    created: 2026-09-01
+    updated: 2026-09-01
     status: current
     owner: per-wren-galloway
     body: |
@@ -2435,8 +2435,8 @@ documents:
 
   - id: doc-sustainability-report-2025
     title: Sustainability report 2025
-    created: 2025-12-02
-    updated: 2025-12-19
+    created: 2026-03-02
+    updated: 2026-03-02
     status: current
     owner: per-elena-brandt
     body: |
@@ -2445,8 +2445,8 @@ documents:
 
   - id: doc-spare-parts-catalogue-2026
     title: Spare parts catalogue 2026
-    created: 2026-10-04
-    updated: 2026-11-01
+    created: 2026-01-20
+    updated: 2026-01-20
     status: current
     owner: per-ivo-kerr
     body: |
@@ -2455,8 +2455,8 @@ documents:
 
   - id: doc-colour-list-2027
     title: Colour list 2027
-    created: 2025-05-20
-    updated: 2025-11-23
+    created: 2026-06-30
+    updated: 2026-06-30
     status: current
     owner: per-ines-castell
     body: |
@@ -2465,8 +2465,8 @@ documents:
 
   - id: doc-hiring-plan-2027
     title: Hiring plan 2027
-    created: 2025-04-27
-    updated: 2025-05-25
+    created: 2026-10-12
+    updated: 2026-10-12
     status: current
     owner: per-dana-vance
     body: |
@@ -2475,8 +2475,8 @@ documents:
 
   - id: doc-board-pack-september-2026
     title: Board pack, September 2026
-    created: 2025-03-23
-    updated: 2025-05-10
+    created: 2026-09-24
+    updated: 2026-09-24
     status: current
     owner: per-dana-vance
     body: |
@@ -2495,7 +2495,7 @@ documents:
 
   - id: doc-firmware-release-notes-3-2
     title: Firmware release notes 3.2
-    created: 2025-07-31
+    created: 2025-11-30
     updated: 2025-11-30
     status: current
     owner: per-dev-kerr
@@ -2505,7 +2505,7 @@ documents:
 
   - id: doc-firmware-release-notes-3-3
     title: Firmware release notes 3.3
-    created: 2026-08-25
+    created: 2026-10-06
     updated: 2026-10-06
     status: current
     owner: per-dev-kerr
@@ -2525,8 +2525,8 @@ documents:
 
   - id: doc-kids-20-spec
     title: Kids 20 spec
-    created: 2025-05-24
-    updated: 2025-08-01
+    created: 2026-10-20
+    updated: 2026-10-20
     status: current
     owner: per-ines-castell
     body: |
@@ -2555,8 +2555,8 @@ documents:
 
   - id: doc-freight-rates-2026
     title: Freight rates 2026
-    created: 2025-09-04
-    updated: 2025-11-15
+    created: 2026-01-08
+    updated: 2026-01-08
     status: current
     owner: per-uma-sethi
     body: |
@@ -2585,8 +2585,8 @@ documents:
 
   - id: doc-production-plan-2027
     title: Production plan 2027
-    created: 2025-08-10
-    updated: 2025-08-27
+    created: 2026-10-15
+    updated: 2026-10-15
     status: current
     owner: per-ewa-ekberg
     body: |
@@ -2595,8 +2595,8 @@ documents:
 
   - id: doc-competitor-overview-2026
     title: Competitor overview 2026
-    created: 2025-09-15
-    updated: 2025-10-04
+    created: 2026-02-20
+    updated: 2026-02-20
     status: current
     owner: per-hana-ivarsson
     body: |
@@ -2605,8 +2605,8 @@ documents:
 
   - id: doc-fit-studio-proposal
     title: Fit studio proposal
-    created: 2025-09-14
-    updated: 2026-02-03
+    created: 2025-10-20
+    updated: 2025-10-20
     status: current
     owner: per-wren-galloway
     body: |

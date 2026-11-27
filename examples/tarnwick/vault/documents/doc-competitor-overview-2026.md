@@ -1,8 +1,8 @@
 ---
 id: doc-competitor-overview-2026
 type: document
-created: 2025-09-15
-updated: 2025-10-04
+created: 2026-02-20
+updated: 2026-02-20
 status: current
 owner: "[[per-hana-ivarsson]]"
 ---
