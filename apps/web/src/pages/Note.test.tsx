@@ -17,13 +17,16 @@ describe('Note', () => {
       'page',
     )
     const chunk = screen.getByRole('region', { name: 'Chunk 1 of 2' })
-    expect(await within(chunk).findByRole('link', { name: 'q-004' })).toBeTruthy()
+    const cited = await within(chunk).findByRole('link', { name: 'q-004' })
+    expect(cited.getAttribute('href')).toBe('/ask?q=q-004')
+    expect(cited.className).toMatch(/text-primary/)
     expect(
       within(screen.getByRole('region', { name: 'Chunk 2 of 2' }))
         .getByRole('link', { name: 'Ridgeline' })
         .getAttribute('href'),
     ).toBe('/notes/prj-ridgeline-emtb')
     expect(screen.getByText('supersedes →')).toBeTruthy()
+    expect(screen.getByRole('link', { name: /q-022 · In which meeting/ }).className).toMatch(/text-primary/)
     expect(screen.getByRole('link', { name: /q-022 · In which meeting/ }).getAttribute('href')).toBe(
       '/ask?q=q-022',
     )

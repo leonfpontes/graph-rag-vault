@@ -277,6 +277,8 @@ interface Row {
   note: string
   value: (v: SearchVariant) => number | undefined
   show: (v: SearchVariant) => string
+  /** The value as it reads for a tie (the mean without its ±); default: what is shown. */
+  tie?: (v: SearchVariant) => string
   diff: string
   lowerIsBetter?: boolean
 }
@@ -288,6 +290,7 @@ function ScoreTable({ sb }: { sb: Scoreboard }) {
   ) => ({
     value: (v: SearchVariant) => (g(v)[key] as Spread).mean,
     show: (v: SearchVariant) => pctSd((g(v)[key] as Spread).mean, (g(v)[key] as Spread).sd),
+    tie: (v: SearchVariant) => pct((g(v)[key] as Spread).mean),
     diff: pp(g('hybrid')[key].mean, g('vector')[key].mean),
   })
   const rounds = `${sb.rounds} runs`
@@ -384,11 +387,19 @@ function ScoreTable({ sb }: { sb: Scoreboard }) {
           {rows.map((r) => {
             const vals = VARIANTS.map((v) => r.value(v))
             const known = vals.filter((x): x is number => x !== undefined)
-            const best = known.length
+            const bestValue = known.length
               ? r.lowerIsBetter
                 ? Math.min(...known)
                 : Math.max(...known)
               : undefined
+            // Every variant whose value, as shown, ties with the best gets the ✓.
+            const bestShown = VARIANTS.find((_, i) => vals[i] === bestValue)
+            const isBest = VARIANTS.map(
+              (v, i) =>
+                vals[i] !== undefined &&
+                bestShown !== undefined &&
+                (r.tie ?? r.show)(v) === (r.tie ?? r.show)(bestShown),
+            )
             return (
               <TableRow key={r.title}>
                 <TableCell>
@@ -398,12 +409,9 @@ function ScoreTable({ sb }: { sb: Scoreboard }) {
                   </div>
                 </TableCell>
                 {VARIANTS.map((v, i) => (
-                  <TableCell
-                    key={v}
-                    className={cn('n text-right text-[13px]', vals[i] === best && 'font-semibold')}
-                  >
+                  <TableCell key={v} className={cn('n text-right text-[13px]', isBest[i] && 'font-semibold')}>
                     {r.show(v)}
-                    {vals[i] === best && (
+                    {isBest[i] && (
                       <span className="font-sans">
                         {' '}
                         ✓<span className="sr-only"> best</span>
@@ -509,12 +517,15 @@ function JudgeCard({ sb, demoAnswers }: { sb: Scoreboard; demoAnswers: number })
           {hu ? (
             <>
               <span className="n text-[22px] font-medium">
-                {hu.blind === false ? `${reviewedAgreed} of ${reviewed}` : pct(hu.observed)}
+                {hu.blind === false
+                  ? `${reviewedAgreed} of ${reviewed}${hu.blindPart ? ` · ${hu.blindPart.agreed} of ${hu.blindPart.items} blind` : ''}`
+                  : pct(hu.observed)}
               </span>
               <span className="text-[13px] text-muted-foreground">
-                {hu.blind === false ? 'sentences agreed, reviewed not blind' : 'agreement, blind'}
-                {hu.blindPart && ` · ${hu.blindPart.agreed} of ${hu.blindPart.items} labelled blind`} ·{' '}
-                {hu.labeledBy} · stratified sample of {hu.sampleAnswers ?? hu.answers} answers
+                {hu.blind === false
+                  ? `sentences agreed: reviewed not blind${hu.blindPart ? ', then labelled blind' : ''}`
+                  : 'agreement, blind'}{' '}
+                · {hu.labeledBy} · stratified sample of {hu.sampleAnswers ?? hu.answers} answers
               </span>
             </>
           ) : (

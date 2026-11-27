@@ -188,7 +188,6 @@ interface LabelOptions {
   font: string
   color: string
   badge?: number
-  keep: boolean
   /** The note the label belongs to (screen x, y, radius): the label tries right, left, above, below. */
   at?: { x: number; y: number; r: number }
   spots?: (width: number) => [number, number][]
@@ -202,6 +201,7 @@ export function labelWriter(
   boxes: Box[],
   colors: Colors,
 ) {
+  const placed: { text: string; x: number; y: number }[] = []
   return function label(text: string, o: LabelOptions) {
     ctx.font = o.font
     let t = text
@@ -235,13 +235,17 @@ export function labelWriter(
       tx + full < W - 4 &&
       ty > 10 &&
       ty < H - 10 &&
-      !boxes.some((q) => tx - 2 < q[2] && tx + full + 2 > q[0] && ty - 10 < q[3] && ty + 10 > q[1])
-    let spot = tries.find(free)
-    if (!spot) {
-      if (!o.keep) return
-      spot = [Math.max(4, Math.min(W - full - 4, tries[0]![0])), Math.max(12, Math.min(H - 12, tries[0]![1]))]
-    }
+      !boxes.some((q) => tx - 2 < q[2] && tx + full + 2 > q[0] && ty - 10 < q[3] && ty + 10 > q[1]) &&
+      // The same words stacked close together (two parallel links of one type) read as one: skip.
+      !placed.some(
+        (q) => q.text === t && Math.abs(q.x - (tx + full / 2)) < full + 24 && Math.abs(q.y - ty) < 40,
+      )
+    // A label that finds no free spot is left out: it never covers a note, a control or another
+    // label (the List, the side card and "The path, as text" carry the names and the link types).
+    const spot = tries.find(free)
+    if (!spot) return
     boxes.push([spot[0] - 2, spot[1] - 10, spot[0] + full + 2, spot[1] + 10])
+    placed.push({ text: t, x: spot[0] + full / 2, y: spot[1] })
     let x = spot[0]
     const y = spot[1]
     ctx.textBaseline = 'middle'
@@ -294,7 +298,8 @@ export function drawLabels(
   L.nodes.forEach((_, i) => {
     if (!s.visible(i) || s.alpha(i) < 0.5) return
     const p = proj[i]!
-    const r = rad(i) + 2
+    // A ringed note keeps its ring clear too (the ring is drawn 4.5 px out, 2 px wide).
+    const r = rad(i) + (s.ring(i) ? 7 : 2)
     boxes.push([p.x - r, p.y - r, p.x + r, p.y + r])
   })
   const label = labelWriter(ctx, W, H, boxes, colors)
@@ -306,7 +311,6 @@ export function drawLabels(
       font: `${n.id === o.focus ? 600 : 500} 12px ${SANS}`,
       color: colors.foreground,
       badge: cites[n.id],
-      keep: !!o.path || n.id === o.focus || !!cites[n.id],
       at: { x: p.x, y: p.y, r: rad(i) },
     })
   }
@@ -316,7 +320,6 @@ export function drawLabels(
     label(rel, {
       font: `500 12px ${MONO}`,
       color: colors.evidence,
-      keep: true,
       spots: (fw) =>
         [0.5, 0.35, 0.65, 0.25, 0.75, 0.15, 0.85].flatMap((t) => {
           const x = pa.x + (pb.x - pa.x) * t
@@ -339,7 +342,6 @@ export function drawLabels(
     label(`${L.nodes[si]!.title} · ${size}`, {
       font: `600 13px ${SANS}`,
       color: colors.foreground,
-      keep: false,
       at: { x: p.x, y: p.y, r: rad(si) },
     })
   }

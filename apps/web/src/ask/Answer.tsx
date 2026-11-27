@@ -23,7 +23,7 @@ import { useState } from 'react'
 import { shortDate } from '../lib/format'
 import { PHONE, useMedia } from '../lib/media'
 import { TypeTag } from '../lib/notes'
-import { Link } from '../lib/router'
+import { Link, LINK_CLASS } from '../lib/router'
 
 const CHIP =
   'relative mx-px inline rounded-sm border border-evidence/45 bg-evidence-subtle px-1.5 align-[1px] font-mono text-xs leading-none font-semibold whitespace-nowrap text-evidence no-underline outline-none hover:bg-evidence hover:text-evidence-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-expanded:bg-evidence aria-expanded:text-evidence-foreground data-[state=open]:bg-evidence data-[state=open]:text-evidence-foreground pointer-coarse:after:absolute pointer-coarse:after:-inset-x-1.5 pointer-coarse:after:-inset-y-3'
@@ -61,7 +61,7 @@ function Passage({ demo, citation }: { demo: Demo; citation: Citation }) {
       </blockquote>
       <Link
         href={paths.note(citation.noteId)}
-        className="inline-flex min-h-6 w-fit items-center pointer-coarse:min-h-11"
+        className={cn('inline-flex min-h-6 w-fit items-center pointer-coarse:min-h-11', LINK_CLASS)}
       >
         Open the note
       </Link>

@@ -31,7 +31,7 @@ import { plural, shortDate } from '../lib/format'
 import { Markdown } from '../lib/markdown'
 import { PHONE, useMedia } from '../lib/media'
 import { isNoteType, Shape, TYPE_PLURAL, TypeTag } from '../lib/notes'
-import { Link, useRouter } from '../lib/router'
+import { Link, LINK_CLASS, useRouter } from '../lib/router'
 import { DemoError, DownloadStatus } from '../shell/states'
 import { usePageTitle } from '../shell/title'
 import { askAbout } from './Explore'
@@ -257,7 +257,10 @@ function NoteBody({ demo, view }: { demo: Demo; view: NoteView }) {
                           {k > 0 && ', '}
                           <Link
                             href={paths.ask(q)}
-                            className="inline-flex min-h-6 items-center pointer-coarse:min-h-11"
+                            className={cn(
+                              'inline-flex min-h-6 items-center pointer-coarse:min-h-11',
+                              LINK_CLASS,
+                            )}
                           >
                             {q}
                           </Link>
@@ -335,7 +338,10 @@ function NoteBody({ demo, view }: { demo: Demo; view: NoteView }) {
 function QuestionLink({ q }: { q: RecordedQuestion }) {
   return (
     <li>
-      <Link href={paths.ask(q.id)} className="inline-flex min-h-6 items-center pointer-coarse:min-h-11">
+      <Link
+        href={paths.ask(q.id)}
+        className={cn('inline-flex min-h-6 items-center pointer-coarse:min-h-11', LINK_CLASS)}
+      >
         <span>
           <span className="n">{q.id}</span> · {q.question}
         </span>

@@ -729,7 +729,19 @@ function NotePreview({ view }: { view: NoteView }) {
       <div className="grid gap-1.5 border-b px-4 py-3.5">
         <TypeTag type={note.type} />
         <h2 className="text-lg leading-snug font-semibold">{note.title}</h2>
-        <p className="n text-[13px] break-all text-muted-foreground">{note.path}</p>
+        <p className="n text-[13px] text-muted-foreground">
+          {/* Breaks only after a "/" (or at a hyphen), never inside a word. */}
+          {note.path.split('/').map((part, i, all) => (
+            <span key={i}>
+              {part}
+              {i < all.length - 1 && (
+                <>
+                  /<wbr />
+                </>
+              )}
+            </span>
+          ))}
+        </p>
       </div>
       <ScrollArea className="min-h-0 flex-1">
         <div className="grid gap-4 px-4 py-3.5">

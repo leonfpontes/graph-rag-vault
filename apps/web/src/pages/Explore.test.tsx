@@ -40,6 +40,12 @@ describe('Explore', () => {
     const preview = (await screen.findAllByRole('complementary', { name: 'Selected note' }))[0]!
     expect(within(preview).getByRole('heading', { name: 'Keep Ampcore as battery supplier' })).toBeTruthy()
     expect(within(preview).getByText('Superseded')).toBeTruthy()
+    // The file path breaks only after a "/".
+    const file = within(preview).getByText(
+      (_, el) => el?.tagName === 'P' && el.textContent === 'decisions/dec-keep-ampcore.md',
+    )
+    expect(file.querySelectorAll('wbr')).toHaveLength(1)
+    expect(file.className).not.toMatch(/break-all/)
     expect(
       within(preview).getByRole('link', { name: 'Switch Ridgeline battery cells to Voltaro' }),
     ).toBeTruthy()

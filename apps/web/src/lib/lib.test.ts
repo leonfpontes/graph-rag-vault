@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 
 import { excerpt } from '../ask/Sources'
 import { layout } from '../graph/layout'
-import { bestYaw, frame, sceneState } from '../graph/scene'
+import { bestYaw, frame, labelWriter, sceneState, type Box, type Colors } from '../graph/scene'
 import { HEADLINE } from '../test/approved'
 import { evalFile, INDEX_BYTES } from '../test/demo'
 import { answerPath, citationNumbers } from './answer-path'
@@ -122,6 +122,89 @@ describe('the answer path', () => {
 
   it('numbers cited notes by their rank among the sources', () => {
     expect(citationNumbers([hit('a'), hit('b'), hit('c')], ['c', 'a', 'x'])).toEqual({ c: 3, a: 1 })
+  })
+})
+
+describe('graph labels', () => {
+  const colors = {
+    canvas: '#fff',
+    foreground: '#000',
+    muted: '#666',
+    evidence: '#0f766e',
+    evidenceForeground: '#fff',
+    edge: '#ccc',
+    type: {},
+  } as Colors
+  const fake = () => {
+    const drawn: string[] = []
+    const ctx = new Proxy({} as CanvasRenderingContext2D, {
+      get: (_t, k) =>
+        k === 'measureText'
+          ? (t: string) => ({ width: t.length * 6 })
+          : k === 'fillText'
+            ? (t: string) => drawn.push(t)
+            : () => {},
+      set: () => true,
+    })
+    return { ctx, drawn }
+  }
+
+  it('never draws a label over a note or another label: one with no free spot is left out', () => {
+    const { ctx, drawn } = fake()
+    // A note at (100, 100) with its ring, and a first label placed to its right.
+    const boxes: Box[] = [[90, 90, 110, 110]]
+    const label = labelWriter(ctx, 400, 300, boxes, colors)
+    label('Switch Ridgeline', { font: '12px x', color: '#000', at: { x: 100, y: 100, r: 6 } })
+    expect(drawn).toEqual(['Switch Ridgeline'])
+    // An edge label whose only spots fall on the note and on the first label is not drawn.
+    label('supersedes', {
+      font: '12px x',
+      color: '#0f766e',
+      spots: () => [
+        [95, 100],
+        [114, 100],
+      ],
+    })
+    expect(drawn).toEqual(['Switch Ridgeline'])
+    // With room, it is.
+    label('supersedes', {
+      font: '12px x',
+      color: '#0f766e',
+      spots: () => [
+        [95, 100],
+        [200, 200],
+      ],
+    })
+    expect(drawn).toEqual(['Switch Ridgeline', 'supersedes'])
+  })
+})
+
+describe('graph labels, repeated', () => {
+  it('writes the same words once when two parallel links of one type sit close together', () => {
+    const drawn: string[] = []
+    const ctx = new Proxy({} as CanvasRenderingContext2D, {
+      get: (_t, k) =>
+        k === 'measureText'
+          ? (t: string) => ({ width: t.length * 6 })
+          : k === 'fillText'
+            ? (t: string) => drawn.push(t)
+            : () => {},
+      set: () => true,
+    })
+    const colors = {
+      canvas: '#fff',
+      foreground: '#000',
+      muted: '#666',
+      evidence: '#0f766e',
+      evidenceForeground: '#fff',
+      edge: '#ccc',
+      type: {},
+    } as Colors
+    const label = labelWriter(ctx, 400, 300, [], colors)
+    label('decided_in', { font: '12px x', color: '#0f766e', spots: () => [[100, 100]] })
+    label('decided_in', { font: '12px x', color: '#0f766e', spots: () => [[104, 124]] })
+    label('decided_in', { font: '12px x', color: '#0f766e', spots: () => [[300, 250]] })
+    expect(drawn).toEqual(['decided_in', 'decided_in'])
   })
 })
 

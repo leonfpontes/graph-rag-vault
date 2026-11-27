@@ -7,11 +7,23 @@ import { headline, kindLine } from '../lib/headline'
 import { HEADLINE, JUDGE_LINES, JUDGE_NEVER } from '../test/approved'
 import { axe } from '../test/axe'
 import { evalFile, latest } from '../test/demo'
+import { demoOptions } from '../test/demo'
 import { renderAt } from '../test/render'
+import { questionResults } from './Evaluation'
+import { loadDemo } from '@graph-rag/client'
 
 const sb = JSON.parse(evalFile('latest.json')) as Scoreboard
 
 describe('Evaluation', () => {
+  it('ranks the questions with the same search the scoreboard measured: its mean is recall@5', async () => {
+    const demo = await loadDemo(demoOptions())
+    const rows = questionResults(demo).filter((r) => r.expected.length > 0)
+    for (const v of ['vector', 'graph', 'hybrid'] as const) {
+      const mean = rows.reduce((t, r) => t + r.result[v].found / r.expected.length, 0) / rows.length
+      expect(mean, v).toBeCloseTo(sb.retrieval[v].all!.recall5!, 6)
+    }
+  })
+
   it('writes the sentence from the verdict in latest.json, with the second line about vectors', async () => {
     const { container } = renderAt('/evaluation')
     const h = headline(sb)!
@@ -49,11 +61,38 @@ describe('Evaluation', () => {
     )
   })
 
+  it('gives the ✓ to every variant whose shown value ties with the best', async () => {
+    renderAt('/evaluation')
+    const table = await screen.findByRole('region', { name: 'Scoreboard table' })
+    for (const row of within(table).getAllByRole('row').slice(1)) {
+      const cells = within(row).getAllByRole('cell').slice(1, 4)
+      const best = cells.filter((c) => c.textContent?.endsWith('✓ best'))
+      expect(best.length, row.textContent!).toBeGreaterThan(0)
+      // Cells that read the same (the mean, before its ±) all carry it, or none does.
+      const head = (c: HTMLElement) => c.textContent!.replace(' ✓ best', '').split(' ± ')[0]
+      const bestHead = head(best[0]!)
+      for (const c of cells)
+        expect(c.textContent!.endsWith('✓ best'), row.textContent!).toBe(head(c) === bestHead)
+    }
+    const precision = within(table).getByText('Citation precision').closest('tr')!
+    const shown = within(precision)
+      .getAllByRole('cell')
+      .slice(1, 4)
+      .map((c) => c.textContent!.split(' ± ')[0])
+    if (new Set(shown).size === 1)
+      expect(within(precision).getAllByText('best', { exact: false })).toHaveLength(3)
+  })
+
   it("says how the judge was checked, in the approved words, with the two judges' disagreements", async () => {
     const { user } = renderAt('/evaluation')
     const card = (await screen.findByText('Faithfulness judge')).closest('section')!
     for (const line of JUDGE_LINES) expect(within(card).getByText(line)).toBeTruthy()
     for (const never of JUDGE_NEVER) expect(card.textContent).not.toMatch(never)
+    // Both parts of the person's check, with the same weight.
+    const hu = sb.human!
+    const blind = hu.blindPart!
+    const reviewed = `${Math.round(hu.observed * hu.items) - blind.agreed} of ${hu.items - blind.items}`
+    expect(within(card).getByText(`${reviewed} · ${blind.agreed} of ${blind.items} blind`)).toBeTruthy()
     await user.click(
       within(card).getByRole('button', { name: 'See the 5 sentences where the two judges disagree' }),
     )

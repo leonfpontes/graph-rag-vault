@@ -116,3 +116,22 @@ review was not blind and the sample is stratified, never random.
 Sentence case everywhere. The same names everywhere: Vectors only, Graph only, Hybrid; Recall@5, MRR,
 Faithfulness, Citation precision, Correct "I don't know". Verbs on buttons, numbers instead of
 adjectives, and errors that say what failed and what to do next.
+
+## Decided in the design review (27/11/2026)
+
+Accepted deviations from the prototype:
+
+1. From 761 to 1180 px, the selected note moves under the graph in Explore (the prototype hid it at
+   1024 px, with no way left to the note).
+2. "I don't know" lists the closest notes without "Why it is not enough": the recorded answers carry
+   no such text, so none is written by hand.
+3. Explore shows no "indexed" date: the index file stores none.
+4. The lit path can pass through a note below the top 5 when the answer cited the link that reaches
+   it (Keep Ampcore on q-022).
+5. In 3D, with nothing framed, the cloud widens with the canvas; with a lit path the view turns to
+   spread the path's notes.
+6. Ask has no separate "searching" state for a recorded question: the search takes about 2 ms.
+
+Rules from the same review: a graph label that finds no free spot is left out, never drawn over a note,
+a ring or another label; links inside text or lists read as links (primary, underlined); a ✓ goes to
+every variant whose shown value ties with the best; a file path breaks only after a "/".

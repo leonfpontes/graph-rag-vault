@@ -65,6 +65,10 @@ export function withParams(location: Location, changes: Record<string, string | 
   return location.pathname + (query ? `?${query}` : '')
 }
 
+/** How a link reads inside text or a list: the primary color, underlined. */
+export const LINK_CLASS =
+  'text-primary underline decoration-1 underline-offset-4 hover:decoration-2 focus-visible:rounded-xs focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none'
+
 /** A plain link that the app follows without reloading (modified clicks open as usual). */
 export function Link({
   href,
