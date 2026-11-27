@@ -1,0 +1,36 @@
+{
+  "name": "@graph-rag/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The app: Explore the graph, Ask with cited answers, read a Note, and the Evaluation scoreboard.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/ibm-plex-sans": "5.3.0",
+    "@leonfpontes/atlas-ui": "0.2.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@graph-rag/search": "workspace:*",
+    "@tailwindcss/vite": "4.3.5",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "^24.19.4",
+    "@types/react": "19.3.3",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "axe-core": "4.14.0",
+    "jsdom": "31.0.1",
+    "tailwindcss": "4.3.5",
+    "vite": "8.3.8",
+    "vitest": "5.1.2"
+  }
+}

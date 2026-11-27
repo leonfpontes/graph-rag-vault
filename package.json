@@ -1,0 +1,39 @@
+{
+  "name": "graph-rag-vault",
+  "private": true,
+  "description": "Graph RAG over a Markdown vault: hybrid search (graph + embeddings), answers that cite their notes, and an evaluation that measures what the graph adds.",
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true",
+    "dev": "pnpm --filter @graph-rag/web dev",
+    "build": "pnpm -r --if-present run build",
+    "typecheck": "tsc -p tsconfig.json && pnpm -r --if-present run typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test && pnpm build",
+    "qa": "pnpm check && pnpm e2e",
+    "serve": "pnpm -s --filter @graph-rag/api build && node packages/api/dist/cli.js serve",
+    "demo": "pnpm build && node packages/api/dist/cli.js serve"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.1",
+    "@types/node": "^24.19.4",
+    "@vitest/coverage-v8": "5.1.2",
+    "eslint": "10.15.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "17.14.0",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.74.0",
+    "vitest": "5.1.2"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.base.json",
+  // Runs in the browser too (the static demo): no Node types, so a Node API fails the typecheck.
+  "compilerOptions": { "noEmit": true, "types": [], "lib": ["ES2023"] },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}

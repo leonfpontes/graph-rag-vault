@@ -1,0 +1,32 @@
+/* The Atlas theme (shadcn/ui variables, light and dark) from the published package and the IBM Plex
+   fonts. One new color with one job: --evidence marks what an answer used (docs/DESIGN.md comes with
+   the design story). */
+@import '@leonfpontes/atlas-ui/styles.css';
+@import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/600.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@source '../src';
+
+:root {
+  --evidence: #0f766e;
+  --evidence-subtle: #e2f4f1;
+  --evidence-foreground: #ffffff;
+}
+.dark {
+  --evidence: #2dd4bf;
+  --evidence-subtle: #0f2e2b;
+  --evidence-foreground: #11151c;
+}
+
+@theme inline {
+  --color-evidence: var(--evidence);
+  --color-evidence-subtle: var(--evidence-subtle);
+  --color-evidence-foreground: var(--evidence-foreground);
+}
+
+@layer base {
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+}

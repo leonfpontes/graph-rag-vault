@@ -1,0 +1,16 @@
+packages:
+  - packages/*
+  - apps/*
+  - evals
+
+# One React in the whole repository: two copies break hooks when Radix resolves another React.
+overrides:
+  react: 19.3.1
+  react-dom: 19.3.1
+
+allowBuilds:
+  esbuild: false # its postinstall only re-checks the platform binary, which comes as an optional dependency
+
+minimumReleaseAgeExclude:
+  - '@leonfpontes/atlas-tokens@0.2.0'
+  - '@leonfpontes/atlas-ui@0.2.0'

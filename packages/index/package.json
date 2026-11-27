@@ -1,0 +1,19 @@
+{
+  "name": "@graph-rag/index",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Builds the index: chunks, embeddings and the graph in SQLite (node:sqlite), with migrations and the export the browser searches.",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "graph-rag-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit"
+  }
+}

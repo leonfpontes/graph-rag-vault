@@ -1,0 +1,8 @@
+#!/bin/sh
+# Stops a commit that carries a secret. pnpm install points git here (the "prepare" script).
+# Needs gitleaks (https://github.com/gitleaks/gitleaks); without it, CI still scans every push.
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --pre-commit --staged --redact --no-banner || exit 1
+else
+  echo "pre-commit: gitleaks is not installed; secrets are only checked in CI." >&2
+fi

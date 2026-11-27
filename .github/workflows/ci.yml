@@ -1,0 +1,33 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    name: Types, lint, format, tests with coverage, build and end-to-end
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .nvmrc, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - name: No high-severity vulnerabilities in production dependencies
+        run: pnpm audit --prod --audit-level high
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm format:check
+      # Coverage floors are in vitest.config.ts; `pnpm test` alone doesn't measure them.
+      - run: pnpm test --coverage
+      - run: pnpm build
+      - name: Browser for the end-to-end tests
+        run: pnpm exec playwright install --with-deps chromium
+      - name: End-to-end tests
+        run: pnpm e2e
+      - name: Playwright report when something fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with: { name: playwright-report, path: playwright-report, retention-days: 7 }

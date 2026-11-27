@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.venv/
+__pycache__/
+.env*
+!.env.example
+.vercel
+CLAUDE.local.md
+.DS_Store
+*.tsbuildinfo
+# Local index databases built from the vault (pnpm index rebuilds them).
+*.sqlite
+*.sqlite-*
