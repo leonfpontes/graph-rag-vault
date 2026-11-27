@@ -14,8 +14,13 @@ import { type Chunk, CHUNK_TOKENS, chunkNote } from './chunk.js'
 /** What ingestion needs from an embedder (`@graph-rag/embeddings`, or a fake in tests). */
 export interface PassageEmbedder {
   model: { id: string; dims: number }
+  /** Where the vectors are computed: vectors of two runtimes are stored apart and never mixed. */
+  runtime?: string
   embedPassages(texts: readonly string[]): Promise<Float32Array[]>
 }
+
+/** The `embeddings.model` key: the model id and, when known, the runtime that made the vector. */
+export const vectorKey = (modelId: string, runtime?: string) => (runtime ? `${modelId} ${runtime}` : modelId)
 
 export interface IngestReport {
   notes: { added: number; updated: number; removed: number; unchanged: number }
@@ -88,7 +93,9 @@ export async function ingest(
   const vectored = new Set(
     embedder
       ? (
-          db.prepare('SELECT chunk_id FROM embeddings WHERE model = ?').all(embedder.model.id) as {
+          db
+            .prepare('SELECT chunk_id FROM embeddings WHERE model = ?')
+            .all(vectorKey(embedder.model.id, embedder.runtime)) as {
             chunk_id: string
           }[]
         ).map((r) => r.chunk_id)
@@ -188,7 +195,7 @@ export async function ingest(
       run(
         'INSERT INTO embeddings (chunk_id, model, dim, vector) VALUES (?, ?, ?, ?)',
         c.id,
-        embedder!.model.id,
+        vectorKey(embedder!.model.id, embedder!.runtime),
         embedder!.model.dims,
         toBlob(vectors[i]!),
       ),

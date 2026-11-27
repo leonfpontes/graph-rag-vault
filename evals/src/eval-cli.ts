@@ -4,21 +4,37 @@
 // pnpm eval --report            rebuild latest.md and the human check from the files, no model call
 // pnpm eval --sheet <file.md>   write the judge-check sample (answers.json → judge-sample.json) and a sheet
 // pnpm eval --second-judge      label that sample with Opus 5.5 (second-judge.json), then --report
+// pnpm eval --reuse             keep the recorded answers whose search notes did not change
 // The test split writes the scoreboard (latest.json, latest.md, answers.json); any other split is a
 // rehearsal (rehearsal.*). The key comes from ANTHROPIC_API_KEY or .env.local and is never printed.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import path from 'node:path'
 
-import { createAnthropicProvider, passageTextById } from '@graph-rag/answer'
-import { createEmbedder, DEFAULT_EMBEDDING_MODEL, EMBEDDING_MODEL_KEYS } from '@graph-rag/embeddings'
+import {
+  ANSWER_MODELS,
+  createAnthropicProvider,
+  passageTextById,
+  promptVersion,
+  readAnswerPrompt,
+} from '@graph-rag/answer'
+import { createEmbedder, DEFAULT_EMBEDDING_MODEL, EMBEDDING_MODEL_KEYS } from '@graph-rag/embeddings/node'
 import { decodeIndex } from '@graph-rag/search'
 
 import { parseEvalArgs } from './args.js'
+import { JUDGE_MODELS, judgePromptVersion, readJudgePrompt } from './judge.js'
 import { evaluate } from './evaluate.js'
 import type { AnswerRecord } from './generation.js'
 import { loadQuestions } from './questions.js'
-import { humanAgreement, pickSample, sampleSheet, type HumanLabels, type SampleItem } from './sample.js'
+import {
+  carryLabels,
+  humanAgreement,
+  pickSample,
+  resample,
+  sampleSheet,
+  type HumanLabels,
+  type SampleItem,
+} from './sample.js'
 import { runSecondJudge, SECOND_JUDGE_MODEL, secondJudgeCheck, type SecondJudgeFile } from './second-judge.js'
 import { bestBaseline } from './baselines.js'
 import { toMarkdown, verdictOf, type Results } from './scoreboard.js'
@@ -52,19 +68,32 @@ const questions = loadQuestions(readFileSync(at(args.questionsFile), 'utf8'))
 if (args.sheet) {
   const records = readJson<AnswerRecord[]>(files.answers)
   const text = new Map(questions.map((q) => [q.id, q.question]))
-  const items = pickSample(
-    records.filter((r) => args.splits.includes(r.split)),
-    (id) => text.get(id) ?? id,
-    (id) => passageTextById(index, id) ?? '',
-  )
+  const questionText = (id: string) => text.get(id) ?? id
+  const chunkText = (id: string) => passageTextById(index, id) ?? ''
+  const scored = records.filter((r) => args.splits.includes(r.split))
+  // An existing sample keeps its answers: they are read again from the new records, the person's
+  // labels move to the new ids where nothing changed, and the sheet lists only what needs a label.
+  let items: SampleItem[]
+  let toLabel: SampleItem[]
+  if (existsSync(files.sample)) {
+    const { items: previous } = readJson<{ items: SampleItem[] }>(files.sample)
+    items = resample(previous, scored, questionText, chunkText)
+    if (existsSync(files.labels)) {
+      const labels = carryLabels(previous, items, readJson<HumanLabels>(files.labels), args.pendingReason)
+      await write(files.labels, JSON.stringify(labels, null, 2))
+      toLabel = items.filter((it) => !labels.labels[it.item])
+    } else toLabel = items
+  } else toLabel = items = pickSample(scored, questionText, chunkText)
   await write(files.sample, JSON.stringify({ items }, null, 2))
   const sheet = sampleSheet(
-    items,
-    `# Judge check: ${items.length} sentences\n\nFor each sentence, read only the quoted passages under it and tick one box: supported (the passages say all of it), partial (part of it), unsupported (they don't say it). Do not use what you know about the company.`,
+    toLabel,
+    `# Judge check: ${toLabel.length} sentences\n\nFor each sentence, read only the quoted passages under it and tick one box: supported (the passages say all of it), partial (part of it), unsupported (they don't say it). Do not use what you know about the company.`,
   )
   mkdirSync(path.dirname(path.resolve(args.sheet)), { recursive: true })
   writeFileSync(path.resolve(args.sheet), sheet)
-  console.log(`${items.length} sentences → ${files.sample} and ${path.resolve(args.sheet)}`)
+  console.log(
+    `${items.length} sentences in the sample, ${toLabel.length} on the sheet → ${path.resolve(args.sheet)}`,
+  )
 } else if (args.report || args.secondJudge) {
   const results = readJson<Results>(files.results)
   if (args.secondJudge) {
@@ -78,7 +107,8 @@ if (args.sheet) {
         apiKey: process.env.ANTHROPIC_API_KEY ?? '',
         allowedModels: [SECOND_JUDGE_MODEL],
       }),
-      capMicros: Math.round((results.cost.capUsd - results.cost.spentUsd) * 1e6),
+      // --budget (default the evaluation's $5 cap), less what the scoreboard run spent
+      capMicros: Math.round((args.budgetUsd - results.cost.spentUsd) * 1e6),
     })
     await write(files.secondJudge, JSON.stringify(file, null, 2))
     console.error(`second judge: $${(file.costMicros / 1e6).toFixed(4)}`)
@@ -87,16 +117,8 @@ if (args.sheet) {
   results.verdict = verdictOf(results.retrieval, bestBaseline(results.baselines))
   if (existsSync(files.labels) && existsSync(files.sample)) {
     const { items } = readJson<{ items: SampleItem[] }>(files.sample)
-    const {
-      observed,
-      kappa,
-      items: n,
-      answers,
-      labeledBy,
-      labeledAt,
-      blind,
-    } = humanAgreement(items, readJson<HumanLabels>(files.labels))
-    results.human = { items: n, answers, observed, kappa, labeledBy, labeledAt, blind }
+    const { items: n, ...rest } = humanAgreement(items, readJson<HumanLabels>(files.labels))
+    results.human = { items: n, ...rest }
   }
   if (existsSync(files.secondJudge) && existsSync(files.sample)) {
     const { items } = readJson<{ items: SampleItem[] }>(files.sample)
@@ -110,7 +132,20 @@ if (args.sheet) {
   const provider = createAnthropicProvider({ apiKey: process.env.ANTHROPIC_API_KEY ?? '' })
   const cacheDir =
     process.env.GRAPH_RAG_MODEL_CACHE ?? path.join(homedir(), '.cache', 'graph-rag-vault', 'models')
+  let previous: AnswerRecord[] | undefined
+  if (args.reuse) {
+    const before = readJson<Results>(files.results)
+    const now = { answer: promptVersion(readAnswerPrompt()), judge: judgePromptVersion(readJudgePrompt()) }
+    if (
+      JSON.stringify(before.promptVersions) !== JSON.stringify(now) ||
+      before.models.answer !== ANSWER_MODELS.primary ||
+      before.models.judge !== JUDGE_MODELS.primary
+    )
+      throw new Error('--reuse needs the same prompts and models as the recorded answers; run without it.')
+    previous = readJson<AnswerRecord[]>(files.answers)
+  }
   const { results, records } = await evaluate({
+    previous,
     args,
     index,
     questions,

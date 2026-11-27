@@ -6,7 +6,9 @@
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
-    "customConditions": []
+    "customConditions": [],
+    "types": ["node"]
   },
+  "include": ["src"],
   "exclude": ["src/**/*.test.ts", "src/test"]
 }

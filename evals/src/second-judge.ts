@@ -89,17 +89,18 @@ export async function runSecondJudge(options: SecondJudgeOptions): Promise<Secon
 
 /** The scoreboard's view of the second judge: agreement with the first judge and where they differ. */
 export function secondJudgeCheck(items: readonly SampleItem[], file: SecondJudgeFile) {
-  const {
-    otherLabels: _labels,
-    disagreements,
-    ...measured
-  } = compareLabels(items, Object.fromEntries(Object.entries(file.verdicts).map(([k, v]) => [k, v.verdict])))
+  const { otherLabels, disagreements, ...measured } = compareLabels(
+    items,
+    Object.fromEntries(Object.entries(file.verdicts).map(([k, v]) => [k, v.verdict])),
+  )
   return {
     model: file.model,
     judgedAt: file.judgedAt,
     promptVersion: file.promptVersion,
     costUsd: file.costMicros / 1e6,
     ...measured,
+    /** The verdicts the second judge used: with one only, kappa is 0 by construction. */
+    secondLabels: otherLabels,
     /** Sentences the first judge did not fully support: few of them make kappa jumpy. */
     judgeFlagged: items.filter((it) => file.verdicts[it.item] && it.judge !== 'supported').length,
     disagreements: disagreements.map(({ other, ...d }) => ({

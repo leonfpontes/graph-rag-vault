@@ -48,7 +48,7 @@ if (options.command === 'serve') {
   // The embedding model (~25 MB) loads on the first question with no recorded vector, not at start.
   let embedder: Promise<{ embedQuery(q: string): Promise<Float32Array> }> | undefined
   const embedQuery = async (question: string) => {
-    embedder ??= import('@graph-rag/embeddings').then(({ createEmbedder }) =>
+    embedder ??= import('@graph-rag/embeddings/node').then(({ createEmbedder }) =>
       createEmbedder({
         cacheDir:
           process.env.GRAPH_RAG_MODEL_CACHE ?? path.join(homedir(), '.cache', 'graph-rag-vault', 'models'),

@@ -134,6 +134,18 @@ describe('ingest', () => {
     expect(count(db, 'embeddings')).toBe(8)
   })
 
+  it('embeds every chunk again on another runtime, and exports only the vectors of that runtime', async () => {
+    const db = openIndex()
+    await ingest(db, vault(), fakeEmbedder('model-a'))
+    const wasm = { ...fakeEmbedder('model-a'), runtime: 'wasm' }
+    expect((await ingest(db, vault(), wasm)).embedded).toBe(4)
+    expect((await ingest(db, vault(), wasm)).embedded).toBe(0)
+    expect(count(db, 'embeddings')).toBe(8)
+    const model = { id: 'model-a', revision: 'r', dims: 4 }
+    expect(exportIndex(db, { model, sourceHash: 'h', runtime: 'wasm' }).chunks).toHaveLength(4)
+    expect(() => exportIndex(db, { model, sourceHash: 'h', runtime: 'cpu' })).toThrow('has no model-a vector')
+  })
+
   it('writes nothing when the model fails or returns the wrong shape', async () => {
     const db = openIndex()
     const failing: PassageEmbedder = {
@@ -206,6 +218,8 @@ describe('source hash', () => {
     expect(sourceHash(edited, questions, model)).not.toBe(base)
     expect(sourceHash(vault(), [{ id: 'q-001', question: 'Who welds now?' }], model)).not.toBe(base)
     expect(sourceHash(vault(), questions, { id: 'm', revision: 'r2' })).not.toBe(base)
+    // vectors of another runtime are other vectors: the index is behind
+    expect(sourceHash(vault(), questions, model, 'onnxruntime-web wasm')).not.toBe(base)
     expect(noteHash(vault()[0]!)).toMatch(/^[0-9a-f]{64}$/)
   })
 

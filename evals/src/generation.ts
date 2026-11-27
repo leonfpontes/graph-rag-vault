@@ -55,6 +55,16 @@ export interface GenerationOptions {
   concurrency?: number
   answerModels?: { primary: string; fallback?: string }
   judgeModels?: { primary: string; fallback?: string }
+  /**
+   * A recorded answer to keep instead of a new call: same question, variant and round, and the
+   * search gave the same notes in the same order (same prompt and models, checked by the caller).
+   */
+  reuse?: (job: {
+    questionId: string
+    variant: RetrievalVariant
+    round: number
+    passageNotes: string[]
+  }) => AnswerRecord | undefined
   now?: () => number
   log?: (line: string) => void
 }
@@ -63,6 +73,8 @@ export interface GenerationOutcome {
   records: AnswerRecord[]
   /** Jobs not run because the budget was spent. */
   skipped: number
+  /** Answers kept from an earlier run (`reuse`), at no cost. */
+  reused: number
   stoppedEarly: boolean
 }
 
@@ -79,20 +91,28 @@ export async function runGeneration(options: GenerationOptions): Promise<Generat
   ).flat()
   const records: AnswerRecord[] = []
   let skipped = 0
+  let reused = 0
 
   await pool(jobs, options.concurrency ?? 4, async ({ question, variant, round }) => {
+    const passages = options.passagesFor(question, variant)
+    const passageNotes = [...new Set(passages.map((p) => p.noteId))]
+    const kept = options.reuse?.({ questionId: question.id, variant, round, passageNotes })
+    if (kept) {
+      reused++
+      records.push(structuredClone(kept))
+      return
+    }
     if (!(await budget.reserveOrWait(JOB_RESERVE_MICROS))) {
       skipped++
       return
     }
-    const passages = options.passagesFor(question, variant)
     const record: AnswerRecord = {
       questionId: question.id,
       kind: question.kind,
       split: question.split,
       variant,
       round,
-      passageNotes: [...new Set(passages.map((p) => p.noteId))],
+      passageNotes,
       status: 'error',
       sentences: [],
       removed: [],
@@ -146,7 +166,7 @@ export async function runGeneration(options: GenerationOptions): Promise<Generat
 
   const order = (r: AnswerRecord) => `${r.round}|${variants.indexOf(r.variant)}|${r.questionId}`
   records.sort((a, b) => order(a).localeCompare(order(b)))
-  return { records, skipped, stoppedEarly: skipped > 0 }
+  return { records, skipped, reused, stoppedEarly: skipped > 0 }
 }
 
 export interface Spread {

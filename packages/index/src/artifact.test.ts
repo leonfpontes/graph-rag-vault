@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { resolveModel } from '@graph-rag/embeddings'
+import { EMBEDDING_RUNTIME, resolveModel } from '@graph-rag/embeddings'
 import { decodeIndex } from '@graph-rag/search'
 import { readVault } from '@graph-rag/vault/node'
 import { describe, expect, it } from 'vitest'
@@ -24,7 +24,9 @@ describe('the exported search index', () => {
   it('is up to date with the vault, the questions and the default model (else: pnpm index)', () => {
     expect(vault.problems).toEqual([])
     expect(index.model).toEqual({ id: model.id, revision: model.revision, dims: model.dims })
-    expect(index.sourceHash, 'run pnpm index').toBe(sourceHash(vault.notes, questions, model))
+    expect(index.sourceHash, 'run pnpm index').toBe(
+      sourceHash(vault.notes, questions, model, EMBEDDING_RUNTIME),
+    )
   })
 
   it('holds every note and chunk of the vault, and a unit vector for each chunk and question', () => {

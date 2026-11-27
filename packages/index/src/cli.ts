@@ -10,7 +10,7 @@ import { homedir } from 'node:os'
 import path from 'node:path'
 import { parseArgs } from 'node:util'
 
-import { createEmbedder, resolveModel } from '@graph-rag/embeddings'
+import { createEmbedder, EMBEDDING_RUNTIME, resolveModel } from '@graph-rag/embeddings/node'
 import { decodeIndex, encodeIndex } from '@graph-rag/search'
 import { readVault } from '@graph-rag/vault/node'
 
@@ -51,7 +51,7 @@ if (vault.problems.length > 0) {
 }
 const questions = readQuestions(readFileSync(at(values.questions), 'utf8'))
 const model = resolveModel(values.model)
-const hash = sourceHash(vault.notes, questions, model)
+const hash = sourceHash(vault.notes, questions, model, EMBEDDING_RUNTIME)
 const out = at(values.out)
 
 if (values.check) {
@@ -75,6 +75,7 @@ if (values.check) {
   const index = exportIndex(db, {
     model: { id: model.id, revision: model.revision, dims: model.dims },
     sourceHash: hash,
+    runtime: embedder.runtime,
     queries: questions.map((q, i) => ({ ...q, vector: queryVectors[i]! })),
   })
   db.close()

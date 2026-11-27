@@ -112,7 +112,15 @@ describe.runIf(has)('the committed scoreboard', () => {
       const s = results.secondJudge!
       expect(readme).toContain(`${Math.round(s.observed * 100)}%, Cohen's kappa ${s.kappa!.toFixed(2)}`)
       expect(readme).toContain(`All ${s.disagreements.length} disagreements go the same way`)
-      expect(readme).toContain(`only ${s.judgeFlagged} of ${s.items} sentences`)
+      expect(readme).toContain(
+        s.secondLabels?.length === 1
+          ? `the second judge marked all ${s.items} sentences ${s.secondLabels[0]}`
+          : `only ${s.judgeFlagged} of ${s.items} sentences`,
+      )
+      if (results.human?.pendingAnswers)
+        expect(readme).toContain(
+          `Review pending for ${results.human.pendingAnswers} of ${results.human.sampleAnswers} answers`,
+        )
     } else expect(results.secondJudge).toBeUndefined()
   })
 

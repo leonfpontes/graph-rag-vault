@@ -54,8 +54,8 @@
       "doc-brake-test-protocol",
       "prj-brake-lever-recall",
       "doc-pre-delivery-safety-checklist",
-      "mtg-2025-10-14-quality-review",
-      "doc-dealer-training-syllabus"
+      "doc-dealer-training-syllabus",
+      "mtg-2025-10-14-quality-review"
     ],
     "status": "answered",
     "sentences": [
@@ -79,15 +79,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states every brake model is tested for 1,000 stops from 25 km/h, wet and dry; the lever force logging is extra but not claimed in the sentence."
+        "reason": "Passage states every brake model is tested for 1,000 stops from 25 km/h, wet and dry."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 338,
-    "judgeMicros": 191,
-    "latencyMs": 1072
+    "judgeMicros": 181,
+    "latencyMs": 1081
   },
   {
     "questionId": "q-013",
@@ -144,8 +144,8 @@
       "mtg-2025-12-29-product-review",
       "mtg-2025-05-19-product-review",
       "doc-colour-list-2027",
-      "mtg-2026-05-29-product-review",
-      "dec-catalogue-printed-on-recycled-paper"
+      "dec-catalogue-printed-on-recycled-paper",
+      "mtg-2026-05-29-product-review"
     ],
     "status": "answered",
     "sentences": [
@@ -169,15 +169,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage lists the same six colours: slate, moss, sand, harbour blue, signal orange, darker charcoal for commuter range."
+        "reason": "The cited passage lists the same six colours, including the darker charcoal for the commuter range."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 397,
-    "judgeMicros": 188,
-    "latencyMs": 1121
+    "judgeMicros": 181,
+    "latencyMs": 1209
   },
   {
     "questionId": "q-015",
@@ -232,10 +232,10 @@
     "round": 1,
     "passageNotes": [
       "doc-torque-spec-gravel-gx",
-      "prj-gravel-gx",
       "mtg-2026-05-30-visit-meridian-sports",
-      "dec-aluminium-6061",
-      "doc-pricing-sheet-2026"
+      "prj-gravel-gx",
+      "doc-pricing-sheet-2026",
+      "dec-aluminium-6061"
     ],
     "status": "answered",
     "sentences": [
@@ -259,7 +259,7 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited current torque spec states thru-axles 12 Nm for the Gravel GX."
+        "reason": "The cited current spec states thru-axles 12 Nm, matching the sentence exactly."
       }
     ],
     "answerModel": "claude-haiku-5-5",
@@ -267,7 +267,7 @@
     "fallbackUsed": false,
     "answerMicros": 362,
     "judgeMicros": 185,
-    "latencyMs": 835
+    "latencyMs": 1078
   },
   {
     "questionId": "q-017",
@@ -339,12 +339,12 @@
       "mtg-2025-12-19-marketing-planning",
       "mtg-2026-11-18-marketing-planning",
       "mtg-2025-04-12-marketing-planning",
-      "mtg-2025-10-19-marketing-planning"
+      "doc-production-plan-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The 2027 marketing budget is split 40% to trade show and launch.",
+        "text": "The 2027 marketing budget is split 40% to trade show and launch, 30% to dealer support, 20% to online, and 10% to photography and video.",
         "citations": [
           {
             "chunkId": "doc-marketing-plan-2027#0",
@@ -352,40 +352,26 @@
             "quote": "Budget split: 40% trade show and launch, 30% dealer support, 20% online, 10% photography and video."
           }
         ]
-      },
-      {
-        "text": "The remaining allocation is 30% dealer support, 20% online, and 10% photography and video.",
-        "citations": [
-          {
-            "chunkId": "doc-marketing-plan-2027#0",
-            "noteId": "doc-marketing-plan-2027",
-            "quote": "30% dealer support, 20% online, 10% photography and video."
-          }
-        ]
       }
     ],
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 1,
+      "kept": 1
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states 40% goes to trade show and launch in the 2027 marketing plan."
-      },
-      {
-        "verdict": "supported",
-        "reason": "Passage lists 30% dealer support, 20% online, and 10% photography and video as the other shares."
+        "reason": "The cited current plan lists the same 40/30/20/10 split across the same four categories."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 426,
-    "judgeMicros": 222,
-    "latencyMs": 1146
+    "answerMicros": 391,
+    "judgeMicros": 181,
+    "latencyMs": 1193
   },
   {
     "questionId": "q-019",
@@ -428,15 +414,15 @@
     "round": 1,
     "passageNotes": [
       "prj-nordic-dealers",
-      "doc-nordic-expansion-memo",
       "cus-velo-lund",
+      "doc-nordic-expansion-memo",
       "per-lena-nyberg",
-      "per-jonah-whitfield"
+      "per-tomas-lindqvist"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-nordic-dealers", "doc-nordic-expansion-memo", "cus-velo-lund"],
+    "nearest": ["prj-nordic-dealers", "cus-velo-lund", "doc-nordic-expansion-memo"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -445,9 +431,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 695,
+    "answerMicros": 373,
     "judgeMicros": 0,
-    "latencyMs": 4083
+    "latencyMs": 1049
   },
   {
     "questionId": "q-021",
@@ -456,57 +442,27 @@
     "variant": "vector",
     "round": 1,
     "passageNotes": [
-      "mtg-2026-04-16-operations-weekly",
       "mtg-2026-08-27-operations-weekly",
+      "mtg-2026-04-16-operations-weekly",
       "per-chloe-dumont",
-      "doc-wheel-building-standard",
+      "per-lena-nyberg",
       "per-elena-brandt"
     ],
-    "status": "answered",
-    "sentences": [
-      {
-        "text": "The passages name Chloé Dumont as the owner of the Wheel building standard, not as its author.",
-        "citations": [
-          {
-            "chunkId": "doc-wheel-building-standard#links",
-            "noteId": "doc-wheel-building-standard",
-            "quote": "The owner of Wheel building standard is Chloé Dumont."
-          }
-        ]
-      },
-      {
-        "text": "Chloé Dumont reports to Hiro Sato, so on that basis the answer is Hiro Sato.",
-        "citations": [
-          {
-            "chunkId": "per-chloe-dumont#links",
-            "noteId": "per-chloe-dumont",
-            "quote": "Chloé Dumont reports to Hiro Sato."
-          }
-        ]
-      }
-    ],
+    "status": "unknown",
+    "sentences": [],
     "removed": [],
-    "nearest": [],
+    "nearest": ["mtg-2026-08-27-operations-weekly", "mtg-2026-04-16-operations-weekly", "per-chloe-dumont"],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 0,
+      "kept": 0
     },
-    "verdicts": [
-      {
-        "verdict": "partial",
-        "reason": "Passage supports that Chloé Dumont is the owner. It says nothing about authorship, so 'not as its author' goes beyond it."
-      },
-      {
-        "verdict": "partial",
-        "reason": "Supported that Chloé Dumont reports to Hiro Sato. Nothing cited makes her the author, so the answer conclusion is unsupported."
-      }
-    ],
+    "verdicts": [],
     "answerModel": "claude-haiku-5-5",
-    "judgeModel": "claude-haiku-5-5",
+    "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 589,
-    "judgeMicros": 388,
-    "latencyMs": 2744
+    "answerMicros": 403,
+    "judgeMicros": 0,
+    "latencyMs": 1172
   },
   {
     "questionId": "q-022",
@@ -519,7 +475,7 @@
       "dec-switch-battery-voltaro",
       "doc-battery-spec-v3",
       "prj-ridgeline-emtb",
-      "doc-cell-test-report"
+      "per-tomas-lindqvist"
     ],
     "status": "unknown",
     "sentences": [],
@@ -533,9 +489,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 500,
+    "answerMicros": 545,
     "judgeMicros": 0,
-    "latencyMs": 1633
+    "latencyMs": 1892
   },
   {
     "questionId": "q-023",
@@ -604,15 +560,15 @@
     "round": 1,
     "passageNotes": [
       "prj-warranty-flow",
-      "doc-dealer-handbook-2025",
       "mtg-2025-06-11-warranty-review",
       "mtg-2026-08-28-leadership",
-      "doc-service-faq"
+      "doc-dealer-handbook-2025",
+      "dec-lifetime-frame-cover"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-warranty-flow", "doc-dealer-handbook-2025", "mtg-2025-06-11-warranty-review"],
+    "nearest": ["prj-warranty-flow", "mtg-2025-06-11-warranty-review", "mtg-2026-08-28-leadership"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -621,9 +577,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 401,
+    "answerMicros": 419,
     "judgeMicros": 0,
-    "latencyMs": 1001
+    "latencyMs": 972
   },
   {
     "questionId": "q-025",
@@ -636,7 +592,7 @@
       "doc-field-test-autumn-2026",
       "per-yara-dunmore",
       "per-ivo-kerr",
-      "per-mateus-rocha"
+      "per-wren-galloway"
     ],
     "status": "answered",
     "sentences": [
@@ -661,7 +617,7 @@
         ]
       },
       {
-        "text": "Yara Dunmore reports to Tomás Lindqvist, so that is the line manager.",
+        "text": "Yara Dunmore's line manager is Tomás Lindqvist.",
         "citations": [
           {
             "chunkId": "per-yara-dunmore#links",
@@ -680,7 +636,7 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Doc states the owner of Field test notes, autumn 2026 is Yara Dunmore."
+        "reason": "Passage states the owner of Field test notes, autumn 2026 is Yara Dunmore."
       },
       {
         "verdict": "supported",
@@ -688,15 +644,15 @@
       },
       {
         "verdict": "supported",
-        "reason": "Yara Dunmore's passage states she reports to Tomás Lindqvist; line manager is implied by reporting line."
+        "reason": "Yara Dunmore's passage states she reports to Tomás Lindqvist, so he is line manager."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 546,
-    "judgeMicros": 264,
-    "latencyMs": 2152
+    "judgeMicros": 261,
+    "latencyMs": 2350
   },
   {
     "questionId": "q-026",
@@ -783,7 +739,7 @@
       "mtg-2026-10-02-supply-review",
       "doc-ampcore-supply-agreement",
       "dec-switch-battery-voltaro",
-      "per-kofi-mensah"
+      "mtg-2026-11-13-quality-review"
     ],
     "status": "unknown",
     "sentences": [],
@@ -801,9 +757,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 418,
+    "answerMicros": 423,
     "judgeMicros": 0,
-    "latencyMs": 934
+    "latencyMs": 962
   },
   {
     "questionId": "q-029",
@@ -813,15 +769,15 @@
     "round": 1,
     "passageNotes": [
       "dec-aluminium-6061",
-      "per-maya-okafor",
       "doc-c27-frame-spec",
+      "per-maya-okafor",
       "mtg-2026-09-12-c27-kickoff",
       "mtg-2026-10-20-ops-sync"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["dec-aluminium-6061", "per-maya-okafor", "doc-c27-frame-spec"],
+    "nearest": ["dec-aluminium-6061", "doc-c27-frame-spec", "per-maya-okafor"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -830,9 +786,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 453,
+    "answerMicros": 439,
     "judgeMicros": 0,
-    "latencyMs": 1234
+    "latencyMs": 1081
   },
   {
     "questionId": "q-030",
@@ -844,13 +800,13 @@
       "mtg-2026-08-28-leadership",
       "dec-lifetime-frame-cover",
       "mtg-2026-09-12-c27-kickoff",
-      "mtg-2026-08-09-marketing-planning",
-      "mtg-2026-11-18-marketing-planning"
+      "per-elena-brandt",
+      "prj-ridgeline-emtb"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The lifetime structural cover for first owners was decided in the Leadership meeting of 28 August 2026.",
+        "text": "The lifetime structural cover for first owners was decided in the Leadership meeting of 28 Aug 2026.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#links",
@@ -875,9 +831,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 550,
+    "answerMicros": 458,
     "judgeMicros": 192,
-    "latencyMs": 1614
+    "latencyMs": 950
   },
   {
     "questionId": "q-031",
@@ -949,12 +905,12 @@
       "dec-rear-rack-v2-rated-for-27-kg",
       "mtg-2026-05-29-product-review",
       "dec-rack-v2-made-by-our-current-rack-supplier",
-      "doc-c27-frame-spec"
+      "prj-commuter-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The 27 kg rear rack decision is part of the Rear rack v2 project.",
+        "text": "The 27 kg rating decision is part of the Rear rack v2 project.",
         "citations": [
           {
             "chunkId": "dec-rear-rack-v2-rated-for-27-kg#0",
@@ -964,7 +920,7 @@
         ]
       },
       {
-        "text": "The owner of the Rear rack v2 project is Ines Castell.",
+        "text": "The owner of Rear rack v2 is Ines Castell.",
         "citations": [
           {
             "chunkId": "prj-rear-rack-v2#links",
@@ -988,19 +944,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Decision passage says the rack is rated for 27 kg and is 'Part of Rear rack v2.'"
+        "reason": "Decision passage says the 27 kg rack is 'Part of Rear rack v2', matching the claim."
       },
       {
         "verdict": "supported",
-        "reason": "Project passage states the owner of Rear rack v2 is Ines Castell; decision passage repeats it."
+        "reason": "The Rear rack v2 project passage states its owner is Ines Castell; the decision passage confirms the same."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 603,
-    "judgeMicros": 245,
-    "latencyMs": 2720
+    "answerMicros": 588,
+    "judgeMicros": 244,
+    "latencyMs": 2153
   },
   {
     "questionId": "q-033",
@@ -1072,7 +1028,7 @@
       "mtg-2026-09-22-finance-review",
       "prj-erp-migration",
       "mtg-2026-05-11-finance-review",
-      "mtg-2025-03-13-product-review"
+      "mtg-2025-12-29-product-review"
     ],
     "status": "answered",
     "sentences": [
@@ -1087,7 +1043,7 @@
         ]
       },
       {
-        "text": "This April 2027 date replaces the earlier plan to go live in February.",
+        "text": "This date replaces the earlier February go-live plan.",
         "citations": [
           {
             "chunkId": "dec-go-live-with-the-new-erp-in-april#links",
@@ -1106,19 +1062,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited passage states the new ERP goes live on 6 April 2027."
+        "reason": "The passage states the new ERP goes live on 6 April 2027 instead."
       },
       {
-        "verdict": "partial",
-        "reason": "The passage confirms the April decision replaces the February plan, but never states the year 2027."
+        "verdict": "supported",
+        "reason": "The passage says the April go-live decision replaces the February go-live plan."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 523,
-    "judgeMicros": 462,
-    "latencyMs": 1905
+    "answerMicros": 481,
+    "judgeMicros": 273,
+    "latencyMs": 1573
   },
   {
     "questionId": "q-035",
@@ -1128,61 +1084,26 @@
     "round": 1,
     "passageNotes": [
       "per-kit-farrow",
-      "dec-book-a-90-square-metre-stand",
       "per-wilde-tull",
-      "per-chloe-dumont",
-      "per-theo-castillo"
+      "prj-ridgeline-emtb",
+      "per-theo-castillo",
+      "per-rafe-lowe"
     ],
-    "status": "answered",
-    "sentences": [
-      {
-        "text": "The stand booked for Trade show 2027 is 90 square metres.",
-        "citations": [
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#0",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "We take a 90 square metre corner stand in hall B instead."
-          },
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#0",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "Part of Trade show 2027."
-          }
-        ]
-      },
-      {
-        "text": "The 90 square metre stand replaces an earlier plan for a 60 square metre stand.",
-        "citations": [
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#links",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "Book a 90 square metre stand replaces Book a 60 square metre stand."
-          }
-        ]
-      }
-    ],
+    "status": "unknown",
+    "sentences": [],
     "removed": [],
-    "nearest": [],
+    "nearest": ["per-kit-farrow", "per-wilde-tull", "prj-ridgeline-emtb"],
     "citations": {
-      "submitted": 3,
-      "kept": 3
+      "submitted": 0,
+      "kept": 0
     },
-    "verdicts": [
-      {
-        "verdict": "supported",
-        "reason": "The cited passage says the team takes a 90 square metre stand as part of Trade show 2027."
-      },
-      {
-        "verdict": "supported",
-        "reason": "The passage states the 90 square metre stand replaces the 60 square metre stand booking, matching the 'earlier plan' wording."
-      }
-    ],
+    "verdicts": [],
     "answerModel": "claude-haiku-5-5",
-    "judgeModel": "claude-haiku-5-5",
+    "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 497,
-    "judgeMicros": 308,
-    "latencyMs": 1801
+    "answerMicros": 348,
+    "judgeMicros": 0,
+    "latencyMs": 1138
   },
   {
     "questionId": "q-036",
@@ -1316,8 +1237,8 @@
     "passageNotes": [
       "doc-battery-spec-v3",
       "mtg-2026-03-17-supply-review",
-      "dec-switch-battery-voltaro",
       "mtg-2026-10-02-supply-review",
+      "dec-switch-battery-voltaro",
       "prj-ridgeline-emtb"
     ],
     "status": "answered",
@@ -1342,15 +1263,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cited current spec states a 5 A charger takes four hours to charge fully."
+        "reason": "Cited current spec states a 5 A charger takes four hours for full charge."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 495,
-    "judgeMicros": 176,
-    "latencyMs": 1384
+    "answerMicros": 517,
+    "judgeMicros": 175,
+    "latencyMs": 1488
   },
   {
     "questionId": "q-039",
@@ -1362,13 +1283,13 @@
       "doc-quality-report-q3-2026",
       "doc-quality-report-q2-2026",
       "doc-quality-report-q1-2026",
-      "mtg-2025-11-15-finance-review",
-      "mtg-2026-05-11-finance-review"
+      "mtg-2025-08-24-finance-review",
+      "mtg-2025-11-15-finance-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The most recent field return rate was 0.8%, in the Q3 2026 quality report.",
+        "text": "The most recent field return rate was 0.8%, reported in the Q3 2026 quality report.",
         "citations": [
           {
             "chunkId": "doc-quality-report-q3-2026#0",
@@ -1387,15 +1308,15 @@
     "verdicts": [
       {
         "verdict": "partial",
-        "reason": "Passage supports 0.8% field returns in the Q3 2026 report, but says nothing about it being the most recent report."
+        "reason": "The 0.8% field return rate in the Q3 2026 report is supported. Nothing cited says it is the most recent rate."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 370,
-    "judgeMicros": 320,
-    "latencyMs": 1081
+    "answerMicros": 367,
+    "judgeMicros": 332,
+    "latencyMs": 1263
   },
   {
     "questionId": "q-040",
@@ -1467,12 +1388,12 @@
       "doc-firmware-release-notes-3-3",
       "mtg-2025-11-19-product-review",
       "mtg-2025-09-01-product-review",
-      "mtg-2025-03-13-product-review"
+      "mtg-2025-12-29-product-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The newest firmware, release notes 3.3 (updated 6 Oct 2026), adds a range estimate based on the last 20 km.",
+        "text": "The newest firmware release is 3.3, which adds a range estimate based on the last 20 km.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
@@ -1482,7 +1403,7 @@
         ]
       },
       {
-        "text": "It also fixes the display freezing in cold weather.",
+        "text": "Firmware 3.3 also includes a fix for the display freezing in cold weather.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
@@ -1501,19 +1422,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states 3.3 adds a range estimate based on the last 20 km; dated and marked current, so it is the newest."
+        "reason": "Passage 3.3 is marked current and adds a range estimate based on the last 20 km."
       },
       {
         "verdict": "supported",
-        "reason": "Passage says the release includes a fix for the display freezing in cold weather."
+        "reason": "Passage states 3.3 includes a fix for the display freezing in cold weather."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 615,
-    "judgeMicros": 223,
-    "latencyMs": 3437
+    "answerMicros": 475,
+    "judgeMicros": 313,
+    "latencyMs": 1748
   },
   {
     "questionId": "q-042",
@@ -1524,19 +1445,34 @@
     "passageNotes": [
       "dec-lifetime-frame-cover",
       "mtg-2026-06-30-frame-review",
-      "doc-dealer-handbook-2025",
+      "mtg-2026-08-28-leadership",
       "mtg-2025-06-11-warranty-review",
-      "mtg-2026-08-28-leadership"
+      "doc-dealer-handbook-2025"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "A frame bought in October 2026 is covered against structural failure for the whole time its first owner keeps the bike.",
+        "text": "A frame bought in October 2026 is covered against structural failure for as long as its first owner keeps the bike.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#0",
             "noteId": "dec-lifetime-frame-cover",
-            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it."
+            "quote": "the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it"
+          },
+          {
+            "chunkId": "dec-lifetime-frame-cover#0",
+            "noteId": "dec-lifetime-frame-cover",
+            "quote": "From 1 September 2026"
+          }
+        ]
+      },
+      {
+        "text": "This lifetime cover replaces the earlier warranty terms.",
+        "citations": [
+          {
+            "chunkId": "dec-lifetime-frame-cover#links",
+            "noteId": "dec-lifetime-frame-cover",
+            "quote": "Lifetime structural cover for first owners replaces Warranty terms."
           }
         ]
       }
@@ -1544,21 +1480,25 @@
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 1,
-      "kept": 1
+      "submitted": 3,
+      "kept": 3
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage says from 1 September 2026 bikes bought get chassis cover for as long as the first owner keeps it; October 2026 falls after that date."
+        "reason": "From 1 Sept 2026, bike chassis bought are covered for as long as the first owner keeps it; October 2026 falls within that."
+      },
+      {
+        "verdict": "supported",
+        "reason": "The passage states that the lifetime structural cover replaces Warranty terms."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 553,
-    "judgeMicros": 195,
-    "latencyMs": 1948
+    "answerMicros": 614,
+    "judgeMicros": 319,
+    "latencyMs": 2368
   },
   {
     "questionId": "q-043",
@@ -1676,8 +1616,8 @@
       "prj-cargo-longtail",
       "prj-nordic-dealers",
       "mtg-2026-07-08-visit-hafen-rad",
-      "doc-cargo-longtail-frame-spec",
-      "cus-velo-lund"
+      "cus-velo-lund",
+      "doc-cargo-longtail-frame-spec"
     ],
     "status": "unknown",
     "sentences": [],
@@ -1691,9 +1631,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 357,
+    "answerMicros": 336,
     "judgeMicros": 0,
-    "latencyMs": 1049
+    "latencyMs": 790
   },
   {
     "questionId": "q-046",
@@ -1702,8 +1642,8 @@
     "variant": "vector",
     "round": 1,
     "passageNotes": [
-      "doc-battery-spec-v3",
       "mtg-2026-10-02-supply-review",
+      "doc-battery-spec-v3",
       "dec-switch-battery-voltaro",
       "doc-cell-test-report",
       "doc-ampcore-supply-agreement"
@@ -1711,7 +1651,7 @@
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["doc-battery-spec-v3", "mtg-2026-10-02-supply-review", "dec-switch-battery-voltaro"],
+    "nearest": ["mtg-2026-10-02-supply-review", "doc-battery-spec-v3", "dec-switch-battery-voltaro"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -1720,9 +1660,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 391,
+    "answerMicros": 396,
     "judgeMicros": 0,
-    "latencyMs": 1584
+    "latencyMs": 1271
   },
   {
     "questionId": "q-047",
@@ -1734,8 +1674,8 @@
       "mtg-2026-10-20-ops-sync",
       "dec-c27-joining-calvane",
       "per-elena-brandt",
-      "cus-velo-lund",
-      "cus-canal-street-cycles"
+      "cus-canal-street-cycles",
+      "mtg-2026-09-12-c27-kickoff"
     ],
     "status": "unknown",
     "sentences": [],
@@ -1749,9 +1689,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 368,
+    "answerMicros": 395,
     "judgeMicros": 0,
-    "latencyMs": 924
+    "latencyMs": 1008
   },
   {
     "questionId": "q-048",
@@ -1764,7 +1704,7 @@
       "prj-paint-line-upgrade",
       "mtg-2026-08-27-operations-weekly",
       "mtg-2026-11-13-quality-review",
-      "dec-move-the-oven-install-to-the-december-shutdo"
+      "mtg-2025-05-18-finance-review"
     ],
     "status": "unknown",
     "sentences": [],
@@ -1778,9 +1718,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 379,
+    "answerMicros": 364,
     "judgeMicros": 0,
-    "latencyMs": 1297
+    "latencyMs": 1964
   },
   {
     "questionId": "q-049",
@@ -1791,14 +1731,14 @@
     "passageNotes": [
       "prj-ridgeline-emtb",
       "doc-roadmap-memo-2027",
-      "dec-book-a-90-square-metre-stand",
+      "dec-pause-dealer-portal",
       "doc-battery-spec-v3",
       "mtg-2026-03-17-supply-review"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-ridgeline-emtb", "doc-roadmap-memo-2027", "dec-book-a-90-square-metre-stand"],
+    "nearest": ["prj-ridgeline-emtb", "doc-roadmap-memo-2027", "dec-pause-dealer-portal"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -1807,9 +1747,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 390,
+    "answerMicros": 385,
     "judgeMicros": 0,
-    "latencyMs": 994
+    "latencyMs": 920
   },
   {
     "questionId": "q-050",
@@ -1819,15 +1759,15 @@
     "round": 1,
     "passageNotes": [
       "per-jonah-whitfield",
-      "per-theo-marsh",
       "doc-quality-report-q3-2026",
       "mtg-2025-06-11-marketing-planning",
+      "mtg-2026-05-06-dealer-day",
       "per-sana-orr"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["per-jonah-whitfield", "per-theo-marsh", "doc-quality-report-q3-2026"],
+    "nearest": ["per-jonah-whitfield", "doc-quality-report-q3-2026", "mtg-2025-06-11-marketing-planning"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -1836,9 +1776,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 327,
+    "answerMicros": 352,
     "judgeMicros": 0,
-    "latencyMs": 813
+    "latencyMs": 1013
   },
   {
     "questionId": "q-011",
@@ -3966,7 +3906,7 @@
       "prj-brake-lever-recall",
       "doc-pre-delivery-safety-checklist",
       "mtg-2025-10-14-quality-review",
-      "mtg-2026-07-13-quality-review"
+      "dec-book-a-90-square-metre-stand"
     ],
     "status": "answered",
     "sentences": [
@@ -3996,9 +3936,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 358,
-    "judgeMicros": 66,
-    "latencyMs": 964
+    "answerMicros": 357,
+    "judgeMicros": 65,
+    "latencyMs": 890
   },
   {
     "questionId": "q-013",
@@ -4146,7 +4086,7 @@
       "doc-torque-spec-gravel-gx",
       "per-ines-castell",
       "dec-aluminium-6061",
-      "dec-second-source-for-chromoly-tubing"
+      "mtg-2026-05-30-visit-meridian-sports"
     ],
     "status": "answered",
     "sentences": [
@@ -4170,15 +4110,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited current spec states thru-axles 12 Nm, matching the sentence exactly."
+        "reason": "The current torque spec states thru-axles 12 Nm for the Gravel GX."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 356,
-    "judgeMicros": 65,
-    "latencyMs": 893
+    "answerMicros": 386,
+    "judgeMicros": 63,
+    "latencyMs": 1342
   },
   {
     "questionId": "q-017",
@@ -4249,8 +4189,8 @@
       "doc-marketing-plan-2027",
       "mtg-2025-12-19-marketing-planning",
       "mtg-2025-04-12-marketing-planning",
-      "mtg-2026-11-18-marketing-planning",
-      "mtg-2026-08-09-marketing-planning"
+      "mtg-2025-06-11-marketing-planning",
+      "mtg-2026-11-18-marketing-planning"
     ],
     "status": "answered",
     "sentences": [
@@ -4265,7 +4205,7 @@
         ]
       },
       {
-        "text": "The remaining allocation is 30% to dealer support, 20% to online, and 10% to photography and video.",
+        "text": "The remainder of the split is 30% dealer support, 20% online, and 10% photography and video.",
         "citations": [
           {
             "chunkId": "doc-marketing-plan-2027#0",
@@ -4284,19 +4224,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states 40% trade show and launch for the 2027 marketing plan budget split."
+        "reason": "Passage states 40% goes to trade show and launch in the 2027 marketing plan split."
       },
       {
         "verdict": "supported",
-        "reason": "Passage gives 30% dealer support, 20% online, and 10% photography and video, matching the remaining allocation."
+        "reason": "Passage gives 30% dealer support, 20% online, and 10% photography and video, matching the remainder."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 438,
-    "judgeMicros": 225,
-    "latencyMs": 1335
+    "judgeMicros": 224,
+    "latencyMs": 1207
   },
   {
     "questionId": "q-019",
@@ -4429,15 +4369,15 @@
     "round": 1,
     "passageNotes": [
       "doc-wheel-building-standard",
-      "mtg-2026-04-16-operations-weekly",
       "mtg-2026-08-27-operations-weekly",
+      "mtg-2026-04-16-operations-weekly",
       "per-chloe-dumont",
       "mtg-2025-11-06-operations-weekly"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The wheel building standard is listed as owned by Chloé Dumont, not explicitly as written by her.",
+        "text": "The wheel building standard is owned by Chloé Dumont.",
         "citations": [
           {
             "chunkId": "doc-wheel-building-standard#links",
@@ -4466,19 +4406,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states the owner of Wheel building standard is Chloé Dumont; the sentence accurately notes it is not stated as author."
+        "reason": "The cited passage states the owner of Wheel building standard is Chloé Dumont."
       },
       {
         "verdict": "supported",
-        "reason": "Chloé Dumont's passage explicitly says she reports to Hiro Sato."
+        "reason": "The cited passage explicitly says Chloé Dumont reports to Hiro Sato."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 586,
-    "judgeMicros": 224,
-    "latencyMs": 2625
+    "answerMicros": 487,
+    "judgeMicros": 216,
+    "latencyMs": 1548
   },
   {
     "questionId": "q-022",
@@ -4916,13 +4856,13 @@
       "doc-c27-frame-spec",
       "prj-commuter-2027",
       "dec-aluminium-6061",
-      "mtg-2026-09-12-c27-kickoff",
-      "per-ines-castell"
+      "per-ines-castell",
+      "mtg-2026-09-12-c27-kickoff"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The C27 frame spec is owned by Ines Castell, the closest match to its author in these passages.",
+        "text": "The C27 frame spec is owned by Ines Castell, the closest match to its author in the passages.",
         "citations": [
           {
             "chunkId": "doc-c27-frame-spec#links",
@@ -4932,7 +4872,7 @@
         ]
       },
       {
-        "text": "Ines Castell reports to Maya Okafor.",
+        "text": "Ines Castell reports to Maya Okafor, so Maya Okafor manages her.",
         "citations": [
           {
             "chunkId": "per-ines-castell#links",
@@ -4951,19 +4891,19 @@
     "verdicts": [
       {
         "verdict": "partial",
-        "reason": "Passage supports that Ines Castell owns the C27 frame spec, but says nothing about her being its author."
+        "reason": "Passage says Ines Castell is the owner of the C27 frame spec, not its author; 'closest match to its author' is an added claim."
       },
       {
         "verdict": "supported",
-        "reason": "The Ines Castell passage directly states that she reports to Maya Okafor."
+        "reason": "Passage says Ines Castell reports to Maya Okafor; a reporting line is what the sentence restates as management."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 542,
-    "judgeMicros": 294,
-    "latencyMs": 1956
+    "answerMicros": 548,
+    "judgeMicros": 430,
+    "latencyMs": 1997
   },
   {
     "questionId": "q-030",
@@ -5566,28 +5506,18 @@
       "doc-supplier-scorecard-q2-2026",
       "doc-supplier-scorecard-q3-2026",
       "dec-rack-v2-made-by-our-current-rack-supplier",
-      "mtg-2026-07-08-visit-hafen-rad",
-      "dec-switch-battery-voltaro"
+      "dec-switch-battery-voltaro",
+      "mtg-2026-07-08-visit-hafen-rad"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The latest on-time delivery rate for racks is 85%, in the Q3 2026 scorecard, which notes a tooling change.",
+        "text": "The latest on-time delivery rate for racks is 85%, from the Q3 2026 scorecard, which is newer than the Q2 figure of 94%.",
         "citations": [
           {
             "chunkId": "doc-supplier-scorecard-q3-2026#0",
             "noteId": "doc-supplier-scorecard-q3-2026",
-            "quote": "tubing 95%, saddles 93%, tyres 92%, racks 85% (tooling change)"
-          }
-        ]
-      },
-      {
-        "text": "This is down from 94% for racks in the earlier Q2 2026 scorecard.",
-        "citations": [
-          {
-            "chunkId": "doc-supplier-scorecard-q2-2026#0",
-            "noteId": "doc-supplier-scorecard-q2-2026",
-            "quote": "tubing 97%, saddles 91%, tyres 88%, racks 94%"
+            "quote": "On-time delivery by supplier: tubing 95%, saddles 93%, tyres 92%, racks 85% (tooling change)."
           }
         ]
       }
@@ -5595,25 +5525,21 @@
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 1,
+      "kept": 1
     },
     "verdicts": [
       {
-        "verdict": "supported",
-        "reason": "Q3 2026 scorecard lists racks at 85% on-time delivery with a tooling change note."
-      },
-      {
-        "verdict": "supported",
-        "reason": "Q2 2026 scorecard shows racks at 94%, so the Q3 figure is a decline from it."
+        "verdict": "partial",
+        "reason": "The Q3 2026 scorecard supports racks at 85%. Nothing in the cited passage mentions a Q2 figure of 94%."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 563,
-    "judgeMicros": 235,
-    "latencyMs": 2107
+    "answerMicros": 530,
+    "judgeMicros": 255,
+    "latencyMs": 2188
   },
   {
     "questionId": "q-041",
@@ -5624,14 +5550,14 @@
     "passageNotes": [
       "doc-firmware-release-notes-3-2",
       "doc-firmware-release-notes-3-3",
-      "per-tomas-lindqvist",
       "per-dev-kerr",
+      "per-tomas-lindqvist",
       "mtg-2025-11-19-product-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The newest firmware, release notes 3.3, adds a range estimate based on the last 20 km.",
+        "text": "Firmware 3.3 adds a range estimate based on the last 20 km.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
@@ -5641,7 +5567,7 @@
         ]
       },
       {
-        "text": "The 3.3 release also includes a fix for the display freezing in cold weather.",
+        "text": "Firmware 3.3 also fixes the display freezing in cold weather.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
@@ -5651,28 +5577,33 @@
         ]
       }
     ],
-    "removed": [],
+    "removed": [
+      {
+        "text": "The newest firmware release is 3.3, last updated 6 October 2026.",
+        "reason": "quote-not-found"
+      }
+    ],
     "nearest": [],
     "citations": {
-      "submitted": 2,
+      "submitted": 3,
       "kept": 2
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited note for release 3.3 is marked current and lists a range estimate based on the last 20 km."
+        "reason": "Passage states the 3.3 release adds a range estimate based on the last 20 km; status is current."
       },
       {
         "verdict": "supported",
-        "reason": "The cited note lists a fix for the display freezing in cold weather in release 3.3."
+        "reason": "Passage says 3.3 includes a fix for the display freezing in cold weather."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 446,
-    "judgeMicros": 282,
-    "latencyMs": 1637
+    "answerMicros": 473,
+    "judgeMicros": 220,
+    "latencyMs": 2012
   },
   {
     "questionId": "q-042",
@@ -5683,34 +5614,34 @@
     "passageNotes": [
       "dec-lifetime-frame-cover",
       "mtg-2026-06-30-frame-review",
-      "doc-service-faq",
       "mtg-2026-08-28-leadership",
+      "doc-service-faq",
       "prj-commuter-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "A frame bought in October 2026 is covered against structural failure for as long as its first owner keeps the bike.",
+        "text": "A bike bought in October 2026 is covered against structural failure for as long as its first owner keeps it.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#0",
             "noteId": "dec-lifetime-frame-cover",
-            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure"
-          },
-          {
-            "chunkId": "dec-lifetime-frame-cover#0",
-            "noteId": "dec-lifetime-frame-cover",
-            "quote": "for the whole time its first owner keeps it."
+            "quote": "covered against structural failure for the whole time its first owner keeps it"
           }
         ]
       },
       {
-        "text": "This lifetime structural cover replaces the earlier warranty terms.",
+        "text": "This lifetime cover replaces the older warranty terms, which had given five years for a first owner.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#links",
             "noteId": "dec-lifetime-frame-cover",
             "quote": "Lifetime structural cover for first owners replaces Warranty terms."
+          },
+          {
+            "chunkId": "doc-service-faq#0",
+            "noteId": "doc-service-faq",
+            "quote": "Five years from the date you bought the bike, if you are its first owner."
           }
         ]
       }
@@ -5724,19 +5655,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage says frames of bikes bought from 1 September 2026 are covered for the whole time the first owner keeps it."
+        "reason": "Passage says the chassis of bikes bought is covered for the whole time the first owner keeps it, from 1 Sept 2026."
       },
       {
-        "verdict": "supported",
-        "reason": "Passage states the lifetime structural cover replaces Warranty terms, per the decision record."
+        "verdict": "partial",
+        "reason": "Passage confirms lifetime cover replaces Warranty terms. The five-year figure comes from an FAQ that never names the warranty terms it replaced."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 850,
-    "judgeMicros": 238,
-    "latencyMs": 4825
+    "answerMicros": 732,
+    "judgeMicros": 478,
+    "latencyMs": 3310
   },
   {
     "questionId": "q-043",
@@ -5876,8 +5807,8 @@
     "variant": "hybrid",
     "round": 1,
     "passageNotes": [
-      "dec-switch-battery-voltaro",
       "mtg-2026-10-02-supply-review",
+      "dec-switch-battery-voltaro",
       "doc-battery-spec-v3",
       "doc-ampcore-supply-agreement",
       "doc-cell-test-report"
@@ -5885,7 +5816,7 @@
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["dec-switch-battery-voltaro", "mtg-2026-10-02-supply-review", "doc-battery-spec-v3"],
+    "nearest": ["mtg-2026-10-02-supply-review", "dec-switch-battery-voltaro", "doc-battery-spec-v3"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -5894,9 +5825,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 389,
+    "answerMicros": 398,
     "judgeMicros": 0,
-    "latencyMs": 2105
+    "latencyMs": 1069
   },
   {
     "questionId": "q-047",
@@ -5909,7 +5840,7 @@
       "mtg-2026-10-20-ops-sync",
       "per-elena-brandt",
       "per-hiro-sato",
-      "cus-velo-lund"
+      "cus-canal-street-cycles"
     ],
     "status": "unknown",
     "sentences": [],
@@ -5923,9 +5854,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 372,
+    "answerMicros": 384,
     "judgeMicros": 0,
-    "latencyMs": 778
+    "latencyMs": 935
   },
   {
     "questionId": "q-048",
@@ -5966,8 +5897,8 @@
       "prj-ridgeline-emtb",
       "per-tomas-lindqvist",
       "doc-battery-spec-v3",
-      "doc-field-test-autumn-2026",
-      "dec-book-a-90-square-metre-stand"
+      "dec-pause-dealer-portal",
+      "dec-switch-battery-voltaro"
     ],
     "status": "unknown",
     "sentences": [],
@@ -5981,9 +5912,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 390,
+    "answerMicros": 391,
     "judgeMicros": 0,
-    "latencyMs": 877
+    "latencyMs": 893
   },
   {
     "questionId": "q-050",
@@ -6069,8 +6000,8 @@
       "doc-brake-test-protocol",
       "prj-brake-lever-recall",
       "doc-pre-delivery-safety-checklist",
-      "mtg-2025-10-14-quality-review",
-      "doc-dealer-training-syllabus"
+      "doc-dealer-training-syllabus",
+      "mtg-2025-10-14-quality-review"
     ],
     "status": "answered",
     "sentences": [
@@ -6101,8 +6032,8 @@
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 102,
-    "judgeMicros": 66,
-    "latencyMs": 1212
+    "judgeMicros": 65,
+    "latencyMs": 869
   },
   {
     "questionId": "q-013",
@@ -6159,8 +6090,8 @@
       "mtg-2025-12-29-product-review",
       "mtg-2025-05-19-product-review",
       "doc-colour-list-2027",
-      "mtg-2026-05-29-product-review",
-      "dec-catalogue-printed-on-recycled-paper"
+      "dec-catalogue-printed-on-recycled-paper",
+      "mtg-2026-05-29-product-review"
     ],
     "status": "answered",
     "sentences": [
@@ -6184,15 +6115,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage lists the same six colours: slate, moss, sand, harbour blue, signal orange, darker charcoal for commuter range."
+        "reason": "The cited passage lists the same six colours, including the darker charcoal for the commuter range."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 119,
-    "judgeMicros": 72,
-    "latencyMs": 967
+    "judgeMicros": 63,
+    "latencyMs": 1017
   },
   {
     "questionId": "q-015",
@@ -6247,15 +6178,15 @@
     "round": 2,
     "passageNotes": [
       "doc-torque-spec-gravel-gx",
-      "prj-gravel-gx",
       "mtg-2026-05-30-visit-meridian-sports",
-      "dec-aluminium-6061",
-      "doc-pricing-sheet-2026"
+      "prj-gravel-gx",
+      "doc-pricing-sheet-2026",
+      "dec-aluminium-6061"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "Thru-axles on the Gravel GX take 12 Nm of torque.",
+        "text": "The thru-axles on the Gravel GX take 12 Nm of torque.",
         "citations": [
           {
             "chunkId": "doc-torque-spec-gravel-gx#0",
@@ -6274,15 +6205,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited passage states thru-axles are 12 Nm for the Gravel GX, status current."
+        "reason": "The cited current torque spec states thru-axles 12 Nm for the Gravel GX."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 94,
-    "judgeMicros": 186,
-    "latencyMs": 849
+    "judgeMicros": 65,
+    "latencyMs": 852
   },
   {
     "questionId": "q-017",
@@ -6354,12 +6285,12 @@
       "mtg-2025-12-19-marketing-planning",
       "mtg-2026-11-18-marketing-planning",
       "mtg-2025-04-12-marketing-planning",
-      "mtg-2025-10-19-marketing-planning"
+      "doc-production-plan-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The 2027 marketing budget is split 40% to trade show and launch.",
+        "text": "The 2027 marketing budget is split 40% to trade show and launch, 30% to dealer support, 20% to online, and 10% to photography and video.",
         "citations": [
           {
             "chunkId": "doc-marketing-plan-2027#0",
@@ -6367,40 +6298,26 @@
             "quote": "Budget split: 40% trade show and launch, 30% dealer support, 20% online, 10% photography and video."
           }
         ]
-      },
-      {
-        "text": "The remainder of the split is 30% dealer support, 20% online, and 10% photography and video.",
-        "citations": [
-          {
-            "chunkId": "doc-marketing-plan-2027#0",
-            "noteId": "doc-marketing-plan-2027",
-            "quote": "30% dealer support, 20% online, 10% photography and video."
-          }
-        ]
       }
     ],
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 1,
+      "kept": 1
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states 40% goes to trade show and launch in the 2027 marketing plan."
-      },
-      {
-        "verdict": "supported",
-        "reason": "Passage lists 30% dealer support, 20% online, and 10% photography and video as the other shares."
+        "reason": "The cited current marketing plan gives the same 40/30/20/10 split across the same four categories."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 145,
-    "judgeMicros": 222,
-    "latencyMs": 1263
+    "answerMicros": 118,
+    "judgeMicros": 65,
+    "latencyMs": 1021
   },
   {
     "questionId": "q-019",
@@ -6443,15 +6360,15 @@
     "round": 2,
     "passageNotes": [
       "prj-nordic-dealers",
-      "doc-nordic-expansion-memo",
       "cus-velo-lund",
+      "doc-nordic-expansion-memo",
       "per-lena-nyberg",
-      "per-jonah-whitfield"
+      "per-tomas-lindqvist"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-nordic-dealers", "doc-nordic-expansion-memo", "cus-velo-lund"],
+    "nearest": ["prj-nordic-dealers", "cus-velo-lund", "doc-nordic-expansion-memo"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -6460,9 +6377,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 311,
+    "answerMicros": 108,
     "judgeMicros": 0,
-    "latencyMs": 2866
+    "latencyMs": 1184
   },
   {
     "questionId": "q-021",
@@ -6471,57 +6388,27 @@
     "variant": "vector",
     "round": 2,
     "passageNotes": [
-      "mtg-2026-04-16-operations-weekly",
       "mtg-2026-08-27-operations-weekly",
+      "mtg-2026-04-16-operations-weekly",
       "per-chloe-dumont",
-      "doc-wheel-building-standard",
+      "per-lena-nyberg",
       "per-elena-brandt"
     ],
-    "status": "answered",
-    "sentences": [
-      {
-        "text": "The passages name Chloé Dumont as the owner of the Wheel building standard, not as its author.",
-        "citations": [
-          {
-            "chunkId": "doc-wheel-building-standard#links",
-            "noteId": "doc-wheel-building-standard",
-            "quote": "The owner of Wheel building standard is Chloé Dumont."
-          }
-        ]
-      },
-      {
-        "text": "Chloé Dumont reports to Hiro Sato.",
-        "citations": [
-          {
-            "chunkId": "per-chloe-dumont#links",
-            "noteId": "per-chloe-dumont",
-            "quote": "Chloé Dumont reports to Hiro Sato."
-          }
-        ]
-      }
-    ],
+    "status": "unknown",
+    "sentences": [],
     "removed": [],
-    "nearest": [],
+    "nearest": ["mtg-2026-08-27-operations-weekly", "mtg-2026-04-16-operations-weekly", "per-chloe-dumont"],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 0,
+      "kept": 0
     },
-    "verdicts": [
-      {
-        "verdict": "partial",
-        "reason": "Passage says Chloé Dumont is the owner, but says nothing about authorship or whether she is not the author."
-      },
-      {
-        "verdict": "supported",
-        "reason": "The Chloé Dumont passage states directly that she reports to Hiro Sato."
-      }
-    ],
+    "verdicts": [],
     "answerModel": "claude-haiku-5-5",
-    "judgeModel": "claude-haiku-5-5",
+    "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 250,
-    "judgeMicros": 322,
-    "latencyMs": 2032
+    "answerMicros": 116,
+    "judgeMicros": 0,
+    "latencyMs": 1083
   },
   {
     "questionId": "q-022",
@@ -6534,7 +6421,7 @@
       "dec-switch-battery-voltaro",
       "doc-battery-spec-v3",
       "prj-ridgeline-emtb",
-      "doc-cell-test-report"
+      "per-tomas-lindqvist"
     ],
     "status": "unknown",
     "sentences": [],
@@ -6548,9 +6435,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 216,
+    "answerMicros": 225,
     "judgeMicros": 0,
-    "latencyMs": 2047
+    "latencyMs": 1802
   },
   {
     "questionId": "q-023",
@@ -6624,15 +6511,15 @@
     "round": 2,
     "passageNotes": [
       "prj-warranty-flow",
-      "doc-dealer-handbook-2025",
       "mtg-2025-06-11-warranty-review",
       "mtg-2026-08-28-leadership",
-      "doc-service-faq"
+      "doc-dealer-handbook-2025",
+      "dec-lifetime-frame-cover"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-warranty-flow", "doc-dealer-handbook-2025", "mtg-2025-06-11-warranty-review"],
+    "nearest": ["prj-warranty-flow", "mtg-2025-06-11-warranty-review", "mtg-2026-08-28-leadership"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -6641,9 +6528,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 98,
+    "answerMicros": 103,
     "judgeMicros": 0,
-    "latencyMs": 1022
+    "latencyMs": 927
   },
   {
     "questionId": "q-025",
@@ -6656,18 +6543,23 @@
       "doc-field-test-autumn-2026",
       "per-yara-dunmore",
       "per-ivo-kerr",
-      "per-mateus-rocha"
+      "per-wren-galloway"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The autumn 2026 field test notes are owned by Yara Dunmore, who writes up every test round.",
+        "text": "The autumn 2026 field test notes are owned by Yara Dunmore.",
         "citations": [
           {
             "chunkId": "doc-field-test-autumn-2026#links",
             "noteId": "doc-field-test-autumn-2026",
             "quote": "The owner of Field test notes, autumn 2026 is Yara Dunmore."
-          },
+          }
+        ]
+      },
+      {
+        "text": "Yara Dunmore writes up every test round.",
+        "citations": [
           {
             "chunkId": "per-yara-dunmore#0",
             "noteId": "per-yara-dunmore",
@@ -6676,7 +6568,7 @@
         ]
       },
       {
-        "text": "Yara Dunmore reports to Tomás Lindqvist.",
+        "text": "Yara Dunmore's line manager is Tomás Lindqvist.",
         "citations": [
           {
             "chunkId": "per-yara-dunmore#links",
@@ -6695,19 +6587,23 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Doc names Yara Dunmore as owner; person note says she writes up every test round, and the doc is the autumn 2026 field test notes."
+        "reason": "Passage states the owner of Field test notes, autumn 2026 is Yara Dunmore."
       },
       {
         "verdict": "supported",
-        "reason": "The Yara Dunmore passage explicitly states she reports to Tomás Lindqvist."
+        "reason": "Yara Dunmore's passage says she writes up every test round."
+      },
+      {
+        "verdict": "supported",
+        "reason": "Yara Dunmore's passage states she reports to Tomás Lindqvist, so he is her line manager."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 270,
-    "judgeMicros": 241,
-    "latencyMs": 2031
+    "answerMicros": 260,
+    "judgeMicros": 116,
+    "latencyMs": 2205
   },
   {
     "questionId": "q-026",
@@ -6794,7 +6690,7 @@
       "mtg-2026-10-02-supply-review",
       "doc-ampcore-supply-agreement",
       "dec-switch-battery-voltaro",
-      "per-kofi-mensah"
+      "mtg-2026-11-13-quality-review"
     ],
     "status": "unknown",
     "sentences": [],
@@ -6812,9 +6708,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 108,
+    "answerMicros": 106,
     "judgeMicros": 0,
-    "latencyMs": 1023
+    "latencyMs": 997
   },
   {
     "questionId": "q-029",
@@ -6824,15 +6720,15 @@
     "round": 2,
     "passageNotes": [
       "dec-aluminium-6061",
-      "per-maya-okafor",
       "doc-c27-frame-spec",
+      "per-maya-okafor",
       "mtg-2026-09-12-c27-kickoff",
       "mtg-2026-10-20-ops-sync"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["dec-aluminium-6061", "per-maya-okafor", "doc-c27-frame-spec"],
+    "nearest": ["dec-aluminium-6061", "doc-c27-frame-spec", "per-maya-okafor"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -6841,9 +6737,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 155,
+    "answerMicros": 134,
     "judgeMicros": 0,
-    "latencyMs": 1471
+    "latencyMs": 1190
   },
   {
     "questionId": "q-030",
@@ -6855,8 +6751,8 @@
       "mtg-2026-08-28-leadership",
       "dec-lifetime-frame-cover",
       "mtg-2026-09-12-c27-kickoff",
-      "mtg-2026-08-09-marketing-planning",
-      "mtg-2026-11-18-marketing-planning"
+      "per-elena-brandt",
+      "prj-ridgeline-emtb"
     ],
     "status": "answered",
     "sentences": [
@@ -6886,9 +6782,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 164,
-    "judgeMicros": 69,
-    "latencyMs": 1261
+    "answerMicros": 171,
+    "judgeMicros": 193,
+    "latencyMs": 1431
   },
   {
     "questionId": "q-031",
@@ -6960,23 +6856,28 @@
       "dec-rear-rack-v2-rated-for-27-kg",
       "mtg-2026-05-29-product-review",
       "dec-rack-v2-made-by-our-current-rack-supplier",
-      "doc-c27-frame-spec"
+      "prj-commuter-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The 27 kg rear rack decision is part of the Rear rack v2 project.",
+        "text": "The owner of the decision to rate the rear rack for 27 kg is Ines Castell.",
         "citations": [
           {
-            "chunkId": "dec-rear-rack-v2-rated-for-27-kg#0",
+            "chunkId": "dec-rear-rack-v2-rated-for-27-kg#links",
             "noteId": "dec-rear-rack-v2-rated-for-27-kg",
-            "quote": "The new rack is rated for 27 kg and takes a child seat. Part of Rear rack v2."
+            "quote": "The owner of Rear rack v2 rated for 27 kg is Ines Castell."
           }
         ]
       },
       {
-        "text": "The owner of the Rear rack v2 project is Ines Castell.",
+        "text": "The 27 kg decision is part of the Rear rack v2 project, whose owner is also Ines Castell.",
         "citations": [
+          {
+            "chunkId": "dec-rear-rack-v2-rated-for-27-kg#0",
+            "noteId": "dec-rear-rack-v2-rated-for-27-kg",
+            "quote": "Part of Rear rack v2."
+          },
           {
             "chunkId": "prj-rear-rack-v2#links",
             "noteId": "prj-rear-rack-v2",
@@ -6988,25 +6889,25 @@
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 3,
+      "kept": 3
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Decision passage says the rack is rated for 27 kg and is part of Rear rack v2."
+        "reason": "Passage states the decision's owner, Ines Castell, for the rear rack rated 27 kg."
       },
       {
         "verdict": "supported",
-        "reason": "Project passage states the owner of Rear rack v2 is Ines Castell."
+        "reason": "Decision passage says it is part of Rear rack v2; project passage names Ines Castell as owner."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 253,
-    "judgeMicros": 224,
-    "latencyMs": 3321
+    "answerMicros": 531,
+    "judgeMicros": 244,
+    "latencyMs": 3292
   },
   {
     "questionId": "q-033",
@@ -7078,7 +6979,7 @@
       "mtg-2026-09-22-finance-review",
       "prj-erp-migration",
       "mtg-2026-05-11-finance-review",
-      "mtg-2025-03-13-product-review"
+      "mtg-2025-12-29-product-review"
     ],
     "status": "answered",
     "sentences": [
@@ -7093,7 +6994,7 @@
         ]
       },
       {
-        "text": "This decision replaced the earlier plan to go live in February.",
+        "text": "This decision, made on 22 September 2026, replaces the earlier February go-live date.",
         "citations": [
           {
             "chunkId": "dec-go-live-with-the-new-erp-in-april#links",
@@ -7112,19 +7013,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The passage states the new ERP goes live on 6 April 2027 instead."
+        "reason": "The passage states the new ERP goes live on 6 April 2027."
       },
       {
         "verdict": "supported",
-        "reason": "The passage says the April go-live decision replaces the February go-live plan."
+        "reason": "Passage says the decision was made 22 Sep 2026 and replaces the February go-live note."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 203,
-    "judgeMicros": 266,
-    "latencyMs": 1603
+    "answerMicros": 217,
+    "judgeMicros": 278,
+    "latencyMs": 1761
   },
   {
     "questionId": "q-035",
@@ -7134,61 +7035,26 @@
     "round": 2,
     "passageNotes": [
       "per-kit-farrow",
-      "dec-book-a-90-square-metre-stand",
       "per-wilde-tull",
-      "per-chloe-dumont",
-      "per-theo-castillo"
+      "prj-ridgeline-emtb",
+      "per-theo-castillo",
+      "per-rafe-lowe"
     ],
-    "status": "answered",
-    "sentences": [
-      {
-        "text": "The stand at the 2027 trade show is 90 square metres.",
-        "citations": [
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#0",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "We take a 90 square metre corner stand in hall B instead."
-          },
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#0",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "Part of Trade show 2027."
-          }
-        ]
-      },
-      {
-        "text": "This decision replaces the earlier plan for a 60 square metre stand.",
-        "citations": [
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#links",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "Book a 90 square metre stand replaces Book a 60 square metre stand."
-          }
-        ]
-      }
-    ],
+    "status": "unknown",
+    "sentences": [],
     "removed": [],
-    "nearest": [],
+    "nearest": ["per-kit-farrow", "per-wilde-tull", "prj-ridgeline-emtb"],
     "citations": {
-      "submitted": 3,
-      "kept": 3
+      "submitted": 0,
+      "kept": 0
     },
-    "verdicts": [
-      {
-        "verdict": "supported",
-        "reason": "Passage states the Tarnwick-related decision takes a 90 square metre corner stand for Trade show 2027."
-      },
-      {
-        "verdict": "supported",
-        "reason": "Passage says the 90 square metre stand decision replaces Book a 60 square metre stand, matching the earlier 60 square metre plan."
-      }
-    ],
+    "verdicts": [],
     "answerModel": "claude-haiku-5-5",
-    "judgeModel": "claude-haiku-5-5",
+    "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 240,
-    "judgeMicros": 240,
-    "latencyMs": 1872
+    "answerMicros": 81,
+    "judgeMicros": 0,
+    "latencyMs": 1644
   },
   {
     "questionId": "q-036",
@@ -7331,14 +7197,14 @@
     "passageNotes": [
       "doc-battery-spec-v3",
       "mtg-2026-03-17-supply-review",
-      "dec-switch-battery-voltaro",
       "mtg-2026-10-02-supply-review",
+      "dec-switch-battery-voltaro",
       "prj-ridgeline-emtb"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The Ridgeline battery takes about four hours to charge fully, using a 5 A charger.",
+        "text": "The Ridgeline battery takes four hours to charge to full, using a 5 A charger.",
         "citations": [
           {
             "chunkId": "doc-battery-spec-v3#1",
@@ -7357,15 +7223,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cited current spec says a 5 A charger fully charges in four hours, matching the sentence."
+        "reason": "Cited current spec states a 5 A charger takes four hours to reach full."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 190,
-    "judgeMicros": 178,
-    "latencyMs": 1568
+    "answerMicros": 161,
+    "judgeMicros": 175,
+    "latencyMs": 1441
   },
   {
     "questionId": "q-039",
@@ -7377,13 +7243,13 @@
       "doc-quality-report-q3-2026",
       "doc-quality-report-q2-2026",
       "doc-quality-report-q1-2026",
-      "mtg-2025-11-15-finance-review",
-      "mtg-2026-05-11-finance-review"
+      "mtg-2025-08-24-finance-review",
+      "mtg-2025-11-15-finance-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The most recent field return rate was 0.8%, in the Q3 2026 quality report.",
+        "text": "The most recent quality report, Q3 2026, gives a field return rate of 0.8%.",
         "citations": [
           {
             "chunkId": "doc-quality-report-q3-2026#0",
@@ -7402,15 +7268,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cited Q3 2026 report states field returns of 0.8%; title and date confirm it is the Q3 2026 report."
+        "reason": "The cited Q3 2026 report states field returns of 0.8%; its 'current' status supports it being the most recent."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 122,
-    "judgeMicros": 70,
-    "latencyMs": 1042
+    "answerMicros": 129,
+    "judgeMicros": 351,
+    "latencyMs": 1179
   },
   {
     "questionId": "q-040",
@@ -7482,12 +7348,12 @@
       "doc-firmware-release-notes-3-3",
       "mtg-2025-11-19-product-review",
       "mtg-2025-09-01-product-review",
-      "mtg-2025-03-13-product-review"
+      "mtg-2025-12-29-product-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "Firmware 3.3 adds a range estimate based on the last 20 km.",
+        "text": "The newest firmware, release notes 3.3, adds a range estimate based on the last 20 km.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
@@ -7497,76 +7363,12 @@
         ]
       },
       {
-        "text": "Firmware 3.3 also includes a fix for the display freezing in cold weather.",
+        "text": "It also includes a fix for the display freezing in cold weather.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
             "noteId": "doc-firmware-release-notes-3-3",
-            "quote": "a fix for the display freezing in cold weather."
-          }
-        ]
-      }
-    ],
-    "removed": [
-      {
-        "text": "The newest firmware release is 3.3, last updated 6 Oct 2026.",
-        "reason": "quote-not-found"
-      }
-    ],
-    "nearest": [],
-    "citations": {
-      "submitted": 3,
-      "kept": 2
-    },
-    "verdicts": [
-      {
-        "verdict": "supported",
-        "reason": "Passage states firmware 3.3 includes a range estimate based on the last 20 km."
-      },
-      {
-        "verdict": "supported",
-        "reason": "Passage states 3.3 includes a fix for the display freezing in cold weather."
-      }
-    ],
-    "answerModel": "claude-haiku-5-5",
-    "judgeModel": "claude-haiku-5-5",
-    "fallbackUsed": false,
-    "answerMicros": 276,
-    "judgeMicros": 218,
-    "latencyMs": 3484
-  },
-  {
-    "questionId": "q-042",
-    "kind": "temporal",
-    "split": "test",
-    "variant": "vector",
-    "round": 2,
-    "passageNotes": [
-      "dec-lifetime-frame-cover",
-      "mtg-2026-06-30-frame-review",
-      "doc-dealer-handbook-2025",
-      "mtg-2025-06-11-warranty-review",
-      "mtg-2026-08-28-leadership"
-    ],
-    "status": "answered",
-    "sentences": [
-      {
-        "text": "A frame bought in October 2026 is covered against structural failure for the whole time the first owner keeps the bike.",
-        "citations": [
-          {
-            "chunkId": "dec-lifetime-frame-cover#0",
-            "noteId": "dec-lifetime-frame-cover",
-            "quote": "the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it"
-          }
-        ]
-      },
-      {
-        "text": "This cover applies to bikes bought from 1 September 2026, so an October 2026 purchase is included.",
-        "citations": [
-          {
-            "chunkId": "dec-lifetime-frame-cover#0",
-            "noteId": "dec-lifetime-frame-cover",
-            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered"
+            "quote": "a fix for the display freezing in cold weather"
           }
         ]
       }
@@ -7580,19 +7382,97 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage says chassis of bikes bought from 1 Sept 2026 is covered for whole time first owner keeps it."
+        "reason": "Cited release notes 3.3, marked current, list a range estimate based on the last 20 km."
       },
       {
         "verdict": "supported",
-        "reason": "Passage covers every bike bought from 1 September 2026, so an October 2026 purchase falls within it."
+        "reason": "The cited release notes say they include a fix for the display freezing in cold weather."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 279,
-    "judgeMicros": 240,
-    "latencyMs": 2325
+    "answerMicros": 318,
+    "judgeMicros": 292,
+    "latencyMs": 2574
+  },
+  {
+    "questionId": "q-042",
+    "kind": "temporal",
+    "split": "test",
+    "variant": "vector",
+    "round": 2,
+    "passageNotes": [
+      "dec-lifetime-frame-cover",
+      "mtg-2026-06-30-frame-review",
+      "mtg-2026-08-28-leadership",
+      "mtg-2025-06-11-warranty-review",
+      "doc-dealer-handbook-2025"
+    ],
+    "status": "answered",
+    "sentences": [
+      {
+        "text": "A bike bought in October 2026 falls under the lifetime structural cover, which starts 1 September 2026.",
+        "citations": [
+          {
+            "chunkId": "dec-lifetime-frame-cover#0",
+            "noteId": "dec-lifetime-frame-cover",
+            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural"
+          }
+        ]
+      },
+      {
+        "text": "The frame is covered against structural failure for the whole time the first owner keeps the bike.",
+        "citations": [
+          {
+            "chunkId": "dec-lifetime-frame-cover#0",
+            "noteId": "dec-lifetime-frame-cover",
+            "quote": "failure for the whole time its first owner keeps it."
+          }
+        ]
+      },
+      {
+        "text": "This lifetime cover replaces the older Warranty terms, which gave five years on the frame.",
+        "citations": [
+          {
+            "chunkId": "dec-lifetime-frame-cover#links",
+            "noteId": "dec-lifetime-frame-cover",
+            "quote": "Lifetime structural cover for first owners replaces Warranty terms."
+          },
+          {
+            "chunkId": "doc-dealer-handbook-2025#1",
+            "noteId": "doc-dealer-handbook-2025",
+            "quote": "Five years on the frame and two years on everything else."
+          }
+        ]
+      }
+    ],
+    "removed": [],
+    "nearest": [],
+    "citations": {
+      "submitted": 4,
+      "kept": 4
+    },
+    "verdicts": [
+      {
+        "verdict": "supported",
+        "reason": "Passage says chassis of every bike bought from 1 Sept 2026 is covered for the first owner's lifetime of ownership."
+      },
+      {
+        "verdict": "supported",
+        "reason": "Passage states the chassis is covered against structural failure for the whole time the first owner keeps it."
+      },
+      {
+        "verdict": "supported",
+        "reason": "Passage says lifetime cover replaces Warranty terms; handbook says warranty gave five years on the frame."
+      }
+    ],
+    "answerModel": "claude-haiku-5-5",
+    "judgeModel": "claude-haiku-5-5",
+    "fallbackUsed": false,
+    "answerMicros": 299,
+    "judgeMicros": 419,
+    "latencyMs": 2204
   },
   {
     "questionId": "q-043",
@@ -7696,8 +7576,8 @@
       "prj-cargo-longtail",
       "prj-nordic-dealers",
       "mtg-2026-07-08-visit-hafen-rad",
-      "doc-cargo-longtail-frame-spec",
-      "cus-velo-lund"
+      "cus-velo-lund",
+      "doc-cargo-longtail-frame-spec"
     ],
     "status": "unknown",
     "sentences": [],
@@ -7711,9 +7591,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 76,
+    "answerMicros": 74,
     "judgeMicros": 0,
-    "latencyMs": 878
+    "latencyMs": 802
   },
   {
     "questionId": "q-046",
@@ -7722,8 +7602,8 @@
     "variant": "vector",
     "round": 2,
     "passageNotes": [
-      "doc-battery-spec-v3",
       "mtg-2026-10-02-supply-review",
+      "doc-battery-spec-v3",
       "dec-switch-battery-voltaro",
       "doc-cell-test-report",
       "doc-ampcore-supply-agreement"
@@ -7731,7 +7611,7 @@
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["doc-battery-spec-v3", "mtg-2026-10-02-supply-review", "dec-switch-battery-voltaro"],
+    "nearest": ["mtg-2026-10-02-supply-review", "doc-battery-spec-v3", "dec-switch-battery-voltaro"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -7740,9 +7620,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 102,
+    "answerMicros": 99,
     "judgeMicros": 0,
-    "latencyMs": 1758
+    "latencyMs": 1247
   },
   {
     "questionId": "q-047",
@@ -7754,8 +7634,8 @@
       "mtg-2026-10-20-ops-sync",
       "dec-c27-joining-calvane",
       "per-elena-brandt",
-      "cus-velo-lund",
-      "cus-canal-street-cycles"
+      "cus-canal-street-cycles",
+      "mtg-2026-09-12-c27-kickoff"
     ],
     "status": "unknown",
     "sentences": [],
@@ -7769,9 +7649,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 78,
+    "answerMicros": 80,
     "judgeMicros": 0,
-    "latencyMs": 1013
+    "latencyMs": 1041
   },
   {
     "questionId": "q-048",
@@ -7784,7 +7664,7 @@
       "prj-paint-line-upgrade",
       "mtg-2026-08-27-operations-weekly",
       "mtg-2026-11-13-quality-review",
-      "dec-move-the-oven-install-to-the-december-shutdo"
+      "mtg-2025-05-18-finance-review"
     ],
     "status": "unknown",
     "sentences": [],
@@ -7798,9 +7678,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 79,
+    "answerMicros": 77,
     "judgeMicros": 0,
-    "latencyMs": 1335
+    "latencyMs": 1167
   },
   {
     "questionId": "q-049",
@@ -7811,14 +7691,14 @@
     "passageNotes": [
       "prj-ridgeline-emtb",
       "doc-roadmap-memo-2027",
-      "dec-book-a-90-square-metre-stand",
+      "dec-pause-dealer-portal",
       "doc-battery-spec-v3",
       "mtg-2026-03-17-supply-review"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-ridgeline-emtb", "doc-roadmap-memo-2027", "dec-book-a-90-square-metre-stand"],
+    "nearest": ["prj-ridgeline-emtb", "doc-roadmap-memo-2027", "dec-pause-dealer-portal"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -7827,9 +7707,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 93,
+    "answerMicros": 90,
     "judgeMicros": 0,
-    "latencyMs": 924
+    "latencyMs": 904
   },
   {
     "questionId": "q-050",
@@ -7839,15 +7719,15 @@
     "round": 2,
     "passageNotes": [
       "per-jonah-whitfield",
-      "per-theo-marsh",
       "doc-quality-report-q3-2026",
       "mtg-2025-06-11-marketing-planning",
+      "mtg-2026-05-06-dealer-day",
       "per-sana-orr"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["per-jonah-whitfield", "per-theo-marsh", "doc-quality-report-q3-2026"],
+    "nearest": ["per-jonah-whitfield", "doc-quality-report-q3-2026", "mtg-2025-06-11-marketing-planning"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -7858,7 +7738,7 @@
     "fallbackUsed": false,
     "answerMicros": 96,
     "judgeMicros": 0,
-    "latencyMs": 1016
+    "latencyMs": 960
   },
   {
     "questionId": "q-011",
@@ -9985,17 +9865,17 @@
       "prj-brake-lever-recall",
       "doc-pre-delivery-safety-checklist",
       "mtg-2025-10-14-quality-review",
-      "mtg-2026-07-13-quality-review"
+      "dec-book-a-90-square-metre-stand"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "Every brake model is tested for 1,000 stops from 25 km/h, wet and dry.",
+        "text": "The brake test requires 1,000 stops from 25 km/h, wet and dry.",
         "citations": [
           {
             "chunkId": "doc-brake-test-protocol#0",
             "noteId": "doc-brake-test-protocol",
-            "quote": "Every brake model is tested for 1,000 stops from 25 km/h, wet and dry"
+            "quote": "Every brake model is tested for 1,000 stops from 25 km/h, wet and dry, with lever force logged."
           }
         ]
       }
@@ -10015,9 +9895,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 104,
-    "judgeMicros": 66,
-    "latencyMs": 922
+    "answerMicros": 159,
+    "judgeMicros": 181,
+    "latencyMs": 1378
   },
   {
     "questionId": "q-013",
@@ -10165,7 +10045,7 @@
       "doc-torque-spec-gravel-gx",
       "per-ines-castell",
       "dec-aluminium-6061",
-      "dec-second-source-for-chromoly-tubing"
+      "mtg-2026-05-30-visit-meridian-sports"
     ],
     "status": "answered",
     "sentences": [
@@ -10189,15 +10069,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cited spec states thru-axles 12 Nm for the Gravel GX, status current and updated 2026-09-05."
+        "reason": "The cited current spec states thru-axles 12 Nm for the Gravel GX."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 94,
-    "judgeMicros": 190,
-    "latencyMs": 897
+    "answerMicros": 147,
+    "judgeMicros": 183,
+    "latencyMs": 2550
   },
   {
     "questionId": "q-017",
@@ -10268,8 +10148,8 @@
       "doc-marketing-plan-2027",
       "mtg-2025-12-19-marketing-planning",
       "mtg-2025-04-12-marketing-planning",
-      "mtg-2026-11-18-marketing-planning",
-      "mtg-2026-08-09-marketing-planning"
+      "mtg-2025-06-11-marketing-planning",
+      "mtg-2026-11-18-marketing-planning"
     ],
     "status": "answered",
     "sentences": [
@@ -10303,7 +10183,7 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states 40% goes to trade show and launch under the 2027 marketing plan."
+        "reason": "Passage states 40% goes to trade show and launch for the 2027 plan."
       },
       {
         "verdict": "supported",
@@ -10314,8 +10194,8 @@
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 146,
-    "judgeMicros": 92,
-    "latencyMs": 1195
+    "judgeMicros": 91,
+    "latencyMs": 1201
   },
   {
     "questionId": "q-019",
@@ -10413,8 +10293,8 @@
     "round": 2,
     "passageNotes": [
       "doc-wheel-building-standard",
-      "mtg-2026-04-16-operations-weekly",
       "mtg-2026-08-27-operations-weekly",
+      "mtg-2026-04-16-operations-weekly",
       "per-chloe-dumont",
       "mtg-2025-11-06-operations-weekly"
     ],
@@ -10450,7 +10330,7 @@
     "verdicts": [
       {
         "verdict": "partial",
-        "reason": "Passage says Chloé Dumont is the owner, but says nothing about authorship or about her not being the author."
+        "reason": "The passage says Chloé Dumont is the owner, but says nothing about authorship or whether she is not the author."
       },
       {
         "verdict": "supported",
@@ -10460,9 +10340,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 238,
-    "judgeMicros": 180,
-    "latencyMs": 2055
+    "answerMicros": 209,
+    "judgeMicros": 311,
+    "latencyMs": 1649
   },
   {
     "questionId": "q-022",
@@ -10881,13 +10761,13 @@
       "doc-c27-frame-spec",
       "prj-commuter-2027",
       "dec-aluminium-6061",
-      "mtg-2026-09-12-c27-kickoff",
-      "per-ines-castell"
+      "per-ines-castell",
+      "mtg-2026-09-12-c27-kickoff"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The C27 frame spec is owned by Ines Castell, who is taken as its author.",
+        "text": "The passages name Ines Castell as the owner of the C27 frame spec, not as its author.",
         "citations": [
           {
             "chunkId": "doc-c27-frame-spec#links",
@@ -10916,19 +10796,19 @@
     "verdicts": [
       {
         "verdict": "partial",
-        "reason": "The passage says Ines Castell is the owner, but says nothing about her being the author."
+        "reason": "Passage says Ines Castell is the owner of the spec, but says nothing about authorship or about her not being the author."
       },
       {
         "verdict": "supported",
-        "reason": "The passage states Ines Castell reports to Maya Okafor, which means Maya manages her."
+        "reason": "Passage says Ines Castell reports to Maya Okafor, which supports the claim that Maya manages her."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 272,
-    "judgeMicros": 283,
-    "latencyMs": 2148
+    "answerMicros": 301,
+    "judgeMicros": 311,
+    "latencyMs": 2488
   },
   {
     "questionId": "q-030",
@@ -11549,19 +11429,24 @@
       "doc-supplier-scorecard-q2-2026",
       "doc-supplier-scorecard-q3-2026",
       "dec-rack-v2-made-by-our-current-rack-supplier",
-      "mtg-2026-07-08-visit-hafen-rad",
-      "dec-switch-battery-voltaro"
+      "dec-switch-battery-voltaro",
+      "mtg-2026-07-08-visit-hafen-rad"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The latest on-time delivery rate for racks is 85%, in the Q3 2026 scorecard, which was down from 94% in Q2 2026.",
+        "text": "The latest scorecard, Q3 2026 (updated 2 Oct 2026), gives racks an on-time delivery rate of 85%.",
         "citations": [
           {
             "chunkId": "doc-supplier-scorecard-q3-2026#0",
             "noteId": "doc-supplier-scorecard-q3-2026",
             "quote": "racks 85% (tooling change)"
-          },
+          }
+        ]
+      },
+      {
+        "text": "The earlier Q2 2026 scorecard showed racks at 94%, so the rate fell in Q3.",
+        "citations": [
           {
             "chunkId": "doc-supplier-scorecard-q2-2026#0",
             "noteId": "doc-supplier-scorecard-q2-2026",
@@ -11579,15 +11464,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Q3 2026 scorecard lists racks at 85%; Q2 2026 scorecard lists racks at 94%, as stated."
+        "reason": "Q3 2026 scorecard, updated 2026-10-02, lists racks on-time delivery at 85%."
+      },
+      {
+        "verdict": "supported",
+        "reason": "Q2 2026 scorecard lists racks at 94%; Q3 value of 85% is lower, so it fell."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 209,
-    "judgeMicros": 252,
-    "latencyMs": 1710
+    "answerMicros": 290,
+    "judgeMicros": 240,
+    "latencyMs": 2823
   },
   {
     "questionId": "q-041",
@@ -11598,29 +11487,29 @@
     "passageNotes": [
       "doc-firmware-release-notes-3-2",
       "doc-firmware-release-notes-3-3",
-      "per-tomas-lindqvist",
       "per-dev-kerr",
+      "per-tomas-lindqvist",
       "mtg-2025-11-19-product-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The newest firmware, release notes 3.3, adds a range estimate based on the last 20 km.",
+        "text": "The newest firmware release is 3.3, which adds a range estimate based on the last 20 km.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
             "noteId": "doc-firmware-release-notes-3-3",
-            "quote": "Range estimate based on the last 20 km, and a fix for the display freezing in cold weather."
+            "quote": "Range estimate based on the last 20 km"
           }
         ]
       },
       {
-        "text": "Release notes 3.3 also includes a fix for the display freezing in cold weather.",
+        "text": "Firmware 3.3 also includes a fix for the display freezing in cold weather.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
             "noteId": "doc-firmware-release-notes-3-3",
-            "quote": "a fix for the display freezing in cold weather."
+            "quote": "a fix for the display freezing in cold weather"
           }
         ]
       }
@@ -11634,19 +11523,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states range estimate based on last 20 km in release 3.3, marked current and newest-dated."
+        "reason": "Passage (status current, 3.3) states the range estimate based on the last 20 km; 'newest' is reasonably implied by 'current'."
       },
       {
         "verdict": "supported",
-        "reason": "Passage states release 3.3 includes a fix for display freezing in cold weather."
+        "reason": "Passage explicitly lists a fix for the display freezing in cold weather in release 3.3."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 220,
-    "judgeMicros": 221,
-    "latencyMs": 1806
+    "answerMicros": 210,
+    "judgeMicros": 178,
+    "latencyMs": 2000
   },
   {
     "questionId": "q-042",
@@ -11657,29 +11546,24 @@
     "passageNotes": [
       "dec-lifetime-frame-cover",
       "mtg-2026-06-30-frame-review",
-      "doc-service-faq",
       "mtg-2026-08-28-leadership",
+      "doc-service-faq",
       "prj-commuter-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "A frame bought in October 2026 is covered against structural failure for the whole time its first owner keeps the bike.",
+        "text": "A bike bought in October 2026 has its chassis covered against structural failure for the whole time its first owner keeps it.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#0",
             "noteId": "dec-lifetime-frame-cover",
-            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural"
-          },
-          {
-            "chunkId": "dec-lifetime-frame-cover#0",
-            "noteId": "dec-lifetime-frame-cover",
-            "quote": "failure for the whole time its first owner keeps it."
+            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it."
           }
         ]
       },
       {
-        "text": "The newer lifetime cover replaces the older warranty terms, so the older five-year frame warranty in the FAQ no longer applies.",
+        "text": "This lifetime cover replaces the older warranty terms, which had given five years from purchase for a first owner.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#links",
@@ -11697,25 +11581,25 @@
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 4,
-      "kept": 4
+      "submitted": 3,
+      "kept": 3
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage says chassis of bikes bought from 1 Sept 2026 is covered for the whole time the first owner keeps it."
+        "reason": "From 1 September 2026 the chassis of every bike bought is covered for the first owner's whole ownership period."
       },
       {
-        "verdict": "unsupported",
-        "reason": "Passage says lifetime cover replaces 'Warranty terms', but never names the FAQ's five-year warranty as superseded; the FAQ is marked current."
+        "verdict": "partial",
+        "reason": "Replacement of Warranty terms is stated, but the FAQ's five-year first-owner term is never explicitly tied to those warranty terms."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 367,
-    "judgeMicros": 575,
-    "latencyMs": 3328
+    "answerMicros": 292,
+    "judgeMicros": 451,
+    "latencyMs": 2289
   },
   {
     "questionId": "q-043",
@@ -11841,8 +11725,8 @@
     "variant": "hybrid",
     "round": 2,
     "passageNotes": [
-      "dec-switch-battery-voltaro",
       "mtg-2026-10-02-supply-review",
+      "dec-switch-battery-voltaro",
       "doc-battery-spec-v3",
       "doc-ampcore-supply-agreement",
       "doc-cell-test-report"
@@ -11850,7 +11734,7 @@
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["dec-switch-battery-voltaro", "mtg-2026-10-02-supply-review", "doc-battery-spec-v3"],
+    "nearest": ["mtg-2026-10-02-supply-review", "dec-switch-battery-voltaro", "doc-battery-spec-v3"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -11859,9 +11743,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 103,
+    "answerMicros": 106,
     "judgeMicros": 0,
-    "latencyMs": 1731
+    "latencyMs": 1003
   },
   {
     "questionId": "q-047",
@@ -11874,7 +11758,7 @@
       "mtg-2026-10-20-ops-sync",
       "per-elena-brandt",
       "per-hiro-sato",
-      "cus-velo-lund"
+      "cus-canal-street-cycles"
     ],
     "status": "unknown",
     "sentences": [],
@@ -11888,9 +11772,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 89,
+    "answerMicros": 80,
     "judgeMicros": 0,
-    "latencyMs": 936
+    "latencyMs": 819
   },
   {
     "questionId": "q-048",
@@ -11931,8 +11815,8 @@
       "prj-ridgeline-emtb",
       "per-tomas-lindqvist",
       "doc-battery-spec-v3",
-      "doc-field-test-autumn-2026",
-      "dec-book-a-90-square-metre-stand"
+      "dec-pause-dealer-portal",
+      "dec-switch-battery-voltaro"
     ],
     "status": "unknown",
     "sentences": [],
@@ -11946,9 +11830,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 86,
+    "answerMicros": 85,
     "judgeMicros": 0,
-    "latencyMs": 770
+    "latencyMs": 850
   },
   {
     "questionId": "q-050",
@@ -12034,8 +11918,8 @@
       "doc-brake-test-protocol",
       "prj-brake-lever-recall",
       "doc-pre-delivery-safety-checklist",
-      "mtg-2025-10-14-quality-review",
-      "doc-dealer-training-syllabus"
+      "doc-dealer-training-syllabus",
+      "mtg-2025-10-14-quality-review"
     ],
     "status": "answered",
     "sentences": [
@@ -12066,8 +11950,8 @@
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 102,
-    "judgeMicros": 66,
-    "latencyMs": 920
+    "judgeMicros": 65,
+    "latencyMs": 930
   },
   {
     "questionId": "q-013",
@@ -12124,8 +12008,8 @@
       "mtg-2025-12-29-product-review",
       "mtg-2025-05-19-product-review",
       "doc-colour-list-2027",
-      "mtg-2026-05-29-product-review",
-      "dec-catalogue-printed-on-recycled-paper"
+      "dec-catalogue-printed-on-recycled-paper",
+      "mtg-2026-05-29-product-review"
     ],
     "status": "answered",
     "sentences": [
@@ -12155,9 +12039,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 160,
-    "judgeMicros": 71,
-    "latencyMs": 1339
+    "answerMicros": 119,
+    "judgeMicros": 72,
+    "latencyMs": 1047
   },
   {
     "questionId": "q-015",
@@ -12212,10 +12096,10 @@
     "round": 3,
     "passageNotes": [
       "doc-torque-spec-gravel-gx",
-      "prj-gravel-gx",
       "mtg-2026-05-30-visit-meridian-sports",
-      "dec-aluminium-6061",
-      "doc-pricing-sheet-2026"
+      "prj-gravel-gx",
+      "doc-pricing-sheet-2026",
+      "dec-aluminium-6061"
     ],
     "status": "answered",
     "sentences": [
@@ -12239,15 +12123,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The current torque spec states thru-axles 12 Nm for the Gravel GX."
+        "reason": "The current torque spec passage states thru-axles 12 Nm for the Gravel GX."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 94,
-    "judgeMicros": 63,
-    "latencyMs": 832
+    "answerMicros": 157,
+    "judgeMicros": 64,
+    "latencyMs": 1416
   },
   {
     "questionId": "q-017",
@@ -12319,7 +12203,7 @@
       "mtg-2025-12-19-marketing-planning",
       "mtg-2026-11-18-marketing-planning",
       "mtg-2025-04-12-marketing-planning",
-      "mtg-2025-10-19-marketing-planning"
+      "doc-production-plan-2027"
     ],
     "status": "answered",
     "sentences": [
@@ -12343,15 +12227,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited current 2027 marketing plan gives the same 40/30/20/10 split across the same four categories."
+        "reason": "The cited passage states the same split: 40% trade show and launch, 30% dealer support, 20% online, 10% photography and video."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 117,
-    "judgeMicros": 184,
-    "latencyMs": 965
+    "answerMicros": 118,
+    "judgeMicros": 70,
+    "latencyMs": 989
   },
   {
     "questionId": "q-019",
@@ -12394,15 +12278,15 @@
     "round": 3,
     "passageNotes": [
       "prj-nordic-dealers",
-      "doc-nordic-expansion-memo",
       "cus-velo-lund",
+      "doc-nordic-expansion-memo",
       "per-lena-nyberg",
-      "per-jonah-whitfield"
+      "per-tomas-lindqvist"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-nordic-dealers", "doc-nordic-expansion-memo", "cus-velo-lund"],
+    "nearest": ["prj-nordic-dealers", "cus-velo-lund", "doc-nordic-expansion-memo"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -12411,9 +12295,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 224,
+    "answerMicros": 115,
     "judgeMicros": 0,
-    "latencyMs": 2011
+    "latencyMs": 1038
   },
   {
     "questionId": "q-021",
@@ -12422,57 +12306,27 @@
     "variant": "vector",
     "round": 3,
     "passageNotes": [
-      "mtg-2026-04-16-operations-weekly",
       "mtg-2026-08-27-operations-weekly",
+      "mtg-2026-04-16-operations-weekly",
       "per-chloe-dumont",
-      "doc-wheel-building-standard",
+      "per-lena-nyberg",
       "per-elena-brandt"
     ],
-    "status": "answered",
-    "sentences": [
-      {
-        "text": "The passages name Chloé Dumont as the owner of the Wheel building standard, not as its author.",
-        "citations": [
-          {
-            "chunkId": "doc-wheel-building-standard#links",
-            "noteId": "doc-wheel-building-standard",
-            "quote": "The owner of Wheel building standard is Chloé Dumont."
-          }
-        ]
-      },
-      {
-        "text": "Chloé Dumont reports to Hiro Sato.",
-        "citations": [
-          {
-            "chunkId": "per-chloe-dumont#links",
-            "noteId": "per-chloe-dumont",
-            "quote": "Chloé Dumont reports to Hiro Sato."
-          }
-        ]
-      }
-    ],
+    "status": "unknown",
+    "sentences": [],
     "removed": [],
-    "nearest": [],
+    "nearest": ["mtg-2026-08-27-operations-weekly", "mtg-2026-04-16-operations-weekly", "per-chloe-dumont"],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 0,
+      "kept": 0
     },
-    "verdicts": [
-      {
-        "verdict": "partial",
-        "reason": "Passage says Chloé Dumont is the owner, but says nothing about authorship or about her not being the author."
-      },
-      {
-        "verdict": "supported",
-        "reason": "The Chloé Dumont passage directly states that she reports to Hiro Sato."
-      }
-    ],
+    "verdicts": [],
     "answerModel": "claude-haiku-5-5",
-    "judgeModel": "claude-haiku-5-5",
+    "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 258,
-    "judgeMicros": 218,
-    "latencyMs": 2183
+    "answerMicros": 129,
+    "judgeMicros": 0,
+    "latencyMs": 1216
   },
   {
     "questionId": "q-022",
@@ -12485,7 +12339,7 @@
       "dec-switch-battery-voltaro",
       "doc-battery-spec-v3",
       "prj-ridgeline-emtb",
-      "doc-cell-test-report"
+      "per-tomas-lindqvist"
     ],
     "status": "unknown",
     "sentences": [],
@@ -12499,9 +12353,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 184,
+    "answerMicros": 194,
     "judgeMicros": 0,
-    "latencyMs": 1690
+    "latencyMs": 1696
   },
   {
     "questionId": "q-023",
@@ -12584,15 +12438,15 @@
     "round": 3,
     "passageNotes": [
       "prj-warranty-flow",
-      "doc-dealer-handbook-2025",
       "mtg-2025-06-11-warranty-review",
       "mtg-2026-08-28-leadership",
-      "doc-service-faq"
+      "doc-dealer-handbook-2025",
+      "dec-lifetime-frame-cover"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-warranty-flow", "doc-dealer-handbook-2025", "mtg-2025-06-11-warranty-review"],
+    "nearest": ["prj-warranty-flow", "mtg-2025-06-11-warranty-review", "mtg-2026-08-28-leadership"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -12601,9 +12455,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 110,
+    "answerMicros": 103,
     "judgeMicros": 0,
-    "latencyMs": 1081
+    "latencyMs": 968
   },
   {
     "questionId": "q-025",
@@ -12616,23 +12470,18 @@
       "doc-field-test-autumn-2026",
       "per-yara-dunmore",
       "per-ivo-kerr",
-      "per-mateus-rocha"
+      "per-wren-galloway"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "Yara Dunmore is the owner of the autumn 2026 field test notes.",
+        "text": "The autumn 2026 field test notes are owned by Yara Dunmore, who writes up every test round.",
         "citations": [
           {
             "chunkId": "doc-field-test-autumn-2026#links",
             "noteId": "doc-field-test-autumn-2026",
             "quote": "The owner of Field test notes, autumn 2026 is Yara Dunmore."
-          }
-        ]
-      },
-      {
-        "text": "Yara Dunmore writes up every test round.",
-        "citations": [
+          },
           {
             "chunkId": "per-yara-dunmore#0",
             "noteId": "per-yara-dunmore",
@@ -12641,7 +12490,7 @@
         ]
       },
       {
-        "text": "Yara Dunmore reports to Tomás Lindqvist, who is therefore the line manager.",
+        "text": "Yara Dunmore's line manager is Tomás Lindqvist.",
         "citations": [
           {
             "chunkId": "per-yara-dunmore#links",
@@ -12660,23 +12509,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited passage states the owner of Field test notes, autumn 2026 is Yara Dunmore."
+        "reason": "Doc names Yara Dunmore as owner; person note says she writes up every test round."
       },
       {
         "verdict": "supported",
-        "reason": "The Yara Dunmore passage says she 'Writes up every test round.'"
-      },
-      {
-        "verdict": "supported",
-        "reason": "The passage says Yara Dunmore reports to Tomás Lindqvist; calling him the line manager follows from that."
+        "reason": "Yara Dunmore's person note states she reports to Tomás Lindqvist."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 250,
-    "judgeMicros": 365,
-    "latencyMs": 1963
+    "judgeMicros": 231,
+    "latencyMs": 2808
   },
   {
     "questionId": "q-026",
@@ -12763,7 +12608,7 @@
       "mtg-2026-10-02-supply-review",
       "doc-ampcore-supply-agreement",
       "dec-switch-battery-voltaro",
-      "per-kofi-mensah"
+      "mtg-2026-11-13-quality-review"
     ],
     "status": "unknown",
     "sentences": [],
@@ -12781,9 +12626,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 111,
+    "answerMicros": 102,
     "judgeMicros": 0,
-    "latencyMs": 1027
+    "latencyMs": 940
   },
   {
     "questionId": "q-029",
@@ -12793,15 +12638,15 @@
     "round": 3,
     "passageNotes": [
       "dec-aluminium-6061",
-      "per-maya-okafor",
       "doc-c27-frame-spec",
+      "per-maya-okafor",
       "mtg-2026-09-12-c27-kickoff",
       "mtg-2026-10-20-ops-sync"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["dec-aluminium-6061", "per-maya-okafor", "doc-c27-frame-spec"],
+    "nearest": ["dec-aluminium-6061", "doc-c27-frame-spec", "per-maya-okafor"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -12810,9 +12655,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 137,
+    "answerMicros": 138,
     "judgeMicros": 0,
-    "latencyMs": 1220
+    "latencyMs": 1375
   },
   {
     "questionId": "q-030",
@@ -12824,13 +12669,13 @@
       "mtg-2026-08-28-leadership",
       "dec-lifetime-frame-cover",
       "mtg-2026-09-12-c27-kickoff",
-      "mtg-2026-08-09-marketing-planning",
-      "mtg-2026-11-18-marketing-planning"
+      "per-elena-brandt",
+      "prj-ridgeline-emtb"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The lifetime structural cover for first owners was decided in the Leadership meeting of 28 August 2026.",
+        "text": "The lifetime structural cover for first owners was decided in the Leadership meeting of 28 Aug 2026.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#links",
@@ -12855,9 +12700,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 207,
+    "answerMicros": 174,
     "judgeMicros": 69,
-    "latencyMs": 1513
+    "latencyMs": 1467
   },
   {
     "questionId": "q-031",
@@ -12929,12 +12774,12 @@
       "dec-rear-rack-v2-rated-for-27-kg",
       "mtg-2026-05-29-product-review",
       "dec-rack-v2-made-by-our-current-rack-supplier",
-      "doc-c27-frame-spec"
+      "prj-commuter-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The decision to rate the new rack for 27 kg is part of the Rear rack v2 project.",
+        "text": "The decision to rate the new rear rack for 27 kg is part of the Rear rack v2 project.",
         "citations": [
           {
             "chunkId": "dec-rear-rack-v2-rated-for-27-kg#0",
@@ -12944,12 +12789,17 @@
         ]
       },
       {
-        "text": "The owner of Rear rack v2 is Ines Castell.",
+        "text": "The owner of the Rear rack v2 project is Ines Castell.",
         "citations": [
           {
             "chunkId": "prj-rear-rack-v2#links",
             "noteId": "prj-rear-rack-v2",
             "quote": "The owner of Rear rack v2 is Ines Castell."
+          },
+          {
+            "chunkId": "dec-rear-rack-v2-rated-for-27-kg#links",
+            "noteId": "dec-rear-rack-v2-rated-for-27-kg",
+            "quote": "The owner of Rear rack v2 rated for 27 kg is Ines Castell."
           }
         ]
       }
@@ -12957,25 +12807,25 @@
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 3,
+      "kept": 3
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states the rack rated for 27 kg is part of Rear rack v2."
+        "reason": "Decision passage states the rack is rated for 27 kg and is part of Rear rack v2."
       },
       {
         "verdict": "supported",
-        "reason": "Passage states the owner of Rear rack v2 is Ines Castell."
+        "reason": "Project passage says the owner of Rear rack v2 is Ines Castell; decision passage confirms the same."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 305,
-    "judgeMicros": 220,
-    "latencyMs": 2780
+    "answerMicros": 292,
+    "judgeMicros": 244,
+    "latencyMs": 2116
   },
   {
     "questionId": "q-033",
@@ -13047,7 +12897,7 @@
       "mtg-2026-09-22-finance-review",
       "prj-erp-migration",
       "mtg-2026-05-11-finance-review",
-      "mtg-2025-03-13-product-review"
+      "mtg-2025-12-29-product-review"
     ],
     "status": "answered",
     "sentences": [
@@ -13062,7 +12912,7 @@
         ]
       },
       {
-        "text": "This April decision replaces the earlier plan to go live in February.",
+        "text": "This decision, made on 22 September 2026, replaces the earlier plan to go live in February.",
         "citations": [
           {
             "chunkId": "dec-go-live-with-the-new-erp-in-april#links",
@@ -13081,19 +12931,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited passage states the new ERP goes live on 6 April 2027."
+        "reason": "The passage states the new ERP goes live on 6 April 2027."
       },
       {
         "verdict": "supported",
-        "reason": "The passage says the April decision replaces the earlier February go-live note."
+        "reason": "Passage says the decision was made 22 Sep 2026 and replaces the February go-live note."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 207,
-    "judgeMicros": 286,
-    "latencyMs": 1655
+    "answerMicros": 197,
+    "judgeMicros": 294,
+    "latencyMs": 1656
   },
   {
     "questionId": "q-035",
@@ -13103,47 +12953,26 @@
     "round": 3,
     "passageNotes": [
       "per-kit-farrow",
-      "dec-book-a-90-square-metre-stand",
       "per-wilde-tull",
-      "per-chloe-dumont",
-      "per-theo-castillo"
+      "prj-ridgeline-emtb",
+      "per-theo-castillo",
+      "per-rafe-lowe"
     ],
-    "status": "answered",
-    "sentences": [
-      {
-        "text": "The company takes a 90 square metre corner stand in hall B for the 2027 trade show.",
-        "citations": [
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#0",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "We take a 90 square metre corner stand in hall B instead."
-          },
-          {
-            "chunkId": "dec-book-a-90-square-metre-stand#0",
-            "noteId": "dec-book-a-90-square-metre-stand",
-            "quote": "Part of Trade show 2027."
-          }
-        ]
-      }
-    ],
+    "status": "unknown",
+    "sentences": [],
     "removed": [],
-    "nearest": [],
+    "nearest": ["per-kit-farrow", "per-wilde-tull", "prj-ridgeline-emtb"],
     "citations": {
-      "submitted": 2,
-      "kept": 2
+      "submitted": 0,
+      "kept": 0
     },
-    "verdicts": [
-      {
-        "verdict": "supported",
-        "reason": "The current decision note says 'We take a 90 square metre corner stand in hall B' and is part of Trade show 2027. It does not name Tarnwick."
-      }
-    ],
+    "verdicts": [],
     "answerModel": "claude-haiku-5-5",
-    "judgeModel": "claude-haiku-5-5",
+    "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 224,
-    "judgeMicros": 371,
-    "latencyMs": 2005
+    "answerMicros": 81,
+    "judgeMicros": 0,
+    "latencyMs": 1334
   },
   {
     "questionId": "q-036",
@@ -13300,14 +13129,14 @@
     "passageNotes": [
       "doc-battery-spec-v3",
       "mtg-2026-03-17-supply-review",
-      "dec-switch-battery-voltaro",
       "mtg-2026-10-02-supply-review",
+      "dec-switch-battery-voltaro",
       "prj-ridgeline-emtb"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The Ridgeline battery charges full in four hours with a 5 A charger.",
+        "text": "The Ridgeline battery takes about four hours to charge fully, using a 5 A charger.",
         "citations": [
           {
             "chunkId": "doc-battery-spec-v3#1",
@@ -13326,15 +13155,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cited current spec states a 5 A charger gives full charge in four hours, matching the sentence."
+        "reason": "Cited current spec states a 5 A charger gives full charge in four hours."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 164,
-    "judgeMicros": 64,
-    "latencyMs": 1422
+    "answerMicros": 182,
+    "judgeMicros": 175,
+    "latencyMs": 1526
   },
   {
     "questionId": "q-039",
@@ -13346,13 +13175,13 @@
       "doc-quality-report-q3-2026",
       "doc-quality-report-q2-2026",
       "doc-quality-report-q1-2026",
-      "mtg-2025-11-15-finance-review",
-      "mtg-2026-05-11-finance-review"
+      "mtg-2025-08-24-finance-review",
+      "mtg-2025-11-15-finance-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The most recent field return rate in the quality reports is 0.8%, from the Q3 2026 report.",
+        "text": "The most recent field return rate was 0.8%, in the Q3 2026 quality report.",
         "citations": [
           {
             "chunkId": "doc-quality-report-q3-2026#0",
@@ -13371,15 +13200,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited Q3 2026 report states field returns of 0.8%, and it is marked current and updated 2026-10-08."
+        "reason": "The cited Q3 2026 quality report states field returns of 0.8%; its current status supports it being the latest."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 125,
-    "judgeMicros": 284,
-    "latencyMs": 1124
+    "answerMicros": 126,
+    "judgeMicros": 307,
+    "latencyMs": 1159
   },
   {
     "questionId": "q-040",
@@ -13451,17 +13280,17 @@
       "doc-firmware-release-notes-3-3",
       "mtg-2025-11-19-product-review",
       "mtg-2025-09-01-product-review",
-      "mtg-2025-03-13-product-review"
+      "mtg-2025-12-29-product-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The newest firmware release is 3.3, which adds a range estimate based on the last 20 km.",
+        "text": "Firmware 3.3 adds a range estimate based on the last 20 km.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
             "noteId": "doc-firmware-release-notes-3-3",
-            "quote": "Range estimate based on the last 20 km, and a fix for the display freezing in cold weather."
+            "quote": "Range estimate based on the last 20 km"
           }
         ]
       },
@@ -13476,16 +13305,21 @@
         ]
       }
     ],
-    "removed": [],
+    "removed": [
+      {
+        "text": "The newest firmware release is 3.3, which is the most recently updated firmware note.",
+        "reason": "quote-not-found"
+      }
+    ],
     "nearest": [],
     "citations": {
-      "submitted": 2,
+      "submitted": 4,
       "kept": 2
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage says 3.3 adds a range estimate based on the last 20 km; its 'current' status supports it being newest."
+        "reason": "Passage states firmware 3.3 adds a range estimate based on the last 20 km."
       },
       {
         "verdict": "supported",
@@ -13495,9 +13329,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 217,
-    "judgeMicros": 296,
-    "latencyMs": 2642
+    "answerMicros": 265,
+    "judgeMicros": 219,
+    "latencyMs": 2046
   },
   {
     "questionId": "q-042",
@@ -13508,39 +13342,49 @@
     "passageNotes": [
       "dec-lifetime-frame-cover",
       "mtg-2026-06-30-frame-review",
-      "doc-dealer-handbook-2025",
+      "mtg-2026-08-28-leadership",
       "mtg-2025-06-11-warranty-review",
-      "mtg-2026-08-28-leadership"
+      "doc-dealer-handbook-2025"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "A frame bought in October 2026 is covered against structural failure for as long as the first owner keeps the bike.",
+        "text": "A frame bought in October 2026 is covered against structural failure for as long as its first owner keeps the bike.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#0",
             "noteId": "dec-lifetime-frame-cover",
-            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure"
-          },
-          {
-            "chunkId": "dec-lifetime-frame-cover#0",
-            "noteId": "dec-lifetime-frame-cover",
-            "quote": "for the whole time its first owner keeps it."
+            "quote": "the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it"
           }
         ]
       },
       {
-        "text": "This cover replaces the earlier warranty terms, so the older five-year frame warranty no longer applies.",
+        "text": "The cover starts on 1 September 2026, so an October 2026 purchase falls under it.",
+        "citations": [
+          {
+            "chunkId": "dec-lifetime-frame-cover#0",
+            "noteId": "dec-lifetime-frame-cover",
+            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered"
+          }
+        ]
+      },
+      {
+        "text": "Paint, bearings and electrics are not part of this cover and keep their current terms.",
+        "citations": [
+          {
+            "chunkId": "dec-lifetime-frame-cover#0",
+            "noteId": "dec-lifetime-frame-cover",
+            "quote": "Paint, bearings and electrics keep their current terms."
+          }
+        ]
+      },
+      {
+        "text": "This lifetime cover replaces the earlier warranty terms.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#links",
             "noteId": "dec-lifetime-frame-cover",
             "quote": "Lifetime structural cover for first owners replaces Warranty terms."
-          },
-          {
-            "chunkId": "doc-dealer-handbook-2025#1",
-            "noteId": "doc-dealer-handbook-2025",
-            "quote": "Five years on the frame and two years on everything else."
           }
         ]
       }
@@ -13554,19 +13398,27 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cover from 1 September 2026 lasts for as long as the first owner keeps the bike; October 2026 purchase falls within that."
+        "reason": "Passage says chassis of bikes bought from 1 Sept 2026 is covered for the whole time the first owner keeps it."
       },
       {
-        "verdict": "partial",
-        "reason": "Passage says the cover replaces 'Warranty terms', but never says the five-year frame warranty ends; the handbook is still marked current."
+        "verdict": "supported",
+        "reason": "Passage gives 1 September 2026 as the start date, so an October 2026 purchase is covered."
+      },
+      {
+        "verdict": "supported",
+        "reason": "Passage states paint, bearings and electrics keep their current terms, outside the structural cover."
+      },
+      {
+        "verdict": "supported",
+        "reason": "Passage states the lifetime structural cover replaces Warranty terms."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 296,
-    "judgeMicros": 461,
-    "latencyMs": 2298
+    "answerMicros": 402,
+    "judgeMicros": 436,
+    "latencyMs": 3161
   },
   {
     "questionId": "q-043",
@@ -13684,8 +13536,8 @@
       "prj-cargo-longtail",
       "prj-nordic-dealers",
       "mtg-2026-07-08-visit-hafen-rad",
-      "doc-cargo-longtail-frame-spec",
-      "cus-velo-lund"
+      "cus-velo-lund",
+      "doc-cargo-longtail-frame-spec"
     ],
     "status": "unknown",
     "sentences": [],
@@ -13699,9 +13551,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 97,
+    "answerMicros": 98,
     "judgeMicros": 0,
-    "latencyMs": 956
+    "latencyMs": 1065
   },
   {
     "questionId": "q-046",
@@ -13710,8 +13562,8 @@
     "variant": "vector",
     "round": 3,
     "passageNotes": [
-      "doc-battery-spec-v3",
       "mtg-2026-10-02-supply-review",
+      "doc-battery-spec-v3",
       "dec-switch-battery-voltaro",
       "doc-cell-test-report",
       "doc-ampcore-supply-agreement"
@@ -13719,7 +13571,7 @@
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["doc-battery-spec-v3", "mtg-2026-10-02-supply-review", "dec-switch-battery-voltaro"],
+    "nearest": ["mtg-2026-10-02-supply-review", "doc-battery-spec-v3", "dec-switch-battery-voltaro"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -13728,9 +13580,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 103,
+    "answerMicros": 93,
     "judgeMicros": 0,
-    "latencyMs": 1206
+    "latencyMs": 1319
   },
   {
     "questionId": "q-047",
@@ -13742,8 +13594,8 @@
       "mtg-2026-10-20-ops-sync",
       "dec-c27-joining-calvane",
       "per-elena-brandt",
-      "cus-velo-lund",
-      "cus-canal-street-cycles"
+      "cus-canal-street-cycles",
+      "mtg-2026-09-12-c27-kickoff"
     ],
     "status": "unknown",
     "sentences": [],
@@ -13757,9 +13609,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 80,
+    "answerMicros": 87,
     "judgeMicros": 0,
-    "latencyMs": 996
+    "latencyMs": 1011
   },
   {
     "questionId": "q-048",
@@ -13772,7 +13624,7 @@
       "prj-paint-line-upgrade",
       "mtg-2026-08-27-operations-weekly",
       "mtg-2026-11-13-quality-review",
-      "dec-move-the-oven-install-to-the-december-shutdo"
+      "mtg-2025-05-18-finance-review"
     ],
     "status": "unknown",
     "sentences": [],
@@ -13786,9 +13638,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 83,
+    "answerMicros": 79,
     "judgeMicros": 0,
-    "latencyMs": 1152
+    "latencyMs": 1659
   },
   {
     "questionId": "q-049",
@@ -13799,14 +13651,14 @@
     "passageNotes": [
       "prj-ridgeline-emtb",
       "doc-roadmap-memo-2027",
-      "dec-book-a-90-square-metre-stand",
+      "dec-pause-dealer-portal",
       "doc-battery-spec-v3",
       "mtg-2026-03-17-supply-review"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["prj-ridgeline-emtb", "doc-roadmap-memo-2027", "dec-book-a-90-square-metre-stand"],
+    "nearest": ["prj-ridgeline-emtb", "doc-roadmap-memo-2027", "dec-pause-dealer-portal"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -13815,9 +13667,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 83,
+    "answerMicros": 89,
     "judgeMicros": 0,
-    "latencyMs": 913
+    "latencyMs": 958
   },
   {
     "questionId": "q-050",
@@ -13827,15 +13679,15 @@
     "round": 3,
     "passageNotes": [
       "per-jonah-whitfield",
-      "per-theo-marsh",
       "doc-quality-report-q3-2026",
       "mtg-2025-06-11-marketing-planning",
+      "mtg-2026-05-06-dealer-day",
       "per-sana-orr"
     ],
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["per-jonah-whitfield", "per-theo-marsh", "doc-quality-report-q3-2026"],
+    "nearest": ["per-jonah-whitfield", "doc-quality-report-q3-2026", "mtg-2025-06-11-marketing-planning"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -13844,9 +13696,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 90,
+    "answerMicros": 92,
     "judgeMicros": 0,
-    "latencyMs": 849
+    "latencyMs": 992
   },
   {
     "questionId": "q-011",
@@ -15887,7 +15739,7 @@
       "prj-brake-lever-recall",
       "doc-pre-delivery-safety-checklist",
       "mtg-2025-10-14-quality-review",
-      "mtg-2026-07-13-quality-review"
+      "dec-book-a-90-square-metre-stand"
     ],
     "status": "answered",
     "sentences": [
@@ -15918,8 +15770,8 @@
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
     "answerMicros": 104,
-    "judgeMicros": 66,
-    "latencyMs": 892
+    "judgeMicros": 65,
+    "latencyMs": 918
   },
   {
     "questionId": "q-013",
@@ -16067,17 +15919,17 @@
       "doc-torque-spec-gravel-gx",
       "per-ines-castell",
       "dec-aluminium-6061",
-      "dec-second-source-for-chromoly-tubing"
+      "mtg-2026-05-30-visit-meridian-sports"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The thru-axles on the Gravel GX are torqued to 12 Nm.",
+        "text": "The thru-axles on the Gravel GX take 12 Nm of torque.",
         "citations": [
           {
             "chunkId": "doc-torque-spec-gravel-gx#0",
             "noteId": "doc-torque-spec-gravel-gx",
-            "quote": "Stem bolts 5 Nm, seat post clamp 6 Nm, thru-axles 12 Nm, disc rotor bolts 6 Nm."
+            "quote": "thru-axles 12 Nm"
           }
         ]
       }
@@ -16091,15 +15943,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited current spec states thru-axles 12 Nm for the Gravel GX."
+        "reason": "The cited current spec states thru-axles 12 Nm, matching the sentence exactly."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 152,
-    "judgeMicros": 63,
-    "latencyMs": 1321
+    "answerMicros": 143,
+    "judgeMicros": 65,
+    "latencyMs": 1966
   },
   {
     "questionId": "q-017",
@@ -16170,13 +16022,13 @@
       "doc-marketing-plan-2027",
       "mtg-2025-12-19-marketing-planning",
       "mtg-2025-04-12-marketing-planning",
-      "mtg-2026-11-18-marketing-planning",
-      "mtg-2026-08-09-marketing-planning"
+      "mtg-2025-06-11-marketing-planning",
+      "mtg-2026-11-18-marketing-planning"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The 2027 marketing budget is split 40% to trade show and launch.",
+        "text": "The 2027 marketing budget is 40% for trade show and launch.",
         "citations": [
           {
             "chunkId": "doc-marketing-plan-2027#0",
@@ -16186,7 +16038,7 @@
         ]
       },
       {
-        "text": "The remainder of the split is 30% dealer support, 20% online, and 10% photography and video.",
+        "text": "The remaining split is 30% dealer support, 20% online, and 10% photography and video.",
         "citations": [
           {
             "chunkId": "doc-marketing-plan-2027#0",
@@ -16205,7 +16057,7 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states 40% goes to trade show and launch in the 2027 marketing plan."
+        "reason": "Passage states 40% goes to trade show and launch for the 2027 marketing plan."
       },
       {
         "verdict": "supported",
@@ -16215,9 +16067,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 146,
-    "judgeMicros": 91,
-    "latencyMs": 1350
+    "answerMicros": 145,
+    "judgeMicros": 222,
+    "latencyMs": 1144
   },
   {
     "questionId": "q-019",
@@ -16359,15 +16211,15 @@
     "round": 3,
     "passageNotes": [
       "doc-wheel-building-standard",
-      "mtg-2026-04-16-operations-weekly",
       "mtg-2026-08-27-operations-weekly",
+      "mtg-2026-04-16-operations-weekly",
       "per-chloe-dumont",
       "mtg-2025-11-06-operations-weekly"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The wheel building standard is owned by Chloé Dumont, and the passages do not name a separate author.",
+        "text": "The Wheel building standard is owned by Chloé Dumont, and the passages do not state who wrote it.",
         "citations": [
           {
             "chunkId": "doc-wheel-building-standard#links",
@@ -16395,20 +16247,20 @@
     },
     "verdicts": [
       {
-        "verdict": "partial",
-        "reason": "Passage supports that Chloé Dumont owns the standard, but says nothing about whether a separate author exists."
+        "verdict": "supported",
+        "reason": "The standard's owner is stated as Chloé Dumont, and the cited passage says nothing about who wrote it."
       },
       {
         "verdict": "supported",
-        "reason": "The Chloé Dumont passage explicitly states she reports to Hiro Sato."
+        "reason": "The Chloé Dumont passage directly states that Chloé Dumont reports to Hiro Sato."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 291,
-    "judgeMicros": 223,
-    "latencyMs": 2522
+    "answerMicros": 212,
+    "judgeMicros": 339,
+    "latencyMs": 1634
   },
   {
     "questionId": "q-022",
@@ -16837,13 +16689,13 @@
       "doc-c27-frame-spec",
       "prj-commuter-2027",
       "dec-aluminium-6061",
-      "mtg-2026-09-12-c27-kickoff",
-      "per-ines-castell"
+      "per-ines-castell",
+      "mtg-2026-09-12-c27-kickoff"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The passages name Ines Castell as the owner of the C27 frame spec, not as its author.",
+        "text": "The C27 frame spec is owned by Ines Castell, the closest match to its author in the passages.",
         "citations": [
           {
             "chunkId": "doc-c27-frame-spec#links",
@@ -16853,7 +16705,7 @@
         ]
       },
       {
-        "text": "Ines Castell reports to Maya Okafor.",
+        "text": "Ines Castell reports to Maya Okafor, so Maya Okafor manages her.",
         "citations": [
           {
             "chunkId": "per-ines-castell#links",
@@ -16872,19 +16724,19 @@
     "verdicts": [
       {
         "verdict": "partial",
-        "reason": "Passage says Ines Castell is the owner of the spec, but says nothing about authorship, so 'not as its author' goes beyond it."
+        "reason": "Passage says Ines Castell is the owner of the C27 spec. It never says she is the author or a 'closest match' to one."
       },
       {
         "verdict": "supported",
-        "reason": "The Ines Castell passage states that she reports to Maya Okafor."
+        "reason": "Passage states Ines Castell reports to Maya Okafor, so the manager relationship follows directly."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 318,
-    "judgeMicros": 318,
-    "latencyMs": 2660
+    "answerMicros": 297,
+    "judgeMicros": 196,
+    "latencyMs": 2575
   },
   {
     "questionId": "q-030",
@@ -17501,13 +17353,13 @@
       "doc-supplier-scorecard-q2-2026",
       "doc-supplier-scorecard-q3-2026",
       "dec-rack-v2-made-by-our-current-rack-supplier",
-      "mtg-2026-07-08-visit-hafen-rad",
-      "dec-switch-battery-voltaro"
+      "dec-switch-battery-voltaro",
+      "mtg-2026-07-08-visit-hafen-rad"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The latest scorecard, Q3 2026, puts the rack supplier's on-time delivery at 85%.",
+        "text": "The latest on-time delivery rate for racks is 85%, in the Q3 2026 scorecard.",
         "citations": [
           {
             "chunkId": "doc-supplier-scorecard-q3-2026#0",
@@ -17517,7 +17369,7 @@
         ]
       },
       {
-        "text": "The earlier Q2 2026 scorecard had racks at 94%, so the rate fell in Q3.",
+        "text": "This is down from 94% in the Q2 2026 scorecard.",
         "citations": [
           {
             "chunkId": "doc-supplier-scorecard-q2-2026#0",
@@ -17536,19 +17388,19 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Q3 2026 scorecard is current and lists racks at 85% on-time delivery."
+        "reason": "Q3 2026 scorecard lists racks at 85% on-time delivery, noted as a tooling change."
       },
       {
-        "verdict": "partial",
-        "reason": "Q2 scorecard does show racks at 94%, but it says nothing about Q3; the fall is not in the cited passage."
+        "verdict": "supported",
+        "reason": "Q2 2026 scorecard shows racks at 94%, so 85% is a decline from it."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 237,
-    "judgeMicros": 385,
-    "latencyMs": 2014
+    "answerMicros": 296,
+    "judgeMicros": 232,
+    "latencyMs": 3451
   },
   {
     "questionId": "q-041",
@@ -17559,14 +17411,14 @@
     "passageNotes": [
       "doc-firmware-release-notes-3-2",
       "doc-firmware-release-notes-3-3",
-      "per-tomas-lindqvist",
       "per-dev-kerr",
+      "per-tomas-lindqvist",
       "mtg-2025-11-19-product-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "The newest firmware, release notes 3.3, adds a range estimate based on the last 20 km.",
+        "text": "Release 3.3 adds a range estimate based on the last 20 km.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
@@ -17576,7 +17428,7 @@
         ]
       },
       {
-        "text": "It also includes a fix for the display freezing in cold weather.",
+        "text": "Release 3.3 also includes a fix for the display freezing in cold weather.",
         "citations": [
           {
             "chunkId": "doc-firmware-release-notes-3-3#0",
@@ -17586,28 +17438,33 @@
         ]
       }
     ],
-    "removed": [],
+    "removed": [
+      {
+        "text": "The newest firmware release is 3.3, last updated 6 October 2026.",
+        "reason": "quote-not-found"
+      }
+    ],
     "nearest": [],
     "citations": {
-      "submitted": 2,
+      "submitted": 3,
       "kept": 2
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cited release notes 3.3 (current) list a range estimate based on the last 20 km."
+        "reason": "Passage states release 3.3 adds a range estimate based on the last 20 km; it is the current release."
       },
       {
         "verdict": "supported",
-        "reason": "Cited release notes 3.3 include a fix for the display freezing in cold weather."
+        "reason": "Passage states the 3.3 release includes a fix for the display freezing in cold weather."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 304,
-    "judgeMicros": 290,
-    "latencyMs": 2454
+    "answerMicros": 235,
+    "judgeMicros": 221,
+    "latencyMs": 1934
   },
   {
     "questionId": "q-042",
@@ -17618,34 +17475,24 @@
     "passageNotes": [
       "dec-lifetime-frame-cover",
       "mtg-2026-06-30-frame-review",
-      "doc-service-faq",
       "mtg-2026-08-28-leadership",
+      "doc-service-faq",
       "prj-commuter-2027"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "A bike bought in October 2026 falls under the new cover, which starts on 1 September 2026.",
+        "text": "A bike bought in October 2026 is covered against structural failure for the whole time its first owner keeps it.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#0",
             "noteId": "dec-lifetime-frame-cover",
-            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural"
+            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it."
           }
         ]
       },
       {
-        "text": "The chassis is covered against structural failure for the whole time its first owner keeps the bike.",
-        "citations": [
-          {
-            "chunkId": "dec-lifetime-frame-cover#0",
-            "noteId": "dec-lifetime-frame-cover",
-            "quote": "covered against structural failure for the whole time its first owner keeps it"
-          }
-        ]
-      },
-      {
-        "text": "This lifetime cover replaces the older warranty terms, which had been five years from purchase.",
+        "text": "This lifetime structural cover replaces the older warranty terms, which had given five years from purchase for first owners.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#links",
@@ -17663,29 +17510,25 @@
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 4,
-      "kept": 4
+      "submitted": 3,
+      "kept": 3
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage says from 1 September 2026 every bike bought is covered for the first owner's whole ownership."
+        "reason": "Passage says chassis of bikes bought are covered for as long as the first owner keeps them; frame means chassis."
       },
       {
         "verdict": "supported",
-        "reason": "Passage states the chassis is covered against structural failure for the whole time the first owner keeps it."
-      },
-      {
-        "verdict": "supported",
-        "reason": "Passage says the new cover replaces Warranty terms; FAQ gives five years from purchase for first owners, though it doesn't name warranty explicitly."
+        "reason": "Passage says the lifetime cover replaces Warranty terms; FAQ gives five years from purchase for first owners."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 417,
-    "judgeMicros": 510,
-    "latencyMs": 3513
+    "answerMicros": 362,
+    "judgeMicros": 416,
+    "latencyMs": 3079
   },
   {
     "questionId": "q-043",
@@ -17825,8 +17668,8 @@
     "variant": "hybrid",
     "round": 3,
     "passageNotes": [
-      "dec-switch-battery-voltaro",
       "mtg-2026-10-02-supply-review",
+      "dec-switch-battery-voltaro",
       "doc-battery-spec-v3",
       "doc-ampcore-supply-agreement",
       "doc-cell-test-report"
@@ -17834,7 +17677,7 @@
     "status": "unknown",
     "sentences": [],
     "removed": [],
-    "nearest": ["dec-switch-battery-voltaro", "mtg-2026-10-02-supply-review", "doc-battery-spec-v3"],
+    "nearest": ["mtg-2026-10-02-supply-review", "dec-switch-battery-voltaro", "doc-battery-spec-v3"],
     "citations": {
       "submitted": 0,
       "kept": 0
@@ -17843,9 +17686,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 101,
+    "answerMicros": 102,
     "judgeMicros": 0,
-    "latencyMs": 1622
+    "latencyMs": 998
   },
   {
     "questionId": "q-047",
@@ -17858,7 +17701,7 @@
       "mtg-2026-10-20-ops-sync",
       "per-elena-brandt",
       "per-hiro-sato",
-      "cus-velo-lund"
+      "cus-canal-street-cycles"
     ],
     "status": "unknown",
     "sentences": [],
@@ -17872,9 +17715,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 82,
+    "answerMicros": 78,
     "judgeMicros": 0,
-    "latencyMs": 851
+    "latencyMs": 885
   },
   {
     "questionId": "q-048",
@@ -17915,8 +17758,8 @@
       "prj-ridgeline-emtb",
       "per-tomas-lindqvist",
       "doc-battery-spec-v3",
-      "doc-field-test-autumn-2026",
-      "dec-book-a-90-square-metre-stand"
+      "dec-pause-dealer-portal",
+      "dec-switch-battery-voltaro"
     ],
     "status": "unknown",
     "sentences": [],
@@ -17930,9 +17773,9 @@
     "answerModel": "claude-haiku-5-5",
     "judgeModel": null,
     "fallbackUsed": false,
-    "answerMicros": 87,
+    "answerMicros": 88,
     "judgeMicros": 0,
-    "latencyMs": 918
+    "latencyMs": 881
   },
   {
     "questionId": "q-050",
@@ -18064,29 +17907,19 @@
     "passageNotes": [
       "prj-ridgeline-emtb",
       "per-tomas-lindqvist",
-      "per-kofi-mensah",
+      "mtg-2026-10-02-supply-review",
       "doc-quality-report-q3-2026",
       "per-jonah-whitfield"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "RL-1 is another name for Ridgeline e-MTB.",
+        "text": "RL-1 is another name for Ridgeline e-MTB, whose owner is Tomás Lindqvist.",
         "citations": [
           {
             "chunkId": "prj-ridgeline-emtb#links",
             "noteId": "prj-ridgeline-emtb",
-            "quote": "Ridgeline e-MTB is also called RL-1, Ridgeline."
-          }
-        ]
-      },
-      {
-        "text": "The owner of Ridgeline e-MTB is Tomás Lindqvist.",
-        "citations": [
-          {
-            "chunkId": "prj-ridgeline-emtb#links",
-            "noteId": "prj-ridgeline-emtb",
-            "quote": "The owner of Ridgeline e-MTB is Tomás Lindqvist."
+            "quote": "Ridgeline e-MTB is also called RL-1, Ridgeline. The owner of Ridgeline e-MTB is Tomás Lindqvist."
           }
         ]
       },
@@ -18104,29 +17937,25 @@
     "removed": [],
     "nearest": [],
     "citations": {
-      "submitted": 3,
-      "kept": 3
+      "submitted": 2,
+      "kept": 2
     },
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Passage states Ridgeline e-MTB is also called RL-1, Ridgeline."
+        "reason": "Passage says Ridgeline e-MTB is also called RL-1 and its owner is Tomás Lindqvist."
       },
       {
         "verdict": "supported",
-        "reason": "Passage explicitly says the owner of Ridgeline e-MTB is Tomás Lindqvist."
-      },
-      {
-        "verdict": "supported",
-        "reason": "Tomás Lindqvist's passage states he reports to Maya Okafor."
+        "reason": "Passage states directly that Tomás Lindqvist reports to Maya Okafor."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 493,
-    "judgeMicros": 270,
-    "latencyMs": 1984
+    "answerMicros": 537,
+    "judgeMicros": 230,
+    "latencyMs": 1795
   },
   {
     "questionId": "q-003",
@@ -18139,28 +17968,33 @@
       "doc-service-faq",
       "prj-commuter-2027",
       "dec-c27-joining-calvane",
-      "doc-dealer-handbook-2025"
+      "mtg-2025-06-11-warranty-review"
     ],
     "status": "answered",
     "sentences": [
       {
-        "text": "From 1 September 2026, the frame (chassis) of every bike bought from us is covered against structural failure for as long as its first owner keeps it.",
+        "text": "From 1 September 2026, the chassis of a bike bought from us is covered against structural failure for as long as its first owner keeps it.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#0",
             "noteId": "dec-lifetime-frame-cover",
-            "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it."
+            "quote": "the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it"
           }
         ]
       },
       {
-        "text": "This lifetime cover replaces the older warranty terms, which gave five years from purchase for a first owner.",
+        "text": "This lifetime structural cover replaces the earlier warranty terms.",
         "citations": [
           {
             "chunkId": "dec-lifetime-frame-cover#links",
             "noteId": "dec-lifetime-frame-cover",
             "quote": "Lifetime structural cover for first owners replaces Warranty terms."
-          },
+          }
+        ]
+      },
+      {
+        "text": "Under the earlier terms in the rider FAQ, the frame warranty was five years from the date of purchase for the first owner.",
+        "citations": [
           {
             "chunkId": "doc-service-faq#0",
             "noteId": "doc-service-faq",
@@ -18178,19 +18012,23 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "Cited passage states the chassis of every bike bought is covered against structural failure for as long as the first owner keeps it, from 1 September 2026."
+        "reason": "Cited passage states chassis is covered against structural failure for the whole time the first owner keeps it, from 1 Sept 2026."
       },
       {
         "verdict": "supported",
-        "reason": "The decision record says lifetime cover replaces Warranty terms, and the FAQ gives five years from purchase for a first owner."
+        "reason": "Cited passage states the lifetime structural cover replaces Warranty terms."
+      },
+      {
+        "verdict": "partial",
+        "reason": "The FAQ gives a five-year term for first owners from purchase, but never says it is the frame warranty."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 695,
-    "judgeMicros": 402,
-    "latencyMs": 2995
+    "answerMicros": 817,
+    "judgeMicros": 474,
+    "latencyMs": 4541
   },
   {
     "questionId": "q-004",
@@ -18304,8 +18142,8 @@
       "doc-field-test-autumn-2026",
       "per-yara-dunmore",
       "mtg-2026-05-29-product-review",
-      "doc-quality-report-q1-2026",
-      "mtg-2025-03-13-product-review"
+      "mtg-2025-03-13-product-review",
+      "cus-saltmarsh-cycle"
     ],
     "status": "answered",
     "sentences": [
@@ -18329,15 +18167,15 @@
     "verdicts": [
       {
         "verdict": "supported",
-        "reason": "The cited passage states twelve outside riders were on the e-MTB prototype for the autumn 2026 field test."
+        "reason": "Passage states twelve outside riders took part in the autumn 2026 field test on the e-MTB prototype."
       }
     ],
     "answerModel": "claude-haiku-5-5",
     "judgeModel": "claude-haiku-5-5",
     "fallbackUsed": false,
-    "answerMicros": 441,
+    "answerMicros": 422,
     "judgeMicros": 181,
-    "latencyMs": 1343
+    "latencyMs": 1261
   },
   {
     "questionId": "q-007",

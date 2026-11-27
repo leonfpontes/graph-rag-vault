@@ -48,25 +48,29 @@ Answers by Claude Haiku 5.5, mean of 3 rounds.
 
 | Variant      | Expected notes in the top 5 | MRR  | Answerable questions answered | Expected notes cited | Faithfulness |
 | ------------ | --------------------------- | ---- | ----------------------------- | -------------------- | ------------ |
-| Hybrid       | 91%                         | 0.87 | 96%                           | 84%                  | 94%          |
+| Hybrid       | 91%                         | 0.87 | 96%                           | 84%                  | 95%          |
 | Graph only   | 93%                         | 0.78 | 94%                           | 82%                  | 97%          |
-| Vectors only | 78%                         | 0.73 | 79%                           | 67%                  | 96%          |
+| Vectors only | 73%                         | 0.73 | 73%                           | 62%                  | 98%          |
 
-- **Search:** hybrid and graph only tie (2 points apart, under the 5-point tie line); against
-  vectors only, hybrid is +13 points, most of it on multi-hop questions (79% against 55%).
+- **Search:** hybrid and graph only tie (2 points apart, under the 5-point tie line). Against
+  vectors only, hybrid is +18 points, most of it on multi-hop questions (79% against 50%); against
+  the strongest embedding model we tried for vectors only (arctic-embed-xs, 78%), +13.
+- **One runtime for the vectors:** the index, the local API and the browser all run the model on
+  onnxruntime-web (WebAssembly), so a question asked in the demo gets the same vector as in the
+  evaluation (cosine > 0.9999).
 - **Faithfulness** comes from an automatic judge (Claude Haiku 5.5), sentence by sentence, against
   the passages each sentence cites.
-- **Reviewed by a person (Leonardo Pontes), not blind: agreed with the judge on 21 of 21
-  sentences**, stratified sample (half of the 10 answers from those with a sentence the judge did
-  not fully support). No kappa: the person saw the judge's verdicts.
+- **Reviewed by a person (Leonardo Pontes), not blind: agreed with the judge on 18 of 18
+  sentences** from 8 of 10 answers, stratified sample (half of the 10 answers from those with a
+  sentence the judge did not fully support). No kappa: the person saw the judge's verdicts. Review
+  pending for 2 of 10 answers after the index rebuild.
 - **Agreement between two automatic judges:** Claude Opus 5.5, blind, on the same 21 sentences:
-  76%, Cohen's kappa 0.22. All 5 disagreements go the same way: the main judge said partial, the
-  second judge said supported, so the faithfulness above is a conservative estimate. A low kappa
-  is expected here: the main judge marked only 6 of 21 sentences as not fully supported, and with
-  so few cases, 5 disagreements that all go one way pull kappa down even at 76% agreement. The
-  main judge stays Claude Haiku 5.5.
-- **Cost:** $0.17 for the whole run (370 answers and their judgments), plus $0.11 for the second
-  judge.
+  76%, Cohen's kappa 0.00. All 5 disagreements go the same way: the main judge said partial, the
+  second judge said supported, so the faithfulness above is a conservative estimate. Kappa says
+  little here: the second judge marked all 21 sentences supported, and with one judge on a single
+  label, kappa is 0 whatever the other does. The main judge stays Claude Haiku 5.5.
+- **Cost:** $0.17 for all recorded answers and their judgments (370); the index rebuild asked again
+  the 111 whose search notes changed, for $0.04; the second judge cost $0.11.
 
 ## Repository
 

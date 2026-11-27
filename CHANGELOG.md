@@ -6,6 +6,15 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- One runtime for the vectors: the index, the local API and the evaluation run the embedding model
+  on onnxruntime-web (WebAssembly) through `@graph-rag/embeddings/node`, as the browser does, so a
+  question gets the same vector everywhere (cosine 0.9999997, the same top 5 in 50 of 50; before,
+  onnxruntime-node gave 0.996 and 24 of 50). Passages are embedded one per call (a batch changes
+  8-bit vectors). The runtime keys the stored vectors and the index's source hash. The index was
+  rebuilt: graph only and hybrid keep 93% and 91%, vectors only goes from 78% to 73%.
+  `pnpm eval --reuse` asked again only the 111 answers whose search notes changed ($0.04);
+  `pnpm eval --sheet` keeps the judge-check sample, moves the person's labels where nothing
+  changed and lists only what needs review.
 - The judge check on the scoreboard and in the README: the person's review, not blind (agreed with
   the judge on 21 of 21 sentences, no kappa), and a blind second judge, Claude Opus 5.5, on the same
   stratified sample (`pnpm eval --second-judge`): agreement between two automatic judges 76%,

@@ -42,19 +42,23 @@ faithfulness judged and the judge itself checked.
 
 ## Evidence
 
-First scoreboard (`evals/results/latest.json`, 2026-11-27): recall@5 hybrid 91%, graph only 93%,
-vectors only 78% with the shipped model (78% with arctic-embed-xs, 73% with all-MiniLM); the gap is
-in multi-hop questions (vectors 55%, hybrid 79%). Answers on hybrid search: 96% of answerable
-questions answered against 79% on vectors, 84% of the expected notes cited against 67%,
-faithfulness 94–97% in every variant, every unanswerable question answered "I don't know". The
-whole run (370 answers and their judgments) cost $0.17.
+Scoreboard (`evals/results/latest.json`, 2026-11-27, index on the WASM runtime of ADR 0003):
+recall@5 hybrid 91%, graph only 93%, vectors only 73% with the shipped model (78% with
+arctic-embed-xs, 73% with all-MiniLM); the gap is in multi-hop questions (vectors 50%, hybrid
+79%). Answers on hybrid search: 96% of answerable questions answered against 73% on vectors, 84% of
+the expected notes cited against 62%, faithfulness 95–98% in every variant, every unanswerable
+question answered "I don't know". All 370 recorded answers and their judgments cost $0.17; after
+the index rebuild, the 111 whose search notes changed were asked again for $0.04
+(`pnpm eval --reuse`), and the others, with the same inputs, were kept.
 
-Judge check (2026-11-27, 21 sentences from 10 answers): the person reviewed the verdicts, not
-blind, and agreed with all 21. Claude Opus 5.5, blind, agreed with Haiku 5.5 on 76% (kappa 0.22).
-On all 5 differences Haiku said partial and Opus supported, so Haiku is the stricter judge. The
-second judge cost $0.11. The product owner kept Haiku 5.5 as the main judge: its faithfulness is
-a conservative estimate, and a low kappa is expected with 6 flagged sentences and one-way
-disagreements.
+Judge check (21 sentences from 10 answers). First index: the person reviewed the verdicts, not
+blind, and agreed with all 21; Claude Opus 5.5, blind, agreed with Haiku 5.5 on 76% (kappa 0.22),
+Haiku said partial and Opus supported on all 5 differences. The product owner kept Haiku 5.5 as
+the main judge: its faithfulness is a conservative estimate. After the rebuild, one sample answer
+became "I don't know" and was replaced by the next of its group, and one changed: the person's
+labels stand for the 18 sentences of the 8 unchanged answers, and 2 answers wait for review. Opus
+again agreed on 76%, with the same direction on all 5 differences; it marked every sentence
+supported, so kappa is 0 by construction. Each second-judge run cost $0.11.
 
 ## Consequences
 

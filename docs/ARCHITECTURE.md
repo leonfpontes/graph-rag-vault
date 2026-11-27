@@ -23,17 +23,17 @@ flowchart LR
 
 ## Packages
 
-| Package                 | Folder                | Owns                                                                                      |
-| ----------------------- | --------------------- | ----------------------------------------------------------------------------------------- |
-| `@graph-rag/vault`      | `packages/vault`      | `Note`, `Link`, the 6 note types and the 7 relations; the parser; the world               |
-| `@graph-rag/index`      | `packages/index`      | `openIndex`, reversible `migrate` (PRAGMA `user_version`), the schema                     |
-| `@graph-rag/search`     | `packages/search`     | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf`                  |
-| `@graph-rag/embeddings` | `packages/embeddings` | `createEmbedder`: the pinned model, query prefix, token counter (Node and browser)        |
-| `@graph-rag/answer`     | `packages/answer`     | `answerQuestion`: cited, quoted sentences, removed ones, "I don't know"; the model client |
-| `@graph-rag/client`     | `packages/client`     | `loadDemo` (the static demo in the browser), the app's routes, the API's wire types       |
-| `@graph-rag/api`        | `packages/api`        | The fetch handler (`createApi`) and the Node server (`serveHttp`)                         |
-| `@graph-rag/web`        | `apps/web`            | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                                    |
-| `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), traps, `recallAtK`, MRR, mean ± sd            |
+| Package                 | Folder                | Owns                                                                                                    |
+| ----------------------- | --------------------- | ------------------------------------------------------------------------------------------------------- |
+| `@graph-rag/vault`      | `packages/vault`      | `Note`, `Link`, the 6 note types and the 7 relations; the parser; the world                             |
+| `@graph-rag/index`      | `packages/index`      | `openIndex`, reversible `migrate` (PRAGMA `user_version`), the schema                                   |
+| `@graph-rag/search`     | `packages/search`     | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf`                                |
+| `@graph-rag/embeddings` | `packages/embeddings` | `createEmbedder`: the pinned model on one runtime (WASM), query prefix, token counter; `/node` for Node |
+| `@graph-rag/answer`     | `packages/answer`     | `answerQuestion`: cited, quoted sentences, removed ones, "I don't know"; the model client               |
+| `@graph-rag/client`     | `packages/client`     | `loadDemo` (the static demo in the browser), the app's routes, the API's wire types                     |
+| `@graph-rag/api`        | `packages/api`        | The fetch handler (`createApi`) and the Node server (`serveHttp`)                                       |
+| `@graph-rag/web`        | `apps/web`            | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                                                  |
+| `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), traps, `recallAtK`, MRR, mean ± sd                          |
 
 ## Contracts
 
@@ -75,18 +75,25 @@ flowchart LR
   text with wikilinks as words: what gets embedded). A note with no body has no chunks.
 - **Embeddings** (`packages/embeddings`, ADR 0003): its own package, apart from the search, so the
   static demo loads the search alone and fetches the model only when a person asks a new question.
-  No Node APIs (the Ask worker runs it in the browser); the model loader is injected, so tests need
-  no network.
+  No Node APIs in the main entry (the Ask worker runs it in the browser); the model loader is
+  injected, so tests need no network. **One runtime:** the vectors always come from
+  onnxruntime-web on WebAssembly (`EMBEDDING_RUNTIME`). In the browser, transformers.js runs it; in
+  Node, `@graph-rag/embeddings/node` gives the same `createEmbedder` with the tokenizer from
+  transformers.js and the ONNX file run by onnxruntime-web, because transformers.js in Node only
+  offers onnxruntime-node, whose 8-bit kernels give other vectors (cosine 0.996). The index, the
+  local API and the evaluation import from `/node`. Passages go one per call (`batchSize` 1): the
+  8-bit model quantizes activations with one scale per call, so a batch would change the vectors.
   `createEmbedder({ model?, batchSize?, cacheDir?, device?, load? }): Promise<Embedder>`, where
-  `Embedder = { model, embedQuery(question), embedPassages(texts), countTokens(text) }`.
+  `Embedder = { model, runtime, embedQuery(question), embedPassages(texts), countTokens(text) }`.
   `embedQuery` adds the model's query prefix, and `embedPassages` takes chunk `embedText` with no
   prefix and refuses a passage over `model.maxTokens`. Both return unit `Float32Array`s of
   `model.dims` (384). `EmbeddingModel` pins `id`, `revision`, `pooling`, `queryPrefix`, `dims` and
   `maxTokens`; `DEFAULT_EMBEDDING_MODEL` is the one the index and the browser share.
 - **Ingestion** (`packages/index`, `ingest(db, notes, embedder)`): every note is chunked on every
   run (cheap); only chunks whose embedded text is new or changed, or that have no vector for this
-  model, go to `embedder.embedPassages`, stored with `toBlob` in `embeddings` keyed by
-  `(model, chunk_id)`. Notes whose `content_hash` didn't change keep their rows; removed notes take
+  model and runtime, go to `embedder.embedPassages`, stored with `toBlob` in `embeddings` keyed by
+  `(model, chunk_id)`, where `model` is `vectorKey(model id, runtime)`: vectors of two runtimes are
+  never mixed. The runtime is part of the index's source hash. Notes whose `content_hash` didn't change keep their rows; removed notes take
   their links, chunks and vectors with them. The model runs before any write, and one transaction
   writes everything. Chunks are cut with the default token estimate, so a test can rebuild them
   with no model.

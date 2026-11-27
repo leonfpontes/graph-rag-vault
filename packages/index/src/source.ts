@@ -15,10 +15,12 @@ export function sourceHash(
   notes: readonly Note[],
   questions: readonly SourceQuestion[],
   model: { id: string; revision: string },
+  runtime?: string,
 ): string {
   const parts = [
     `chunker ${CHUNKER_VERSION} ${CHUNK_TOKENS}`,
     `model ${model.id}@${model.revision}`,
+    ...(runtime ? [`runtime ${runtime}`] : []),
     ...[...notes].sort((a, b) => (a.id < b.id ? -1 : 1)).map((n) => `note ${noteHash(n)}`),
     ...questions.map((q) => `question ${q.id} ${q.question}`),
   ]

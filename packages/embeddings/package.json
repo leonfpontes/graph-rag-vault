@@ -10,6 +10,11 @@
       "graph-rag-source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./node": {
+      "graph-rag-source": "./src/node.ts",
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js"
     }
   },
   "scripts": {
@@ -17,6 +22,7 @@
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
   },
   "dependencies": {
-    "@huggingface/transformers": "4.3.2"
+    "@huggingface/transformers": "4.3.2",
+    "onnxruntime-web": "1.31.0-dev.20260914-8d85527a0"
   }
 }

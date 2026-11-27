@@ -2,40 +2,23 @@
   "items": [
     {
       "item": "S01",
-      "questionId": "q-021",
-      "question": "Who does the author of the wheel building standard report to?",
+      "questionId": "q-039",
+      "question": "What was the most recent field return rate in the quality reports?",
       "variant": "vector",
       "round": 1,
-      "sentence": "The passages name Chloé Dumont as the owner of the Wheel building standard, not as its author.",
+      "sentence": "The most recent field return rate was 0.8%, reported in the Q3 2026 quality report.",
       "cited": [
         {
-          "chunkId": "doc-wheel-building-standard#links",
-          "noteId": "doc-wheel-building-standard",
-          "quote": "The owner of Wheel building standard is Chloé Dumont.",
-          "text": "The owner of Wheel building standard is Chloé Dumont."
+          "chunkId": "doc-quality-report-q3-2026#0",
+          "noteId": "doc-quality-report-q3-2026",
+          "quote": "Field returns 0.8%.",
+          "text": "Field returns 0.8%. First quarter without a paint complaint from a dealer."
         }
       ],
       "judge": "partial"
     },
     {
       "item": "S02",
-      "questionId": "q-021",
-      "question": "Who does the author of the wheel building standard report to?",
-      "variant": "vector",
-      "round": 1,
-      "sentence": "Chloé Dumont reports to Hiro Sato, so on that basis the answer is Hiro Sato.",
-      "cited": [
-        {
-          "chunkId": "per-chloe-dumont#links",
-          "noteId": "per-chloe-dumont",
-          "quote": "Chloé Dumont reports to Hiro Sato.",
-          "text": "Chloé Dumont is also called Chloé. Chloé Dumont reports to Hiro Sato."
-        }
-      ],
-      "judge": "partial"
-    },
-    {
-      "item": "S03",
       "questionId": "q-026",
       "question": "Who is the account manager of the dealer that hosted the dealer day in May 2026?",
       "variant": "graph",
@@ -52,7 +35,7 @@
       "judge": "supported"
     },
     {
-      "item": "S04",
+      "item": "S03",
       "questionId": "q-026",
       "question": "Who is the account manager of the dealer that hosted the dealer day in May 2026?",
       "variant": "graph",
@@ -69,7 +52,7 @@
       "judge": "supported"
     },
     {
-      "item": "S05",
+      "item": "S04",
       "questionId": "q-026",
       "question": "Who is the account manager of the dealer that hosted the dealer day in May 2026?",
       "variant": "graph",
@@ -86,7 +69,7 @@
       "judge": "partial"
     },
     {
-      "item": "S06",
+      "item": "S05",
       "questionId": "q-022",
       "question": "In which meeting was the battery decision taken that the Voltaro switch later replaced?",
       "variant": "hybrid",
@@ -103,7 +86,7 @@
       "judge": "supported"
     },
     {
-      "item": "S07",
+      "item": "S06",
       "questionId": "q-022",
       "question": "In which meeting was the battery decision taken that the Voltaro switch later replaced?",
       "variant": "hybrid",
@@ -126,7 +109,7 @@
       "judge": "partial"
     },
     {
-      "item": "S08",
+      "item": "S07",
       "questionId": "q-023",
       "question": "Which meeting first set the ERP go-live date that was later moved to April?",
       "variant": "vector",
@@ -143,7 +126,7 @@
       "judge": "partial"
     },
     {
-      "item": "S09",
+      "item": "S08",
       "questionId": "q-023",
       "question": "Which meeting first set the ERP go-live date that was later moved to April?",
       "variant": "vector",
@@ -160,7 +143,7 @@
       "judge": "supported"
     },
     {
-      "item": "S10",
+      "item": "S09",
       "questionId": "q-037",
       "question": "When will the second curing oven be installed?",
       "variant": "graph",
@@ -177,7 +160,7 @@
       "judge": "supported"
     },
     {
-      "item": "S11",
+      "item": "S10",
       "questionId": "q-037",
       "question": "When will the second curing oven be installed?",
       "variant": "graph",
@@ -194,7 +177,7 @@
       "judge": "supported"
     },
     {
-      "item": "S12",
+      "item": "S11",
       "questionId": "q-037",
       "question": "When will the second curing oven be installed?",
       "variant": "graph",
@@ -211,7 +194,7 @@
       "judge": "partial"
     },
     {
-      "item": "S13",
+      "item": "S12",
       "questionId": "q-036",
       "question": "When do dealer orders close each month?",
       "variant": "vector",
@@ -228,7 +211,7 @@
       "judge": "supported"
     },
     {
-      "item": "S14",
+      "item": "S13",
       "questionId": "q-036",
       "question": "When do dealer orders close each month?",
       "variant": "vector",
@@ -251,7 +234,7 @@
       "judge": "supported"
     },
     {
-      "item": "S15",
+      "item": "S14",
       "questionId": "q-040",
       "question": "What is the latest on-time delivery rate of the rack supplier?",
       "variant": "graph",
@@ -268,7 +251,7 @@
       "judge": "supported"
     },
     {
-      "item": "S16",
+      "item": "S15",
       "questionId": "q-033",
       "question": "Where will the Commuter 2027 frames be welded from January?",
       "variant": "hybrid",
@@ -291,7 +274,7 @@
       "judge": "supported"
     },
     {
-      "item": "S17",
+      "item": "S16",
       "questionId": "q-033",
       "question": "Where will the Commuter 2027 frames be welded from January?",
       "variant": "hybrid",
@@ -314,7 +297,7 @@
       "judge": "supported"
     },
     {
-      "item": "S18",
+      "item": "S17",
       "questionId": "q-033",
       "question": "Where will the Commuter 2027 frames be welded from January?",
       "variant": "hybrid",
@@ -331,18 +314,41 @@
       "judge": "supported"
     },
     {
+      "item": "S18",
+      "questionId": "q-042",
+      "question": "For how long is a frame covered against structural failure if it was bought in October 2026?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "A frame bought in October 2026 is covered against structural failure for as long as its first owner keeps the bike.",
+      "cited": [
+        {
+          "chunkId": "dec-lifetime-frame-cover#0",
+          "noteId": "dec-lifetime-frame-cover",
+          "quote": "the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it",
+          "text": "From 1 September 2026, the chassis of every bike bought from us is covered against structural\nfailure for the whole time its first owner keeps it. Paint, bearings and electrics keep their\ncurrent terms."
+        },
+        {
+          "chunkId": "dec-lifetime-frame-cover#0",
+          "noteId": "dec-lifetime-frame-cover",
+          "quote": "From 1 September 2026",
+          "text": "From 1 September 2026, the chassis of every bike bought from us is covered against structural\nfailure for the whole time its first owner keeps it. Paint, bearings and electrics keep their\ncurrent terms."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
       "item": "S19",
       "questionId": "q-042",
       "question": "For how long is a frame covered against structural failure if it was bought in October 2026?",
       "variant": "vector",
       "round": 1,
-      "sentence": "A frame bought in October 2026 is covered against structural failure for the whole time its first owner keeps the bike.",
+      "sentence": "This lifetime cover replaces the earlier warranty terms.",
       "cited": [
         {
-          "chunkId": "dec-lifetime-frame-cover#0",
+          "chunkId": "dec-lifetime-frame-cover#links",
           "noteId": "dec-lifetime-frame-cover",
-          "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it.",
-          "text": "From 1 September 2026, the chassis of every bike bought from us is covered against structural\nfailure for the whole time its first owner keeps it. Paint, bearings and electrics keep their\ncurrent terms."
+          "quote": "Lifetime structural cover for first owners replaces Warranty terms.",
+          "text": "Lifetime structural cover for first owners was decided in Leadership meeting · 28 Aug 2026. The owner of Lifetime structural cover for first owners is Maya Okafor. Lifetime structural cover for first owners replaces Warranty terms."
         }
       ],
       "judge": "supported"

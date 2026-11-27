@@ -2,91 +2,91 @@
   "model": "claude-opus-5-5",
   "judgedAt": "2026-11-27",
   "promptVersion": "4439e6cce528",
-  "costMicros": 111895,
+  "costMicros": 112115,
   "verdicts": {
     "S01": {
       "verdict": "supported",
-      "reason": "Passage names Chloé Dumont as owner and names no author."
+      "reason": "Q3 2026 report, marked current, states field returns 0.8%."
     },
     "S02": {
       "verdict": "supported",
-      "reason": "Passage states Chloé Dumont reports to Hiro Sato; the conclusion is explicitly hedged."
+      "reason": "Dealer day on 6 May 2026 was hosted at Harbor Bikes in Bristol."
     },
     "S03": {
       "verdict": "supported",
-      "reason": "The 6 May 2026 dealer day note says it was hosted at Harbor Bikes in Bristol."
+      "reason": "The passage names Jonah Whitfield as owner and does not mention an account manager."
     },
     "S04": {
       "verdict": "supported",
-      "reason": "The passage names Jonah Whitfield as the owner of Harbor Bikes and never uses the term account manager."
+      "reason": "Jonah Whitfield's note says Sana Orr handles the day-to-day accounts."
     },
     "S05": {
-      "verdict": "partial",
-      "reason": "The passage says Sana Orr handles day-to-day accounts but never says she is on Jonah Whitfield's team."
-    },
-    "S06": {
       "verdict": "supported",
       "reason": "Passage states the Voltaro switch replaces Keep Ampcore as battery supplier."
     },
-    "S07": {
+    "S06": {
       "verdict": "supported",
-      "reason": "Supply review 17 Mar 2026 meeting note records keeping Ampcore as battery supplier."
+      "reason": "The 17 Mar 2026 Supply review note records keeping Ampcore as battery supplier."
     },
-    "S08": {
+    "S07": {
       "verdict": "supported",
       "reason": "The 11 May 2026 Finance review lists 'Go live with the new ERP in February'."
     },
+    "S08": {
+      "verdict": "supported",
+      "reason": "The decision note says the 22 Sep 2026 Finance review set April, replacing the February date."
+    },
     "S09": {
       "verdict": "supported",
-      "reason": "The decision note says the April go-live was decided 22 Sep 2026 and replaces the February date."
+      "reason": "The current note says the oven goes in during the December shutdown."
     },
     "S10": {
       "verdict": "supported",
-      "reason": "Passage says the oven goes in during the December shutdown."
+      "reason": "The passage says the December move replaces 'Install the oven in the October shutdown.'"
     },
     "S11": {
       "verdict": "supported",
-      "reason": "Passage states it replaces 'Install the oven in the October shutdown'."
+      "reason": "The decision note says the supplier cannot deliver before November."
     },
     "S12": {
       "verdict": "supported",
-      "reason": "Passage states the supplier cannot deliver before November."
+      "reason": "The passage says this word for word."
     },
     "S13": {
       "verdict": "supported",
-      "reason": "The passage says the same thing word for word."
+      "reason": "The decision note says it replaces the first-Monday cut-off, and the 2025 handbook states that rule."
     },
     "S14": {
       "verdict": "supported",
-      "reason": "The decision note says it replaces the first-Monday cut-off, and the 2025 handbook states that rule."
+      "reason": "The current Q3 2026 scorecard lists racks on-time delivery at 85%."
     },
     "S15": {
       "verdict": "supported",
-      "reason": "The current Q3 2026 scorecard lists racks on-time delivery at 85%."
+      "reason": "Passages state Calvane in Porto joins C27 tubes from January 2027; C27 equals Commuter 2027 frame."
     },
     "S16": {
       "verdict": "supported",
-      "reason": "Decision note says Calvane in Porto joins C27 tubes from January 2027; project note confirms the alias."
+      "reason": "Decision dated 20 Oct 2026 replaces in-house welding; project note says welding in Tarnwick shop."
     },
     "S17": {
       "verdict": "supported",
-      "reason": "Decided 20 Oct 2026 and explicitly replaces in-house welding; project note places that welding in Tarnwick."
+      "reason": "Stated verbatim in the cited passage."
     },
     "S18": {
       "verdict": "supported",
-      "reason": "Stated verbatim in the decision note."
+      "reason": "From 1 Sept 2026, the chassis is covered against structural failure for as long as the first owner keeps it."
     },
     "S19": {
       "verdict": "supported",
-      "reason": "Current note: from 1 Sept 2026, chassis covered against structural failure while first owner keeps it."
+      "reason": "Passage states lifetime structural cover replaces Warranty terms."
     },
     "S20": {
       "verdict": "supported",
-      "reason": "Passage says the second curing oven is part of Paint line upgrade."
+      "reason": "Passage states the second curing oven is part of Paint line upgrade."
     },
     "S21": {
       "verdict": "supported",
-      "reason": "Passage states the owner of Paint line upgrade is Hiro Sato."
+      "reason": "Passage states Hiro Sato owns Paint line upgrade."
     }
   }
 }

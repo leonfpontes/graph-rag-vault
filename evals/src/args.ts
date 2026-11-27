@@ -30,6 +30,10 @@ export interface EvalArgs {
   sheet?: string
   /** Label the judge-check sample with a second automatic judge (Opus 5.5), then rebuild the report. */
   secondJudge: boolean
+  /** Keep the recorded answers whose search notes did not change (same prompts and models). */
+  reuse: boolean
+  /** With --sheet: why the answers that changed wait for a label (shown on the scoreboard). */
+  pendingReason?: string
 }
 
 const positive = (name: string, raw: string): number => {
@@ -70,6 +74,8 @@ export function parseEvalArgs(argv: string[]): EvalArgs {
       report: { type: 'boolean', default: false },
       sheet: { type: 'string' },
       'second-judge': { type: 'boolean', default: false },
+      reuse: { type: 'boolean', default: false },
+      'pending-reason': { type: 'string' },
       'confirm-budget': { type: 'boolean', default: false },
     },
   })
@@ -106,5 +112,7 @@ export function parseEvalArgs(argv: string[]): EvalArgs {
     report: values.report,
     sheet: values.sheet,
     secondJudge: values['second-judge'],
+    reuse: values.reuse,
+    pendingReason: values['pending-reason'],
   }
 }

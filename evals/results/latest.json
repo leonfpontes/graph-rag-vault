@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "runAt": "2026-11-27T06:41:26.257Z",
+  "runAt": "2026-11-27T10:58:00.689Z",
   "rehearsal": false,
   "splits": ["test"],
   "questions": {
@@ -24,15 +24,15 @@
     "judge": "4439e6cce528"
   },
   "index": {
-    "sourceHash": "0da96347a94270a29d57a566ad31e1b14303a1ba28981f0432bdc40b8dae6070",
+    "sourceHash": "3b0593aeb9060b638de4132ddb990382bdbe6239a99cd6438e82f77a28332ad1",
     "model": "Xenova/bge-small-en-v1.5"
   },
   "retrieval": {
     "vector": {
       "all": {
         "questions": 33,
-        "recall5": 0.7777777777777777,
-        "mrr": 0.733853238265003
+        "recall5": 0.7272727272727273,
+        "mrr": 0.7258778258778259
       },
       "fact": {
         "questions": 8,
@@ -41,13 +41,13 @@
       },
       "multi-hop": {
         "questions": 14,
-        "recall5": 0.5476190476190477,
-        "mrr": 0.6517857142857143
+        "recall5": 0.5000000000000001,
+        "mrr": 0.6626984126984128
       },
       "temporal": {
         "questions": 11,
-        "recall5": 0.9090909090909091,
-        "mrr": 0.7053475935828877
+        "recall5": 0.8181818181818182,
+        "mrr": 0.6675324675324675
       }
     },
     "graph": {
@@ -101,33 +101,8 @@
       "scores": {
         "all": {
           "questions": 33,
-          "recall5": 0.7777777777777777,
-          "mrr": 0.733853238265003
-        },
-        "fact": {
-          "questions": 8,
-          "recall5": 1,
-          "mrr": 0.9166666666666667
-        },
-        "multi-hop": {
-          "questions": 14,
-          "recall5": 0.5476190476190477,
-          "mrr": 0.6517857142857143
-        },
-        "temporal": {
-          "questions": 11,
-          "recall5": 0.9090909090909091,
-          "mrr": 0.7053475935828877
-        }
-      }
-    },
-    {
-      "model": "all-minilm-l6-v2",
-      "scores": {
-        "all": {
-          "questions": 33,
           "recall5": 0.7272727272727273,
-          "mrr": 0.7638659320477502
+          "mrr": 0.7258778258778259
         },
         "fact": {
           "questions": 8,
@@ -137,12 +112,37 @@
         "multi-hop": {
           "questions": 14,
           "recall5": 0.5000000000000001,
-          "mrr": 0.7267316017316017
+          "mrr": 0.6626984126984128
         },
         "temporal": {
           "questions": 11,
           "recall5": 0.8181818181818182,
-          "mrr": 0.7000000000000001
+          "mrr": 0.6675324675324675
+        }
+      }
+    },
+    {
+      "model": "all-minilm-l6-v2",
+      "scores": {
+        "all": {
+          "questions": 33,
+          "recall5": 0.7272727272727273,
+          "mrr": 0.7775022956841139
+        },
+        "fact": {
+          "questions": 8,
+          "recall5": 1,
+          "mrr": 0.9166666666666667
+        },
+        "multi-hop": {
+          "questions": 14,
+          "recall5": 0.5000000000000001,
+          "mrr": 0.7231601731601732
+        },
+        "temporal": {
+          "questions": 11,
+          "recall5": 0.8181818181818182,
+          "mrr": 0.7454545454545454
         }
       }
     },
@@ -152,7 +152,7 @@
         "all": {
           "questions": 33,
           "recall5": 0.7777777777777777,
-          "mrr": 0.8188131313131313
+          "mrr": 0.8343943638061284
         },
         "fact": {
           "questions": 8,
@@ -162,12 +162,12 @@
         "multi-hop": {
           "questions": 14,
           "recall5": 0.5476190476190477,
-          "mrr": 0.7767857142857143
+          "mrr": 0.7661564625850339
         },
         "temporal": {
           "questions": 11,
           "recall5": 0.9090909090909091,
-          "mrr": 0.7405303030303029
+          "mrr": 0.8008021390374331
         }
       }
     }
@@ -181,12 +181,12 @@
     "pointsVsBestOther": -2,
     "outcomeVsBestOther": "tie",
     "hybrid": 0.909090909090909,
-    "vector": 0.7777777777777777,
+    "vector": 0.7272727272727273,
     "bestVector": {
-      "model": "bge-small-en-v1.5",
+      "model": "arctic-embed-xs",
       "recall5": 0.7777777777777777
     },
-    "points": 13.1,
+    "points": 18.2,
     "pointsVsBest": 13.1,
     "outcome": "win",
     "outcomeVsBest": "win"
@@ -194,19 +194,19 @@
   "generation": {
     "vector": {
       "faithfulness": {
-        "mean": 0.9617571059431524,
-        "sd": 0.017952613635846746,
-        "rounds": [0.9418604651162791, 0.9767441860465116, 0.9666666666666667]
+        "mean": 0.9834103557940767,
+        "sd": 0.007850844920968058,
+        "rounds": [0.9743589743589743, 0.9875, 0.9883720930232558]
       },
       "citationPrecision": {
-        "mean": 0.9929078014184397,
-        "sd": 0.012284048280630353,
-        "rounds": [1, 0.9787234042553191, 1]
+        "mean": 0.9858156028368795,
+        "sd": 0.024568096561260643,
+        "rounds": [1, 1, 0.9574468085106383]
       },
       "removedShare": {
         "mean": 0.007575757575757576,
-        "sd": 0.013121597027036951,
-        "rounds": [0, 0.022727272727272728, 0]
+        "sd": 0.01312159702703695,
+        "rounds": [0, 0, 0.022727272727272728]
       },
       "correctUnknown": {
         "mean": 1,
@@ -214,19 +214,19 @@
         "rounds": [1, 1, 1]
       },
       "answered": {
-        "mean": 0.7878787878787877,
+        "mean": 0.7272727272727272,
         "sd": 1.3597399555105182e-16,
-        "rounds": [0.7878787878787878, 0.7878787878787878, 0.7878787878787878]
+        "rounds": [0.7272727272727273, 0.7272727272727273, 0.7272727272727273]
       },
       "sourceRecall": {
-        "mean": 0.6717171717171716,
+        "mean": 0.6212121212121212,
         "sd": 0,
-        "rounds": [0.6717171717171716, 0.6717171717171716, 0.6717171717171716]
+        "rounds": [0.6212121212121212, 0.6212121212121212, 0.6212121212121212]
       },
       "answers": 120,
       "errors": 0,
-      "costPerAnswerUsd": 0.0004155083333333333,
-      "medianLatencyMs": 1492
+      "costPerAnswerUsd": 0.0003899416666666667,
+      "medianLatencyMs": 1295
     },
     "graph": {
       "faithfulness": {
@@ -266,19 +266,19 @@
     },
     "hybrid": {
       "faithfulness": {
-        "mean": 0.9439020939445388,
-        "sd": 0.014257676901841524,
-        "rounds": [0.9583333333333334, 0.9298245614035088, 0.9435483870967742]
+        "mean": 0.946449843986037,
+        "sd": 0.010894959874438156,
+        "rounds": [0.940677966101695, 0.9396551724137931, 0.9590163934426229]
       },
       "citationPrecision": {
-        "mean": 0.9947916666666666,
-        "sd": 0.009021097956087904,
-        "rounds": [1, 0.984375, 1]
+        "mean": 0.9850451291627763,
+        "sd": 0.0008224220517724719,
+        "rounds": [0.9852941176470589, 0.9841269841269841, 0.9857142857142858]
       },
       "removedShare": {
-        "mean": 0,
-        "sd": 0,
-        "rounds": [0, 0, 0]
+        "mean": 0.010931899641577059,
+        "sd": 0.009471118467185529,
+        "rounds": [0.016666666666666666, 0, 0.016129032258064516]
       },
       "correctUnknown": {
         "mean": 1,
@@ -297,27 +297,32 @@
       },
       "answers": 120,
       "errors": 0,
-      "costPerAnswerUsd": 0.00047093333333333336,
-      "medianLatencyMs": 1805.5
+      "costPerAnswerUsd": 0.00047070833333333334,
+      "medianLatencyMs": 1814.5
     }
   },
   "cost": {
-    "capUsd": 5,
-    "spentUsd": 0.172223,
-    "answerUsd": 0.112626,
-    "judgeUsd": 0.059597,
+    "capUsd": 1,
+    "spentUsd": 0.043338,
+    "answerUsd": 0.111241,
+    "judgeUsd": 0.058066,
     "skipped": 0,
+    "reused": 259,
     "stoppedEarly": false
   },
   "human": {
-    "items": 21,
-    "answers": 10,
+    "items": 18,
     "observed": 1,
+    "answers": 8,
     "labeledBy": "Leonardo Pontes",
     "labeledAt": "2026-11-27",
-    "blind": false
+    "blind": false,
+    "sampleAnswers": 10,
+    "pendingAnswers": 2,
+    "pendingReason": "after the index rebuild"
   },
   "notes": [
+    "The index was rebuilt on 2026-11-27 with onnxruntime-web (WebAssembly), the runtime the browser uses, so a question searched in the demo gets the same vector as here (cosine > 0.9999). The earlier vectors came from onnxruntime-node, whose 8-bit kernels round differently (cosine 0.996). Graph only and hybrid kept their recall@5 and MRR; vectors only went from 78% to 73%. The 111 answers whose search notes changed were asked and judged again; the other 259 have the same inputs and were kept.",
     "Before this run, a rehearsal bug answered the 40 test questions once, and those answers were read. Nothing was tuned on them: the search weights were fixed earlier on the 10 tuning questions, and the one change made afterwards (a passage per note that words its typed links and aliases, which live in the frontmatter) came from the tuning questions q-001, q-002, q-008 and q-009, which failed for that reason. The bug is fixed and tested: a rehearsal never answers a test question.",
     "Graph only finds slightly more of the expected notes in its top 5 than hybrid (93% against 91%), but hybrid ranks them higher (MRR 0.87 against 0.78) and answers more of the answerable questions (96% against 94%).",
     "The judge check samples half of its answers among those with a sentence the judge did not fully support, so it looks at the judge where it matters; it is not a random sample of all answers."
@@ -326,42 +331,43 @@
     "model": "claude-opus-5-5",
     "judgedAt": "2026-11-27",
     "promptVersion": "4439e6cce528",
-    "costUsd": 0.111895,
+    "costUsd": 0.112115,
     "items": 21,
     "observed": 0.7619047619047619,
-    "kappa": 0.2222222222222221,
+    "kappa": 0,
     "answers": 10,
-    "judgeFlagged": 6,
+    "secondLabels": ["supported"],
+    "judgeFlagged": 5,
     "disagreements": [
       {
         "item": "S01",
-        "questionId": "q-021",
+        "questionId": "q-039",
         "variant": "vector",
-        "sentence": "The passages name Chloé Dumont as the owner of the Wheel building standard, not as its author.",
+        "sentence": "The most recent field return rate was 0.8%, reported in the Q3 2026 quality report.",
         "judge": "partial",
         "second": "supported",
-        "reason": "Passage names Chloé Dumont as owner and names no author."
+        "reason": "Q3 2026 report, marked current, states field returns 0.8%."
       },
       {
-        "item": "S02",
-        "questionId": "q-021",
-        "variant": "vector",
-        "sentence": "Chloé Dumont reports to Hiro Sato, so on that basis the answer is Hiro Sato.",
+        "item": "S04",
+        "questionId": "q-026",
+        "variant": "graph",
+        "sentence": "Under Jonah Whitfield's team, Sana Orr is listed as handling the day-to-day accounts.",
         "judge": "partial",
         "second": "supported",
-        "reason": "Passage states Chloé Dumont reports to Hiro Sato; the conclusion is explicitly hedged."
+        "reason": "Jonah Whitfield's note says Sana Orr handles the day-to-day accounts."
       },
       {
-        "item": "S07",
+        "item": "S06",
         "questionId": "q-022",
         "variant": "hybrid",
         "sentence": "That Keep Ampcore decision was taken at the Supply review of 17 March 2026.",
         "judge": "partial",
         "second": "supported",
-        "reason": "Supply review 17 Mar 2026 meeting note records keeping Ampcore as battery supplier."
+        "reason": "The 17 Mar 2026 Supply review note records keeping Ampcore as battery supplier."
       },
       {
-        "item": "S08",
+        "item": "S07",
         "questionId": "q-023",
         "variant": "vector",
         "sentence": "The February ERP go-live date appears in the outcome of the Finance review of 11 May 2026, the earliest meeting in these passages that records it.",
@@ -370,13 +376,13 @@
         "reason": "The 11 May 2026 Finance review lists 'Go live with the new ERP in February'."
       },
       {
-        "item": "S12",
+        "item": "S11",
         "questionId": "q-037",
         "variant": "graph",
         "sentence": "The reason given is that the supplier cannot deliver before November.",
         "judge": "partial",
         "second": "supported",
-        "reason": "Passage states the supplier cannot deliver before November."
+        "reason": "The decision note says the supplier cannot deliver before November."
       }
     ]
   }

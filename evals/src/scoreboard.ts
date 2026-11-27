@@ -49,6 +49,8 @@ export interface Results {
     answerUsd: number
     judgeUsd: number
     skipped: number
+    /** Answers kept from the earlier run because their search notes did not change. */
+    reused?: number
     stoppedEarly: boolean
   }
   human: {
@@ -60,6 +62,10 @@ export interface Results {
     labeledAt: string
     /** False when the person reviewed the judge's verdicts rather than labelling without them. */
     blind?: boolean
+    /** Answers in the sample, and those with a sentence the person has not labelled yet. */
+    sampleAnswers?: number
+    pendingAnswers?: number
+    pendingReason?: string
   } | null
   /** A second automatic judge on the same sample: agreement between 2 models, not a human check. */
   secondJudge?: {
@@ -72,6 +78,7 @@ export interface Results {
     observed: number
     kappa: number | undefined
     judgeFlagged: number
+    secondLabels?: Verdict[]
     disagreements: {
       item: string
       questionId: string
@@ -209,13 +216,13 @@ export function toMarkdown(r: Results): string {
       }),
     '',
     r.human?.blind === false
-      ? `**Judge reviewed by a person (${r.human.labeledBy}), not blind:** agreed with the judge on ${Math.round(r.human.observed * r.human.items)} of ${r.human.items} sentences, stratified sample (half of the ${r.human.answers} answers from those with a sentence the judge did not fully support). No kappa: the person saw the judge's verdicts.`
+      ? `**Judge reviewed by a person (${r.human.labeledBy}), not blind:** agreed with the judge on ${Math.round(r.human.observed * r.human.items)} of ${r.human.items} sentences${r.human.pendingAnswers ? ` from ${r.human.answers} of ${r.human.sampleAnswers} answers` : ''}, stratified sample (half of the ${r.human.sampleAnswers ?? r.human.answers} answers from those with a sentence the judge did not fully support). No kappa: the person saw the judge's verdicts.${r.human.pendingAnswers ? ` Review pending for ${r.human.pendingAnswers} of ${r.human.sampleAnswers} answers${r.human.pendingReason ? ` ${r.human.pendingReason}` : ''}.` : ''}`
       : r.human
         ? `**Judge checked by a human:** ${r.human.items} sentences from ${r.human.answers} answers; agreement ${pct(r.human.observed)}, Cohen's kappa ${r.human.kappa?.toFixed(2) ?? '— (one label only)'}.`
         : `**Judge not checked by a person:** the faithfulness above comes from the automatic judge (${r.models.judge}), sentence by sentence.`,
     ...(r.secondJudge ? secondJudgeLines(r.secondJudge, r.models.judge) : []),
     '',
-    `**Cost:** ${usd(r.cost.spentUsd, 2)} of a ${usd(r.cost.capUsd, 2)} cap (answers ${usd(r.cost.answerUsd, 2)}, judge ${usd(r.cost.judgeUsd, 2)})${r.cost.stoppedEarly ? `; stopped at the cap with ${r.cost.skipped} answers not run` : ''}${r.secondJudge ? `; the second judge added ${usd(r.secondJudge.costUsd, 2)}` : ''}.`,
+    `**Cost:** ${r.cost.reused ? `this run ${usd(r.cost.spentUsd, 2)} of a ${usd(r.cost.capUsd, 2)} cap, for the answers whose search notes changed; ${r.cost.reused} answers with the same notes kept from the earlier run. All recorded answers: ${usd(r.cost.answerUsd + r.cost.judgeUsd, 2)}` : `${usd(r.cost.spentUsd, 2)} of a ${usd(r.cost.capUsd, 2)} cap`} (answers ${usd(r.cost.answerUsd, 2)}, judge ${usd(r.cost.judgeUsd, 2)})${r.cost.stoppedEarly ? `; stopped at the cap with ${r.cost.skipped} answers not run` : ''}${r.secondJudge ? `; the second judge added ${usd(r.secondJudge.costUsd, 2)}` : ''}.`,
     '',
     `Run ${r.runAt.slice(0, 10)} · answer prompt ${r.promptVersions.answer} · judge prompt ${r.promptVersions.judge} · index ${r.index.sourceHash.slice(0, 12)}. Faithfulness: supported 1, partial 0.5, unsupported 0, per sentence kept. "Citations kept": the share of the sources the model gave whose quote is in the cited passage (checked by code).`,
   )
@@ -239,7 +246,9 @@ function secondJudgeLines(s: NonNullable<Results['secondJudge']>, judge: string)
       ? `All ${n} disagreements go the same way: the main judge (${judge}) said ${first.judge}, the second judge said ${first.second}${stricter ? ', so the faithfulness above is a conservative estimate' : ''}.`
       : `They differ on ${n} sentences; ${judge} is the stricter on ${s.disagreements.filter((d) => VERDICT_SCORE[d.judge] < VERDICT_SCORE[d.second]).length}.`,
     '',
-    `A low kappa is expected here: the main judge marked only ${s.judgeFlagged} of ${s.items} sentences as not fully supported, and with so few cases, ${n} disagreements${oneWay ? ' that all go one way' : ''} pull kappa down even at ${pct(s.observed)} agreement. The main judge stays ${judge}.`,
+    s.secondLabels?.length === 1
+      ? `Kappa says little here: the second judge marked all ${s.items} sentences ${s.secondLabels[0]}. With one judge on a single label, the agreement expected by chance equals the observed agreement, so kappa is 0 whatever the main judge does; the agreement (${pct(s.observed)}) and the disagreements below are the measure. The main judge stays ${judge}.`
+      : `A low kappa is expected here: the main judge marked only ${s.judgeFlagged} of ${s.items} sentences as not fully supported, and with so few cases, ${n} disagreements${oneWay ? ' that all go one way' : ''} pull kappa down even at ${pct(s.observed)} agreement. The main judge stays ${judge}.`,
     '',
     'The disagreements:',
     '',

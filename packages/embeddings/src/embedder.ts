@@ -15,6 +15,8 @@ export interface Extractor {
     options: { pooling: 'cls' | 'mean'; normalize: boolean },
   ): Promise<{ data: ArrayLike<number>; dims: readonly number[] }>
   tokenizer: { encode(text: string): readonly number[] }
+  /** Where the vectors are computed; vectors of two runtimes don't mix in one index. */
+  runtime?: string
 }
 
 export interface LoadOptions {
@@ -28,7 +30,11 @@ export type LoadExtractor = (model: EmbeddingModel, options: LoadOptions) => Pro
 
 export interface EmbedderOptions extends LoadOptions {
   model?: string
-  /** Passages per model call (default 32). */
+  /**
+   * Passages per model call (default 1). The 8-bit model quantizes its activations with one scale
+   * per call, so a passage embedded with others (and their padding) gets another vector (cosine
+   * 0.993): one at a time, a passage always gets the same vector, and it is faster on WebAssembly.
+   */
   batchSize?: number
   /** Loads the pipeline; default: transformers.js. Tests pass a fake. */
   load?: LoadExtractor
@@ -36,6 +42,8 @@ export interface EmbedderOptions extends LoadOptions {
 
 export interface Embedder {
   model: EmbeddingModel
+  /** The runtime the vectors come from (EMBEDDING_RUNTIME in Node and in the Ask worker). */
+  runtime: string
   /** A question's unit vector, with the model's query prefix. */
   embedQuery(question: string): Promise<Float32Array>
   /** Unit vectors of passages (chunk `embedText`), in order, without the prefix. */
@@ -60,12 +68,14 @@ const loadTransformers: LoadExtractor = async (model, options) => {
     dtype: 'q8',
     ...(options.device ? { device: options.device as never } : {}),
   })
-  return extractor as unknown as Extractor
+  return Object.assign(extractor, {
+    runtime: `transformers.js ${options.device ?? 'default device'}`,
+  }) as unknown as Extractor
 }
 
 export async function createEmbedder(options: EmbedderOptions = {}): Promise<Embedder> {
   const model = resolveModel(options.model)
-  const batchSize = options.batchSize ?? 32
+  const batchSize = options.batchSize ?? 1
   if (!Number.isSafeInteger(batchSize) || batchSize < 1)
     throw new Error(`batchSize must be a whole number of 1 or more (got ${batchSize}).`)
   const load = options.load ?? loadTransformers
@@ -86,6 +96,7 @@ export async function createEmbedder(options: EmbedderOptions = {}): Promise<Emb
 
   return {
     model,
+    runtime: extractor.runtime ?? 'unknown',
     countTokens,
     async embedQuery(question) {
       const text = question.trim()

@@ -13,6 +13,7 @@ export default defineConfig({
       { find: /^@graph-rag\/vault$/, replacement: src('./packages/vault/src/index.ts') },
       { find: /^@graph-rag\/index$/, replacement: src('./packages/index/src/index.ts') },
       { find: /^@graph-rag\/search$/, replacement: src('./packages/search/src/index.ts') },
+      { find: /^@graph-rag\/embeddings\/node$/, replacement: src('./packages/embeddings/src/node.ts') },
       { find: /^@graph-rag\/embeddings$/, replacement: src('./packages/embeddings/src/index.ts') },
       { find: /^@graph-rag\/answer\/passages$/, replacement: src('./packages/answer/src/browser.ts') },
       { find: /^@graph-rag\/answer$/, replacement: src('./packages/answer/src/index.ts') },

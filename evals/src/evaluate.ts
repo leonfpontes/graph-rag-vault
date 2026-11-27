@@ -30,6 +30,11 @@ export interface EvaluateInputs {
   /** Embedders of the other candidate models, for the vector baselines; none skips them. */
   baselineEmbedders?: () => AsyncIterable<Pick<Embedder, 'model' | 'embedQuery' | 'embedPassages'>>
   embeddingModelKey: string
+  /**
+   * The answers of an earlier run with the same prompts and models: an answer whose search notes
+   * did not change is kept, the others are asked again (after an index rebuild, for instance).
+   */
+  previous?: readonly AnswerRecord[]
   now?: () => Date
   log?: (line: string) => void
 }
@@ -71,6 +76,17 @@ export async function evaluate(inputs: EvaluateInputs): Promise<EvaluateOutcome>
   const best = bestBaseline(baselines)
 
   const budget = new Budget(args.budgetUsd * 1e6)
+  const earlier = new Map(
+    (inputs.previous ?? [])
+      .filter((r) => r.status !== 'error')
+      .map((r) => [`${r.questionId}|${r.variant}|${r.round}`, r]),
+  )
+  const reuse = inputs.previous
+    ? (job: { questionId: string; variant: RetrievalVariant; round: number; passageNotes: string[] }) => {
+        const r = earlier.get(`${job.questionId}|${job.variant}|${job.round}`)
+        return r && r.passageNotes.join('|') === job.passageNotes.join('|') ? r : undefined
+      }
+    : undefined
   const passagesFor = (q: Question, v: RetrievalVariant) => passagesFromHits(index, hits(q, v))
   log(`answers: ${scored.length} questions × ${args.variants.length} variants × ${args.rounds} rounds`)
   const main = await runGeneration({
@@ -81,6 +97,7 @@ export async function evaluate(inputs: EvaluateInputs): Promise<EvaluateOutcome>
     provider: inputs.provider,
     budget,
     concurrency: args.concurrency,
+    reuse,
     log,
   })
   // Only the scoreboard run answers the other questions for the demo: a rehearsal must never read
@@ -98,9 +115,10 @@ export async function evaluate(inputs: EvaluateInputs): Promise<EvaluateOutcome>
         provider: inputs.provider,
         budget,
         concurrency: args.concurrency,
+        reuse,
         log,
       })
-    : { records: [], skipped: 0, stoppedEarly: false }
+    : { records: [], skipped: 0, reused: 0, stoppedEarly: false }
 
   const all = [...main.records, ...extras.records]
   const sum = (key: 'answerMicros' | 'judgeMicros') => all.reduce((s, r) => s + r[key], 0) / 1e6
@@ -108,6 +126,7 @@ export async function evaluate(inputs: EvaluateInputs): Promise<EvaluateOutcome>
   const notes: string[] = []
   if (errors)
     notes.push(`${errors} answers failed after retries and the fallback; they are counted, not scored.`)
+  const reused = main.reused + extras.reused
   const results: Results = {
     version: 1,
     runAt: (inputs.now ?? (() => new Date()))().toISOString(),
@@ -138,6 +157,7 @@ export async function evaluate(inputs: EvaluateInputs): Promise<EvaluateOutcome>
       answerUsd: sum('answerMicros'),
       judgeUsd: sum('judgeMicros'),
       skipped: main.skipped + extras.skipped,
+      ...(inputs.previous ? { reused } : {}),
       stoppedEarly: main.stoppedEarly || extras.stoppedEarly,
     },
     human: null,

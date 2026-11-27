@@ -26,7 +26,8 @@ export default tseslint.config(
       'packages/client/src/**/*.ts',
       'packages/answer/src/{browser,passages,types,provider}.ts',
     ],
-    ignores: ['**/*.test.ts'],
+    // The embedder's Node entry (WASM runtime, model file cache) is for Node only.
+    ignores: ['**/*.test.ts', 'packages/embeddings/src/node.ts'],
     rules: {
       'no-restricted-imports': [
         'error',

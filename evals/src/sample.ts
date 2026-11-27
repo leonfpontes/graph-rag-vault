@@ -27,6 +27,8 @@ export interface HumanLabels {
    * agreement is then a review, and no kappa is computed. Absent means blind.
    */
   blind?: boolean
+  /** Why some sample answers have no label yet (e.g. "after the index rebuild"). */
+  pendingReason?: string
   labels: Record<string, Verdict>
 }
 
@@ -79,6 +81,15 @@ export function pickSample(
     candidates.filter((r) => !flagged(r)),
     answers - picked.length,
   )
+  return itemsFor(picked, questionText, chunkText)
+}
+
+/** One item per sentence of the given answers, numbered S01, S02… in order. */
+function itemsFor(
+  picked: readonly AnswerRecord[],
+  questionText: (id: string) => string,
+  chunkText: (chunkId: string) => string,
+): SampleItem[] {
   let n = 0
   return picked.flatMap((r) =>
     r.sentences.map((s, i) => ({
@@ -92,6 +103,76 @@ export function pickSample(
       judge: r.verdicts[i]!.verdict,
     })),
   )
+}
+
+/**
+ * The same answers as an earlier sample (question, variant, round), read from new records: after
+ * a rebuild, the sample stays the one that was chosen, and an answer that changed gets new items.
+ */
+export function resample(
+  previous: readonly SampleItem[],
+  records: readonly AnswerRecord[],
+  questionText: (id: string) => string,
+  chunkText: (chunkId: string) => string,
+): SampleItem[] {
+  const keyOf = (x: { questionId: string; variant: string; round: number }) =>
+    `${x.questionId}|${x.variant}|${x.round}`
+  const judged = (r: AnswerRecord) =>
+    r.round === 1 && r.status === 'answered' && r.verdicts.length === r.sentences.length
+  const flagged = (r: AnswerRecord) => r.verdicts.some((v) => v.verdict !== 'supported')
+  const keys = [...new Set(previous.map(keyOf))]
+  const questions = new Set(previous.map((it) => it.questionId))
+  const picked = keys.map((key) => {
+    const r = records.find((x) => keyOf(x) === key)
+    if (r && judged(r)) return r
+    // The answer has nothing left to check (now "I don't know", say): the next answer of the same
+    // variant and the same half of the sample takes its place, in the order pickSample uses.
+    const old = previous.filter((it) => keyOf(it) === key)
+    const wasFlagged = old.some((it) => it.judge !== 'supported')
+    const next = records
+      .filter(
+        (x) =>
+          judged(x) &&
+          x.variant === old[0]!.variant &&
+          flagged(x) === wasFlagged &&
+          !questions.has(x.questionId),
+      )
+      .sort((a, b) =>
+        hash(`${a.questionId}|${a.variant}`).localeCompare(hash(`${b.questionId}|${b.variant}`)),
+      )[0]
+    if (!next)
+      throw new Error(`The sample answer ${key} has nothing left to check, and no answer can replace it.`)
+    questions.add(next.questionId)
+    return next
+  })
+  return itemsFor(picked, questionText, chunkText)
+}
+
+/**
+ * Moves the person's labels to the new item ids: a label stays only where the answer, the
+ * sentence and the judge's verdict are the same; a changed answer waits for a new label.
+ */
+export function carryLabels(
+  previous: readonly SampleItem[],
+  items: readonly SampleItem[],
+  labels: HumanLabels,
+  pendingReason?: string,
+): HumanLabels {
+  const same = (a: SampleItem, b: SampleItem) =>
+    a.questionId === b.questionId &&
+    a.variant === b.variant &&
+    a.round === b.round &&
+    a.sentence === b.sentence &&
+    a.judge === b.judge
+  const moved: Record<string, Verdict> = {}
+  for (const it of items) {
+    const old = previous.find((p) => same(p, it))
+    const label = old && labels.labels[old.item]
+    if (label) moved[it.item] = label
+  }
+  const pending = items.some((it) => !moved[it.item])
+  const { pendingReason: _old, ...rest } = labels
+  return { ...rest, ...(pending && pendingReason ? { pendingReason } : {}), labels: moved }
 }
 
 /** The sheet a person fills in: question, sentence and cited passages; no judge verdict. */
@@ -149,6 +230,9 @@ export function humanAgreement(items: readonly SampleItem[], labels: HumanLabels
       throw new Error(`The label of ${key} is "${v}", not a verdict.`)
   }
   const labelled = items.filter((it) => labels.labels[it.item])
+  const answerKey = (it: SampleItem) => `${it.questionId}|${it.variant}|${it.round}`
+  const sampleAnswers = new Set(items.map(answerKey))
+  const pendingAnswers = new Set(items.filter((it) => !labels.labels[it.item]).map(answerKey))
   const blind = labels.blind ?? true
   const measured = agreement(
     labelled.map((it) => it.judge),
@@ -162,5 +246,8 @@ export function humanAgreement(items: readonly SampleItem[], labels: HumanLabels
     labeledBy: labels.labeledBy,
     labeledAt: labels.labeledAt,
     blind,
+    sampleAnswers: sampleAnswers.size,
+    pendingAnswers: pendingAnswers.size,
+    ...(pendingAnswers.size && labels.pendingReason ? { pendingReason: labels.pendingReason } : {}),
   }
 }

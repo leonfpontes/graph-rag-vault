@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { humanAgreement, pickSample, sampleSheet, type AnswerRecord } from './index.js'
+import { carryLabels, humanAgreement, pickSample, resample, sampleSheet, type AnswerRecord } from './index.js'
 
 const rec = (
   questionId: string,
@@ -111,5 +111,57 @@ describe('the sheet and the agreement', () => {
     expect(() =>
       humanAgreement(items, { labeledBy: 'x', labeledAt: 'y', labels: { S01: 'yes' as never } }),
     ).toThrow('The label of S01 is "yes", not a verdict.')
+  })
+})
+
+describe('after a rebuild', () => {
+  const before = pickSample(RECORDS, text, chunk, 3)
+  const labels = {
+    labeledBy: 'owner',
+    labeledAt: '2026-11-27',
+    blind: false,
+    labels: Object.fromEntries(before.map((it) => [it.item, it.judge])),
+  }
+
+  it('keeps the chosen answers, reads them again, and moves a label only where nothing changed', () => {
+    const [first, second] = before
+    // the first answer was asked again and now reads differently
+    const changed = RECORDS.map((r) =>
+      r.questionId === first!.questionId && r.variant === first!.variant
+        ? { ...r, sentences: [{ ...r.sentences[0]!, text: 'A new answer.' }] }
+        : r,
+    )
+    const items = resample(before, changed, text, chunk)
+    expect(items.map((it) => [it.questionId, it.variant])).toEqual(
+      before.map((it) => [it.questionId, it.variant]),
+    )
+    const moved = carryLabels(before, items, labels, 'after the index rebuild')
+    expect(Object.keys(moved.labels)).toEqual(items.slice(1).map((it) => it.item))
+    expect(moved).toMatchObject({ blind: false, pendingReason: 'after the index rebuild' })
+    expect(moved.labels[items[1]!.item]).toBe(labels.labels[second!.item])
+    const check = humanAgreement(items, moved)
+    expect(check).toMatchObject({
+      items: 2,
+      observed: 1,
+      sampleAnswers: 3,
+      pendingAnswers: 1,
+      kappa: undefined,
+    })
+    expect(check.pendingReason).toBe('after the index rebuild')
+  })
+
+  it('replaces an answer with nothing left to check by the next one of the same variant and half', () => {
+    const [first] = before
+    const unknown = RECORDS.map((r) =>
+      r.questionId === first!.questionId && r.variant === first!.variant
+        ? { ...r, status: 'unknown' as const, sentences: [], verdicts: [] }
+        : r,
+    )
+    const items = resample(before, unknown, text, chunk)
+    expect(items[0]!.variant).toBe(first!.variant)
+    expect(before.map((it) => it.questionId)).not.toContain(items[0]!.questionId)
+    expect(items.slice(1).map((it) => it.questionId)).toEqual(before.slice(1).map((it) => it.questionId))
+    // no reason is kept once every answer has its labels
+    expect(carryLabels(before, before, labels, 'after the index rebuild').pendingReason).toBeUndefined()
   })
 })

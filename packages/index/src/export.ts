@@ -5,15 +5,19 @@ import type { DatabaseSync } from 'node:sqlite'
 
 import { fromBlob, type IndexedQuery, type SearchIndex } from '@graph-rag/search'
 
+import { vectorKey } from './ingest.js'
+
 export interface ExportOptions {
   model: { id: string; revision: string; dims: number }
   sourceHash: string
   queries?: IndexedQuery[]
+  /** The runtime the vectors were made with (see vectorKey); none reads the plain model id. */
+  runtime?: string
 }
 
 export function exportIndex(
   db: DatabaseSync,
-  { model, sourceHash, queries = [] }: ExportOptions,
+  { model, sourceHash, queries = [], runtime }: ExportOptions,
 ): SearchIndex {
   const aliases = new Map<string, string[]>()
   for (const r of db.prepare('SELECT note_id, alias FROM aliases ORDER BY note_id, alias').all() as {
@@ -61,7 +65,9 @@ export function exportIndex(
 
   const stored = new Map(
     (
-      db.prepare('SELECT chunk_id, dim, vector FROM embeddings WHERE model = ?').all(model.id) as {
+      db
+        .prepare('SELECT chunk_id, dim, vector FROM embeddings WHERE model = ?')
+        .all(vectorKey(model.id, runtime)) as {
         chunk_id: string
         dim: number
         vector: Uint8Array

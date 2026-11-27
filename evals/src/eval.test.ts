@@ -207,6 +207,32 @@ describe('evaluate', () => {
     expect(toMarkdown(results)).toContain('# Scoreboard: 2 questions never used for tuning')
   })
 
+  it('keeps an earlier answer whose search notes did not change, and asks again the others', async () => {
+    const first = await evaluate({
+      args: ARGS,
+      index: INDEX,
+      questions: QUESTIONS,
+      provider: fakeModel(),
+      embeddingModelKey: 'bge-small-en-v1.5',
+    })
+    // one recorded answer read other notes before the rebuild: only that one is asked again
+    const previous = first.records.map((r, i) => (i === 0 ? { ...r, passageNotes: ['other-note'] } : r))
+    const provider = fakeModel()
+    const again = await evaluate({
+      args: ARGS,
+      index: INDEX,
+      questions: QUESTIONS,
+      provider,
+      embeddingModelKey: 'bge-small-en-v1.5',
+      previous,
+    })
+    expect(again.records).toHaveLength(13)
+    expect(again.results.cost.reused).toBe(12)
+    expect(again.results.cost.spentUsd).toBeGreaterThan(0)
+    expect(again.results.cost.spentUsd).toBeLessThan(first.results.cost.spentUsd)
+    expect(toMarkdown(again.results)).toContain('12 answers with the same notes kept from the earlier run')
+  })
+
   it('never answers a test question in a rehearsal', async () => {
     const provider = fakeModel()
     const { records, results } = await evaluate({
@@ -443,6 +469,7 @@ describe('parseEvalArgs', () => {
       out: 'evals/results',
       report: false,
       secondJudge: false,
+      reuse: false,
     })
     expect(parseEvalArgs(['--second-judge']).secondJudge).toBe(true)
   })

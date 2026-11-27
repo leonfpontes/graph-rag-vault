@@ -144,9 +144,11 @@ describe('models', () => {
 })
 
 describe('runs in the browser', () => {
-  it('imports nothing from Node: the Ask worker loads it', () => {
+  it('imports nothing from Node: the Ask worker loads it (node.ts is the Node entry)', () => {
     const dir = path.dirname(fileURLToPath(import.meta.url))
-    const sources = readdirSync(dir).filter((f) => f.endsWith('.ts') && !f.endsWith('.test.ts'))
+    const sources = readdirSync(dir).filter(
+      (f) => f.endsWith('.ts') && !f.endsWith('.test.ts') && f !== 'node.ts',
+    )
     expect(sources.length).toBeGreaterThan(0)
     for (const file of sources)
       expect(readFileSync(path.join(dir, file), 'utf8'), file).not.toMatch(/from 'node:|require\(/)
