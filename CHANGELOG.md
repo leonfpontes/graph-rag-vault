@@ -6,6 +6,12 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- How it works, the landing page: the scoreboard sentence as the title, the share composition as the
+  hero (a recorded question, its cited answer and the links it walked), a real note as the index reads
+  it, the reasons a result shows, how it is measured and the quickstart, with the footer of Atlas and
+  Crew. A 404 page with three ways on. `pnpm share-images` draws the social preview, the OG image and
+  the README cover (light and dark) from the scoreboard and writes the values they show; a test fails
+  when they fall behind.
 - The screens on Atlas UI 0.3.0: Explore (3D graph on Three.js, loaded on demand, 2D and a List for
   keyboards; on phones a map with one bubble per constellation), Ask (a citation per sentence with the
   exact passage on hover or focus, the sources with their reasons, the path the answer walked with the

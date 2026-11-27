@@ -102,6 +102,27 @@ the word, and the color only helps.
   value and a hybrid − vectors column, the faithfulness judge and how it was checked, every test
   question with the rank of its first expected note per variant, the run's own notes, and the commands.
 
+- **How it works (the landing page, `/`):** the site's own header (the mark, the page's sections,
+  GitHub, the theme) and footer. The H1 is the sentence (below), with the second line about vectors; the
+  hero is the share composition (a recorded question, its cited answer, the links it walked); then
+  1 · notes become a typed graph (a real note's frontmatter and the links extracted), 2 · hybrid search
+  with the reasons a result shows, 3 · answers cite every sentence, 4 · how we measure (the
+  `kindLine()` sentence, the 3 kind cards and the judge check in one clause), and the quickstart.
+- **404:** the mark, "No page at this address" and three ways on (Explore, Ask, How it works). The
+  servers answer it with HTTP 404.
+
+## Share images
+
+One composition for the README cover, the social preview and the OG image, and the landing hero:
+the mark, the featured question (`FEATURED_QUESTION` in `apps/web/src/lib/share.ts`: a multi-hop test
+question whose hybrid answer the judge supported in every sentence, with the longest lit path), the
+answer with its citations, the lit path with the type of each link and a short name on every note, and
+the sentence on one line at the bottom. Only that line changes with the result. `pnpm share-images`
+draws them from `/share?record` (`?case=win|tie|loss` shows the other outcomes, as examples) and writes
+`docs/share.values.json`; a test fails when the values fall behind `latest.json` or the recorded
+answer. Sizes: social 1280 × 640, OG 1200 × 630, README cover 830 × 415 at 2× in a light and a dark
+file. Every text is at least 24 px at 1280 (26 on the graph), so at least 11 px at 600 px.
+
 ## The sentence
 
 `headline()` (`apps/web/src/lib/headline.ts`) writes it from the verdict in `latest.json`: hybrid

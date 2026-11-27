@@ -232,7 +232,9 @@ the recorded answers and the scoreboard all run from `apps/web/dist`. Project se
 (the public origin, for `og:url` and `og:image`; without it a production build falls back to
 `VERCEL_PROJECT_PRODUCTION_URL`, and fails with neither) and `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm
 11 from `packageManager`). The OG image is `apps/web/public/og.png`, 1200 × 630, made from the
-scoreboard with the share pieces.
+scoreboard with the share pieces by `pnpm share-images` (`apps/web/scripts/share-images.mjs`: the
+built app on its own port, `/share?record`, a screenshot of each piece, and `docs/share.values.json`
+with the values they show, which `apps/web/src/lib/share.test.tsx` compares with the sources).
 
 ## Decisions
 
