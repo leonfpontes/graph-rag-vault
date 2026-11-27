@@ -13,8 +13,10 @@ import {
   runGeneration,
   summarizeGeneration,
   toMarkdown,
+  verdictOf,
   type AnswerRecord,
   type Question,
+  type Results,
 } from './index.js'
 
 // A tiny fictional index: 3 notes, 4 dimensions.
@@ -182,7 +184,14 @@ describe('evaluate', () => {
       human: null,
     })
     expect(results.retrieval.vector.all).toEqual({ questions: 1, recall5: 1, mrr: 1 })
-    expect(results.verdict).toMatchObject({ hybrid: 1, vector: 1, points: 0, outcome: 'tie' })
+    expect(results.verdict).toMatchObject({
+      hybrid: 1,
+      vector: 1,
+      points: 0,
+      outcome: 'tie',
+      bestOther: { variant: 'vector', recall5: 1 },
+      outcomeVsBestOther: 'tie',
+    })
     const hybrid = results.generation.hybrid
     expect(hybrid.faithfulness).toEqual({ mean: 1, sd: 0, rounds: [1, 1] })
     expect(hybrid.correctUnknown.mean).toBe(1)
@@ -482,6 +491,64 @@ describe('parseEvalArgs', () => {
 })
 
 describe('scoreboard', () => {
+  const score = (recall5: number) => ({ all: { questions: 33, recall5, mrr: 0.8 } })
+
+  it('compares hybrid with the best other variant, and says what it adds to vectors', () => {
+    const v = verdictOf({ vector: score(0.78), graph: score(0.93), hybrid: score(0.91) }, undefined)
+    expect(v).toMatchObject({
+      bestOther: { variant: 'graph', recall5: 0.93 },
+      pointsVsBestOther: -2,
+      outcomeVsBestOther: 'tie',
+      points: 13,
+      outcome: 'win',
+    })
+    const win = verdictOf({ vector: score(0.6), graph: score(0.5), hybrid: score(0.9) }, undefined)
+    expect(win).toMatchObject({
+      bestOther: { variant: 'vector' },
+      pointsVsBestOther: 30,
+      outcomeVsBestOther: 'win',
+    })
+    const loss = verdictOf({ vector: score(0.6), graph: score(0.9), hybrid: score(0.7) }, undefined)
+    expect(loss.outcomeVsBestOther).toBe('loss')
+  })
+
+  it('writes the headline from the approved rule, with no word of a win in a tie or a loss', () => {
+    const base = {
+      rehearsal: false,
+      splits: ['test'],
+      questions: { total: 40, byKind: {} },
+      rounds: 3,
+      notes: [],
+      human: null,
+      baselines: [],
+      generation: {},
+      models: { answer: 'a', answerFallback: null, judge: 'j', embeddings: 'bge-small-en-v1.5' },
+      promptVersions: { answer: 'p', judge: 'q' },
+      index: { sourceHash: 'h'.repeat(16), model: 'm' },
+      runAt: '2026-11-27T00:00:00Z',
+      version: 1,
+      cost: { capUsd: 5, spentUsd: 0.17, answerUsd: 0.11, judgeUsd: 0.06, skipped: 0, stoppedEarly: false },
+    } as unknown as Results
+    const md = (retrieval: Results['retrieval']) =>
+      toMarkdown({ ...base, retrieval, verdict: verdictOf(retrieval, undefined) })
+    const tie = md({ vector: score(0.78), graph: score(0.93), hybrid: score(0.91) })
+    expect(tie).toContain(
+      'Hybrid search and graph only tie: 91% and 93% of the expected notes in the top 5 (-2 points, under the 5-point tie line).',
+    )
+    expect(tie).toContain(
+      'Against vectors only (78%), hybrid search is +13 points: what the graph adds to vectors.',
+    )
+    expect(tie).not.toMatch(/\bwins?\b|\bbeats?\b/i)
+    expect(md({ vector: score(0.6), graph: score(0.5), hybrid: score(0.9) })).toContain(
+      'Hybrid search finds 90% of the expected notes in its top 5, against 60% for vectors only (+30 points).',
+    )
+    const loss = md({ vector: score(0.6), graph: score(0.9), hybrid: score(0.7) })
+    expect(loss).toContain(
+      'Graph only finds 90% of the expected notes in the top 5, hybrid search 70% (-20 points).',
+    )
+    expect(loss).not.toMatch(/\bwins?\b/i)
+  })
+
   it('calls a difference under 5 points a tie', () => {
     expect(outcome(4.9)).toBe('tie')
     expect(outcome(5)).toBe('win')

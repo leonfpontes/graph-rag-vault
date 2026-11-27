@@ -1,6 +1,8 @@
 # Scoreboard: 40 questions never used for tuning
 
-Hybrid search finds 91% of the expected notes in its top 5, against 78% for vectors only (+13.1 points).
+Hybrid search and graph only tie: 91% and 93% of the expected notes in the top 5 (-2 points, under the 5-point tie line).
+
+Against vectors only (78%), hybrid search is +13.1 points: what the graph adds to vectors.
 
 > **Note:** Before this run, a rehearsal bug answered the 40 test questions once, and those answers were read. Nothing was tuned on them: the search weights were fixed earlier on the 10 tuning questions, and the one change made afterwards (a passage per note that words its typed links and aliases, which live in the frontmatter) came from the tuning questions q-001, q-002, q-008 and q-009, which failed for that reason. The bug is fixed and tested: a rehearsal never answers a test question.
 

@@ -26,6 +26,13 @@ export interface Results {
   baselines: BaselineScore[]
   verdict: {
     metric: 'recall@5'
+    /**
+     * The headline (approved rule): hybrid against the best other variant, vectors only or graph
+     * only; under TIE_POINTS it is a tie.
+     */
+    bestOther: { variant: Exclude<RetrievalVariant, 'hybrid'>; recall5: number | undefined }
+    pointsVsBestOther: number | undefined
+    outcomeVsBestOther: Outcome | undefined
     hybrid: number | undefined
     vector: number | undefined
     bestVector: { model: string; recall5: number | undefined } | null
@@ -72,8 +79,17 @@ export function verdictOf(
   const strongest =
     bestRecall !== undefined && vector !== undefined ? Math.max(bestRecall, vector) : (bestRecall ?? vector)
   const pBest = points(hybrid, strongest)
+  const graph = retrieval.graph.all?.recall5
+  const other: Results['verdict']['bestOther'] =
+    (graph ?? -1) > (vector ?? -1)
+      ? { variant: 'graph', recall5: graph }
+      : { variant: 'vector', recall5: vector }
+  const pOther = points(hybrid, other.recall5)
   return {
     metric: 'recall@5',
+    bestOther: other,
+    pointsVsBestOther: pOther,
+    outcomeVsBestOther: outcome(pOther),
     hybrid,
     vector,
     bestVector: best ? { model: best.model, recall5: bestRecall } : null,
@@ -101,14 +117,17 @@ const VARIANT_NAMES: Record<RetrievalVariant, string> = {
 export function toMarkdown(r: Results): string {
   const kinds = ['all', 'fact', 'multi-hop', 'temporal'].filter((k) => r.retrieval.vector[k])
   const v = r.verdict
+  const other = VARIANT_NAMES[v.bestOther.variant].toLowerCase()
+  const signed = (x: number | undefined) => (x === undefined ? '—' : `${x > 0 ? '+' : ''}${x}`)
+  // The approved rule: hybrid against the best other variant; vectors only gets its own line.
   const headline =
-    v.outcome === undefined
+    v.outcomeVsBestOther === undefined
       ? 'No verdict: the run has no answerable question.'
-      : v.outcome === 'win'
-        ? `Hybrid search finds ${pct(v.hybrid)} of the expected notes in its top 5, against ${pct(v.vector)} for vectors only (+${v.points} points).`
-        : v.outcome === 'tie'
-          ? `Hybrid search and vectors only tie: ${pct(v.hybrid)} against ${pct(v.vector)} of the expected notes in the top 5 (${v.points} points, under the ${TIE_POINTS}-point tie line).`
-          : `Vectors only beat hybrid search: ${pct(v.vector)} against ${pct(v.hybrid)} of the expected notes in the top 5 (${v.points} points).`
+      : v.outcomeVsBestOther === 'win'
+        ? `Hybrid search finds ${pct(v.hybrid)} of the expected notes in its top 5, against ${pct(v.bestOther.recall5)} for ${other} (${signed(v.pointsVsBestOther)} points).`
+        : v.outcomeVsBestOther === 'tie'
+          ? `Hybrid search and ${other} tie: ${pct(v.hybrid)} and ${pct(v.bestOther.recall5)} of the expected notes in the top 5 (${signed(v.pointsVsBestOther)} points, under the ${TIE_POINTS}-point tie line).`
+          : `${VARIANT_NAMES[v.bestOther.variant]} finds ${pct(v.bestOther.recall5)} of the expected notes in the top 5, hybrid search ${pct(v.hybrid)} (${signed(v.pointsVsBestOther)} points).`
   const lines = [
     r.rehearsal
       ? `# Rehearsal on the tuning questions (${r.splits.join(' + ')}): not the scoreboard`
@@ -116,9 +135,15 @@ export function toMarkdown(r: Results): string {
     '',
     headline,
   ]
+  if (v.bestOther.variant !== 'vector' && v.outcome !== undefined)
+    lines.push(
+      '',
+      `Against vectors only (${pct(v.vector)}), hybrid search is ${signed(v.points)} points: what the graph adds to vectors.`,
+    )
   if (v.bestVector && v.bestVector.model !== r.models.embeddings)
     lines.push(
-      `Against the strongest vector search we tried (${v.bestVector.model}, ${pct(v.bestVector.recall5)}), hybrid is ${v.pointsVsBest! >= 0 ? '+' : ''}${v.pointsVsBest} points: a ${v.outcomeVsBest}.`,
+      '',
+      `Against the strongest vector search we tried (${v.bestVector.model}, ${pct(v.bestVector.recall5)}), hybrid is ${signed(v.pointsVsBest)} points.`,
     )
   for (const note of r.notes) lines.push('', `> **Note:** ${note}`)
   lines.push(

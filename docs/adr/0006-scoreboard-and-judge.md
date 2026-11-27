@@ -15,7 +15,9 @@ faithfulness judged and the judge itself checked.
   question.
 - **Retrieval** (recall@5, MRR) runs once: the search is deterministic. The vector-only variant is
   also measured with each candidate embedding model, and the scoreboard names the strongest.
-  Differences under 5 recall@5 points are reported as a tie.
+- **Headline (the rule approved with the prototype):** hybrid against the best other variant
+  (vectors only or graph only) on recall@5; under 5 points it is a tie, and no word suggests a win.
+  A second line says what hybrid adds to vectors only.
 - **Answers** run 3 rounds per question and variant, with mean ± sample deviation: faithfulness from
   the judge (supported 1, partial 0.5, unsupported 0, per kept sentence), citations kept by the
   quote check (code, no model), sentences removed, "I don't know" on unanswerable questions,

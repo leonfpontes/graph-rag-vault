@@ -18,7 +18,8 @@ import { evaluate } from './evaluate.js'
 import type { AnswerRecord } from './generation.js'
 import { loadQuestions } from './questions.js'
 import { humanAgreement, pickSample, sampleSheet, type HumanLabels, type SampleItem } from './sample.js'
-import { toMarkdown, type Results } from './scoreboard.js'
+import { bestBaseline } from './baselines.js'
+import { toMarkdown, verdictOf, type Results } from './scoreboard.js'
 
 const args = parseEvalArgs(process.argv.slice(2))
 const root = process.env.INIT_CWD ?? process.cwd()
@@ -63,6 +64,8 @@ if (args.sheet) {
   console.log(`${items.length} sentences → ${files.sample} and ${path.resolve(args.sheet)}`)
 } else if (args.report) {
   const results = readJson<Results>(files.results)
+  // The verdict follows the current rule, from the stored retrieval and baselines (no new run).
+  results.verdict = verdictOf(results.retrieval, bestBaseline(results.baselines))
   if (existsSync(files.labels) && existsSync(files.sample)) {
     const { items } = readJson<{ items: SampleItem[] }>(files.sample)
     const {

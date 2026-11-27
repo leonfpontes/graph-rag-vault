@@ -9,7 +9,9 @@ import { format, resolveConfig } from 'prettier'
 import { describe, expect, it } from 'vitest'
 
 import {
+  bestBaseline,
   loadQuestions,
+  verdictOf,
   retrievalReport,
   summarizeGeneration,
   toMarkdown,
@@ -84,6 +86,12 @@ describe.runIf(has)('the committed scoreboard', () => {
       for (const c of it.cited)
         expect(normalize(c.text), `${it.item} ${c.chunkId}`).toContain(normalize(c.quote))
     }
+  })
+
+  it('states the verdict the rule gives for its retrieval and baselines', () => {
+    expect(results.verdict).toEqual(
+      JSON.parse(JSON.stringify(verdictOf(results.retrieval, bestBaseline(results.baselines)))),
+    )
   })
 
   it('says in latest.md what latest.json says', async () => {
