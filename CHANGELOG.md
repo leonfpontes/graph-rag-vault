@@ -4,6 +4,11 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ## Unreleased
 
+### Published
+
+- The repository is public, and the demo is live at https://graph-rag-vault.vercel.app (static, on
+  Vercel, with the search and the recorded answers in the browser).
+
 ### Added
 
 - The README for people who read it first: the cover in the reader's theme, a GIF and a 1-minute video

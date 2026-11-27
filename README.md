@@ -14,6 +14,9 @@ came from, and an evaluation measures what the graph adds over vector search alo
 [Watch the 1-minute video](docs/media/graph-rag-demo.mp4) (MP4, English captions, no narration;
 [captions as WebVTT](docs/media/graph-rag-demo.en.vtt)).
 
+**Live demo: [graph-rag-vault.vercel.app](https://graph-rag-vault.vercel.app).** The search and the
+recorded answers run in your browser, with no key and no backend.
+
 ## The problem
 
 Vector search finds the note that sounds like the question. It misses the answer when that answer is
