@@ -14,5 +14,5 @@ allowBuilds:
   protobufjs: false # its postinstall only warns about the version scheme of dependents
 
 minimumReleaseAgeExclude:
-  - '@leonfpontes/atlas-tokens@0.2.0'
-  - '@leonfpontes/atlas-ui@0.2.0'
+  - '@leonfpontes/atlas-tokens@0.3.0'
+  - '@leonfpontes/atlas-ui@0.3.0'
