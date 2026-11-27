@@ -6,6 +6,11 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- The README for people who read it first: the cover in the reader's theme, a GIF and a 1-minute video
+  with English captions (and WebVTT), the problem, the quickstart of the landing page, and the
+  scoreboard written from `evals/results/latest.json` by `pnpm readme` (a test fails when it falls
+  behind). `pnpm record-demo` records the GIF and the video frame by frame from `/demo?record` and
+  writes the captions it drew; a test compares them with the scoreboard.
 - How it works, the landing page: the scoreboard sentence as the title, the share composition as the
   hero (a recorded question, its cited answer and the links it walked), a real note as the index reads
   it, the reasons a result shows, how it is measured and the quickstart, with the footer of Atlas and
