@@ -59,6 +59,13 @@ updates the model. Not tried; the comparison stays out of scope.
   worker); recorded questions need no model.
 - Changing the model or its revision means rebuilding the index and the exported demo index.
 - Embedding in Node runs on WebAssembly: the 300 chunks take about 35 s.
+- In the browser, transformers.js 4.3.2 asks for `config.json` and `tokenizer_config.json` on the
+  model's `main` before the pinned revision: `pipeline()` lists the files to fetch without the
+  revision. Those two only decide which files to load; the config, the tokenizer and the weights
+  come from the pinned revision, so the vectors don't change. If `main` ever changes its file list,
+  loading could break, and the parity e2e (which serves the pinned copy) wouldn't see it. Accepted
+  for now; the fix, if it happens, is to load the tokenizer and the ONNX file directly, as the
+  Node entry does.
 - `onnxruntime-web` is a direct dependency, at the version transformers.js pins; updating
   transformers.js means moving it too (a test fails until then).
 - `onnxruntime-node` comes with transformers.js; its install script only fetches CUDA libraries on
