@@ -214,7 +214,8 @@ export function exampleCase(sb: Scoreboard, outcome: 'win' | 'tie' | 'loss'): Sc
             bestOther: { variant: 'graph', recall5: hy },
             pointsVsBestOther: (ve - hy) * 100,
             outcomeVsBestOther: 'loss',
-            points: 0,
+            vector: undefined,
+            points: undefined,
           }
         : { ...v, outcomeVsBestOther: 'tie' }
   return { ...sb, rehearsal: true, verdict }
