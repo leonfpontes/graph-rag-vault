@@ -18,8 +18,8 @@ export default defineConfig({
     {
       name: 'mobile',
       use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 812 } },
-      // Ranking parity and the demo's data layer don't depend on the viewport: one run is enough.
-      testIgnore: ['**/search-parity.e2e.ts', '**/demo.e2e.ts'],
+      // Ranking and embedding parity and the demo's data layer don't depend on the viewport: one run is enough.
+      testIgnore: ['**/search-parity.e2e.ts', '**/embed-parity.e2e.ts', '**/demo.e2e.ts'],
     },
   ],
   webServer: {
