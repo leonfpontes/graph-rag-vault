@@ -1,26 +1,41 @@
-# Graph RAG over a Markdown vault
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/cover-dark.png">
+  <img alt="graph-rag-vault: a question about the Tarnwick vault, its answer with a citation on every sentence, the typed links the answer walked in the graph, and the scoreboard sentence." src="docs/cover-light.png" width="830">
+</picture>
 
-A vault of Markdown notes becomes a typed knowledge graph. Questions are answered with hybrid
-search (the graph plus embeddings), every sentence of an answer cites the note it came from, and an
-evaluation measures what the graph adds over vector search alone.
+# graph-rag-vault
 
-> **Status: in development.** The skeleton, the contracts and CI are in place; the vault, the
-> search, the app and the scoreboard come next. Every number here is measured: [the scoreboard](evals/results/latest.md).
+Graph RAG over a Markdown vault. A folder of notes becomes a typed knowledge graph; questions are
+answered with hybrid search (vectors, words and links), every sentence of an answer cites the note it
+came from, and an evaluation measures what the graph adds over vector search alone.
+
+![A question typed into the demo, the five results with the reason each one came in, the answer with a citation on every sentence, and the path it walked lighting up link by link.](docs/media/graph-rag-demo.gif)
+
+[Watch the 1-minute video](docs/media/graph-rag-demo.mp4) (MP4, English captions, no narration;
+[captions as WebVTT](docs/media/graph-rag-demo.en.vtt)).
+
+## The problem
+
+Vector search finds the note that sounds like the question. It misses the answer when that answer is
+one link away (the manager of the person who owns a project) or when a newer note replaced an older
+one that shares more words with the question. And a model's answer, however fluent, is only as good
+as the passages behind it. graph-rag-vault follows the typed links the notes already have, cites the
+passage behind every sentence, and measures both against vectors alone.
 
 ## Quickstart
 
-Node 24 and pnpm.
+Node 24 and pnpm. Three commands, no key:
 
 ```bash
-git clone https://github.com/leonfpontes/graph-rag-vault
-cd graph-rag-vault && pnpm install
-pnpm demo   # http://127.0.0.1:8787
+git clone https://github.com/leonfpontes/graph-rag-vault.git && cd graph-rag-vault
+pnpm install
+pnpm demo
 ```
 
-No key is needed: the search runs in the browser, and the 50 evaluation questions replay their
-recorded answers. For written answers to new questions, copy `.env.example` to `.env.local`, put
-your Anthropic key in `ANTHROPIC_API_KEY` and run `pnpm demo` again (each answer costs a fraction of
-a cent; `--no-key` ignores the key).
+The demo opens on http://127.0.0.1:8787. The search runs in the browser, and the recorded questions
+replay their recorded answers. For written answers to new questions, copy `.env.example` to
+`.env.local`, put your Anthropic key in `ANTHROPIC_API_KEY` and run `pnpm demo` again (each answer
+costs a fraction of a cent; `--no-key` ignores the key).
 
 ## How it works
 
@@ -43,6 +58,8 @@ flowchart LR
 
 ## Scoreboard
 
+<!-- scoreboard:start (generated from evals/results/latest.json by `pnpm readme`) -->
+
 40 questions never used for tuning, measured on 2026-11-27 ([full scoreboard](evals/results/latest.md)).
 Answers by Claude Haiku 5.5, mean of 3 rounds.
 
@@ -52,39 +69,29 @@ Answers by Claude Haiku 5.5, mean of 3 rounds.
 | Graph only   | 93%                         | 0.78 | 94%                           | 82%                  | 97%          |
 | Vectors only | 73%                         | 0.73 | 73%                           | 62%                  | 98%          |
 
-- **Search:** hybrid and graph only tie (2 points apart, under the 5-point tie line). Against
-  vectors only, hybrid is +18 points, most of it on multi-hop questions (79% against 50%); against
-  the strongest embedding model we tried for vectors only (arctic-embed-xs, 78%), +13.
-- **One runtime for the vectors:** the index, the local API and the browser all run the model on
-  onnxruntime-web (WebAssembly), so a question asked in the demo gets the same vector as in the
-  evaluation (cosine > 0.9999).
-- **Faithfulness** comes from an automatic judge (Claude Haiku 5.5), sentence by sentence, against
-  the passages each sentence cites.
-- **Checked by a person (Leonardo Pontes)** on a stratified sample of 10 answers (half from those
-  with a sentence the judge did not fully support). **Reviewed not blind: agreed with the judge on
-  18 of 18 sentences.** **Labelled blind, without the judge's verdicts: agreed on 2 of 3
-  sentences** (the answers that changed in the index rebuild); on the third the judge said partial
-  and the person supported, the same direction as the second judge. No kappa: the review saw the
-  verdicts, and 3 blind sentences are too few for one.
-- **Agreement between two automatic judges:** Claude Opus 5.5, blind, on the same 21 sentences:
-  76%, Cohen's kappa 0.00. All 5 disagreements go the same way: the main judge said partial, the
-  second judge said supported, so the faithfulness above is a conservative estimate. Kappa says
-  little here: the second judge marked all 21 sentences supported, and with one judge on a single
-  label, kappa is 0 whatever the other does. The main judge stays Claude Haiku 5.5.
-- **Cost:** $0.17 for all recorded answers and their judgments (370); the index rebuild asked again
-  the 111 whose search notes changed, for $0.04; the second judge cost $0.11.
+- **Search:** hybrid and graph only tie (2 points apart, under the 5-point tie line). Against vectors only, hybrid is +18 points, most of it on multi-hop questions (79% against 50%); against the strongest embedding model we tried for vectors only (arctic-embed-xs, 78%), +13.
+- **Faithfulness** comes from an automatic judge (Claude Haiku 5.5), sentence by sentence, against the passages each sentence cites.
+- **Checked by a person (Leonardo Pontes)** on a stratified sample of 10 answers (half from those with a sentence the judge did not fully support). Reviewed not blind: agreed with the judge on 18 of 18 sentences. Labelled blind, without the judge's verdicts: agreed on 2 of 3 sentences (the answers that changed in the index rebuild); on the third the judge said partial and the person supported, the same direction as the second judge. No kappa: the review saw the verdicts, and 3 blind sentences are too few for one.
+- **Agreement between two automatic judges:** Claude Opus 5.5, blind, on the same 21 sentences: 76%, Cohen's kappa 0.00. All 5 disagreements go the same way: the main judge said partial, the second judge said supported, so the faithfulness above is a conservative estimate. Kappa says little here: the second judge marked all 21 sentences supported, and with one judge on a single label, kappa is 0 whatever the other does. The main judge stays Claude Haiku 5.5.
+- **Cost:** $0.17 for all recorded answers and their judgments (370); the index rebuild asked again the 111 whose search notes changed, for $0.04; the second judge cost $0.11.
+
+<!-- scoreboard:end -->
+
+The index, the local API and the browser run the embedding model on the same runtime
+(onnxruntime-web, WebAssembly), so a question asked in the demo gets the same vector as in the
+evaluation: `e2e/embed-parity.e2e.ts` checks the cosine and the top 5 of every recorded question.
 
 ## Repository
 
-| Folder            | What it has                                                     |
-| ----------------- | --------------------------------------------------------------- |
-| `packages/vault`  | The note and link contract, and the Markdown parser             |
-| `packages/index`  | The SQLite index: migrations, chunks, embeddings and the graph  |
-| `packages/search` | Hybrid search, the same in Node and in the browser              |
-| `packages/client` | What the app reads: the static demo in the browser, the routes  |
-| `packages/api`    | The local API and the server for the app and the demo           |
-| `apps/web`        | The app on Atlas UI: Explore, Ask, Note and Evaluation          |
-| `evals`           | Questions with expected sources, the metrics and the scoreboard |
+| Folder            | What it has                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| `packages/vault`  | The note and link contract, and the Markdown parser                           |
+| `packages/index`  | The SQLite index: migrations, chunks, embeddings and the graph                |
+| `packages/search` | Hybrid search, the same in Node and in the browser                            |
+| `packages/client` | What the app reads: the static demo in the browser, the routes                |
+| `packages/api`    | The local API and the server for the app and the demo                         |
+| `apps/web`        | The site and app on Atlas UI: How it works, Explore, Ask, Note and Evaluation |
+| `evals`           | Questions with expected sources, the metrics and the scoreboard               |
 
 ## Development
 
@@ -98,6 +105,9 @@ Answers by Claude Haiku 5.5, mean of 3 rounds.
 | `pnpm test --coverage`   | the tests with the coverage floors, as CI runs them                 |
 | `pnpm index`             | rebuilds the search index from the vault (downloads the model once) |
 | `pnpm retrieval`         | recall@5 and MRR of the three variants on the tuning questions      |
+| `pnpm readme`            | rewrites the README scoreboard from `evals/results/latest.json`     |
+| `pnpm share-images`      | redraws the cover, social preview and OG image from the scoreboard  |
+| `pnpm record-demo`       | records the GIF and the video (needs ffmpeg)                        |
 
 Every server listens on 127.0.0.1. `--port` or the `PORT` variable picks the port; a busy port
 stops the server with an error, it never moves to the next one.

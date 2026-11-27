@@ -24,7 +24,9 @@
     "index": "pnpm -s --filter \"@graph-rag/index...\" build && node packages/index/dist/cli.js",
     "retrieval": "pnpm -s --filter \"@graph-rag/evals...\" build && node evals/dist/retrieval-cli.js",
     "eval": "pnpm -s --filter \"@graph-rag/evals...\" build && node evals/dist/eval-cli.js",
-    "share-images": "pnpm build && node apps/web/scripts/share-images.mjs"
+    "share-images": "pnpm build && node apps/web/scripts/share-images.mjs",
+    "readme": "UPDATE_README=1 vitest run --project @graph-rag/web apps/web/src/lib/readme.test.ts",
+    "record-demo": "pnpm build && node apps/web/scripts/record-demo.mjs"
   },
   "license": "MIT",
   "devDependencies": {
