@@ -17,6 +17,11 @@ cd graph-rag-vault && pnpm install
 pnpm demo   # http://127.0.0.1:8787
 ```
 
+No key is needed: the search runs in the browser, and the 50 evaluation questions replay their
+recorded answers. For written answers to new questions, copy `.env.example` to `.env.local`, put
+your Anthropic key in `ANTHROPIC_API_KEY` and run `pnpm demo` again (each answer costs a fraction of
+a cent; `--no-key` ignores the key).
+
 ## How it works
 
 ```mermaid
@@ -43,6 +48,7 @@ flowchart LR
 | `packages/vault`  | The note and link contract, and the Markdown parser             |
 | `packages/index`  | The SQLite index: migrations, chunks, embeddings and the graph  |
 | `packages/search` | Hybrid search, the same in Node and in the browser              |
+| `packages/client` | What the app reads: the static demo in the browser, the routes  |
 | `packages/api`    | The local API and the server for the app and the demo           |
 | `apps/web`        | The app on Atlas UI: Explore, Ask, Note and Evaluation          |
 | `evals`           | Questions with expected sources, the metrics and the scoreboard |

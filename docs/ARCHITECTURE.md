@@ -14,9 +14,10 @@ flowchart LR
   end
   index --> search
   export --> search
+  search --> client[packages/client<br/>static demo, routes, wire contract]
   search --> api[packages/api<br/>local API + server]
-  search --> web[apps/web<br/>Explore, Ask, Note, Evaluation]
-  api --> web
+  client --> web[apps/web<br/>Explore, Ask, Note, Evaluation]
+  api -. answers with the person's key .-> client
   search --> evals[evals<br/>3 variants, metrics, scoreboard]
 ```
 
@@ -29,6 +30,7 @@ flowchart LR
 | `@graph-rag/search`     | `packages/search`     | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf`                  |
 | `@graph-rag/embeddings` | `packages/embeddings` | `createEmbedder`: the pinned model, query prefix, token counter (Node and browser)        |
 | `@graph-rag/answer`     | `packages/answer`     | `answerQuestion`: cited, quoted sentences, removed ones, "I don't know"; the model client |
+| `@graph-rag/client`     | `packages/client`     | `loadDemo` (the static demo in the browser), the app's routes, the API's wire types       |
 | `@graph-rag/api`        | `packages/api`        | The fetch handler (`createApi`) and the Node server (`serveHttp`)                         |
 | `@graph-rag/web`        | `apps/web`            | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                                    |
 | `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), traps, `recallAtK`, MRR, mean ± sd            |
@@ -110,10 +112,58 @@ flowchart LR
 nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each sentence carries
   `citations: { chunkId, noteId, quote }[]`, and each removed one a `reason`. Local mode only:
   `createAnthropicProvider({ apiKey })` reads no environment itself, the caller passes the key.
-- **API** (`packages/api`): read-only, GET and HEAD; other methods get 405. Errors are JSON
-  `{ "error": "…" }` and never echo the request. `GET /api/meta` → `{ name, mode }`, where `mode` is
-  `demo` (never calls a model) or `local`. The search, note, graph and answer routes come with the
-  API story.
+  The browser imports `@graph-rag/answer/passages` (the passages and the answer types, no Node and
+  no model client), so the app shows the text behind a citation exactly as the answer read it.
+- **Client** (`packages/client`, for the app; the screens build on it): runs in the browser, no
+  Node. `loadDemo({ base = '/data/', api = '/api', fetch? })` → `Demo`, after loading
+  `/data/index.bin`, `/data/latest.json` and `/data/questions.json` (and, right after, off the first
+  search's path, `/data/answers.json`). The demo's first search answers in under 2 s
+  (`e2e/demo.e2e.ts`).
+
+  | Member                                                          | Gives                                                                                                                                                                                                          |
+  | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `mode`                                                          | `static` (public site, no API), `demo` (local server, no key) or `local` (local server with the person's key)                                                                                                  |
+  | `scoreboard`                                                    | `latest.json` as it is (`Scoreboard`): every number on screen comes from here, none is written by hand                                                                                                         |
+  | `questions`, `findQuestion(idOrText)`                           | the 50 `RecordedQuestion`s (`id`, `kind`, `split`, `question`, `expectedSources`, `traps`); found by id (`q-011`) or by text, case and punctuation ignored                                                     |
+  | `search({ question, variant = 'hybrid', queryVector?, k = 5 })` | `SearchOutcome { question, variant, ran, hits, recorded?, ms }`. A recorded question uses its recorded vector; a new one needs `queryVector` from the Ask worker, and without it `ran` is `graph`              |
+  | `answer({ …search options, live?, signal? })`                   | `AnswerOutcome`: `recorded` (round 1 of that variant from `answers.json`, at once, no model), `live` (POST /api/answer, local mode only) or `needs-key` (the search, plus `commands`: `LOCAL_ANSWER_COMMANDS`) |
+  | `recordedAnswer(id, variant?)`                                  | the recorded answer, if any (hybrid for all 50 questions; vector and graph for the 40 test ones)                                                                                                               |
+  | `note(id)`                                                      | `NoteView { note, chunks (Markdown, in order), links (both ways, typed), replacedBy? }`, or undefined                                                                                                          |
+  | `graph()`                                                       | `GraphView { nodes (id, type, title, status, updated, degree), links }`                                                                                                                                        |
+  | `passageText(id)`, `passages(hits)`                             | the text behind a citation (`<noteId>#<ord>` or `<noteId>#links`); the passages an answer reads                                                                                                                |
+
+  A recorded answer read the top 5 notes the browser finds for its question (test: every one of the
+  130). The live answer fails with `ApiRequestError { status, message }`, a message the app can
+  show. **Routes** (`matchRoute`, `paths`): `/` How it works, `/explore` (`?focus=<note>`), `/ask`
+  (`?q=<question id or text>`), `/evaluation`, `/notes/<id>` (`NOTE_ID`: lowercase letters, digits,
+  hyphens); anything else is `not-found`. The local server and `vercel.json` follow the same table
+  (tests compare them).
+
+- **Data files** (`apps/web/build-plugins.ts`): `/data/latest.json` and `/data/answers.json` are
+  `evals/results/*.json` byte for byte, and `/data/questions.json` is `evals/questions.yaml` with
+  the fields above. A Vite plugin reads them from the repository on each `pnpm dev` request and on
+  each build: no copy is committed, so none can fall behind the scoreboard. `index.bin` is in
+  `apps/web/public/data/`.
+- **API** (`packages/api`, local only: `pnpm demo` and `pnpm serve`; the public site has none).
+  Errors are JSON `{ "error": "…" }` and never echo the request. Every request must name a loopback
+  `Host` (`127.0.0.1`, `localhost`, `[::1]`, any port), or it gets 403: a page that rebinds its
+  domain to 127.0.0.1 gets nothing.
+
+  | Route                                   | Answer                                                                                                                                                                                                              |
+  | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `GET /api/meta`                         | `ApiMeta { name, mode }`: `local` with a key, `demo` without                                                                                                                                                        |
+  | `GET /api/search?q=&variant=hybrid&k=5` | `{ question, variant, ran, hits }`; the recorded vector for a recorded question, else the embedding model (loaded on first use), else `ran: graph`. 400: no `q`, over 500 characters, unknown variant, `k` not 1–50 |
+  | `GET /api/notes/<id>`                   | `NoteView`; 404 for an unknown id                                                                                                                                                                                   |
+  | `GET /api/graph`                        | `GraphView`                                                                                                                                                                                                         |
+  | `POST /api/answer`                      | body `AnswerRequest { question, variant? }` → `AnswerResponse { question, variant, hits (10), answer: AnswerResult }`; the answer reads `passagesFromHits` of the top 5 notes, as the evaluation does               |
+
+  `POST /api/answer` spends the person's key, so: JSON only (415 otherwise, so a plain form can't
+  post), no `Origin` or this server's own (403 otherwise, and for `Sec-Fetch-Site: cross-site`),
+  body up to 8 KB counted while it arrives, with or without `Content-Length` (413), one answer at a
+  time (429), 503 without a key (with how to add one), 502 when the model fails (the reason goes to
+  the server log only). The key comes from `ANTHROPIC_API_KEY` or `.env.local`, is never printed,
+  and `--no-key` keeps it unread. The other routes are GET and HEAD only (405 with `Allow`).
+
 - **Evaluation** (`evals`): questions of 4 kinds (`fact`, `multi-hop`, `temporal`, `unanswerable`)
   in 3 splits (`probe` and `dev` tune, `test` scores). recall@5 and MRR leave unanswerable
   questions out of the mean. Deviation across rounds is the sample standard deviation. The set
@@ -148,7 +198,20 @@ nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each s
 
 Every server listens on 127.0.0.1 on the port it is given (`--port` or `PORT`) and fails on a busy
 port. `pnpm demo` and `pnpm serve` default to 8787, `pnpm dev` to 5173 (it proxies `/api` to
-`GRAPH_RAG_API`, default `http://127.0.0.1:8787`), and the end-to-end tests to `E2E_PORT` (4173).
+`GRAPH_RAG_API`, default `http://127.0.0.1:8787`), and the end-to-end tests to `E2E_PORT` (4173,
+started with `--no-key`). The local server opens the app on its routes and answers any other path
+with the app and status 404, as Vercel does.
+
+## Deploy (static, Vercel)
+
+`vercel.json`: `pnpm install --frozen-lockfile`, then `pnpm --filter @graph-rag/web build` and a
+copy of `index.html` as `404.html` (Vercel serves it with status 404, so an unknown path is a real
+404 that shows the app's 404 page). Rewrites only for the app's routes. No functions: the search,
+the recorded answers and the scoreboard all run from `apps/web/dist`. Project settings: `SITE_URL`
+(the public origin, for `og:url` and `og:image`; without it a production build falls back to
+`VERCEL_PROJECT_PRODUCTION_URL`, and fails with neither) and `ENABLE_EXPERIMENTAL_COREPACK=1` (pnpm
+11 from `packageManager`). The OG image is `apps/web/public/og.png`, 1200 × 630, made from the
+scoreboard with the share pieces.
 
 ## Decisions
 

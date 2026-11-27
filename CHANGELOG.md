@@ -6,6 +6,13 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- The demo with no key and the local API. `@graph-rag/client` loads the search index, the
+  scoreboard (`latest.json` as it is), the questions and the recorded answers in the browser: the
+  first search answers in under 2 s, the 50 questions replay their answers at once, and a new
+  question gets its search results and the commands to answer it locally. The local server adds
+  `/api/search`, `/api/notes/<id>`, `/api/graph` and `POST /api/answer` (with the person's key:
+  JSON from its own pages only, one at a time, 8 KB body, loopback hosts), real 404s for unknown
+  paths, and `vercel.json` for a static deploy with `SITE_URL` for the social cards.
 - The scoreboard (`pnpm eval`): retrieval of the three variants and vector baselines with each
   embedding model; answers and a faithfulness judge over 3 rounds with mean ± deviation; citations
   kept, sentences removed, "I don't know", cost and latency; a hard $5 cap; a blind human check of

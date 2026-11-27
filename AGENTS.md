@@ -15,7 +15,7 @@ pnpm vitest run <file>          # one test
 pnpm test --coverage            # with the coverage floors, as CI
 pnpm --filter <package> build   # one package (names in docs/ARCHITECTURE.md)
 E2E_PORT=4300 pnpm e2e          # end-to-end tests on your own port
-pnpm demo --port 8787           # build, then serve app + API on 127.0.0.1
+pnpm demo --port 8787           # build, then serve app + API on 127.0.0.1 (answers new questions with ANTHROPIC_API_KEY; --no-key ignores it)
 pnpm index                      # vault → .graph-rag/index.sqlite → apps/web/public/data/index.bin (model cached once)
 pnpm retrieval                  # recall@5 and MRR of the 3 variants on probe + dev, free (--split test for the scoreboard)
 ```
@@ -28,6 +28,14 @@ pnpm retrieval                  # recall@5 and MRR of the 3 variants on probe + 
 - `packages/search` runs in the browser too (the public demo searches a prebuilt index there). No
   Node built-ins in it: its tsconfig has no Node types, ESLint forbids `node:` imports and its tests
   run in jsdom.
+- `packages/client` runs in the browser too (the same rules as the search), and so does the
+  `@graph-rag/answer/passages` entry (`src/browser.ts`): keep `node:` imports out of `passages.ts`,
+  `types.ts` and `provider.ts` of the answer package.
+- The public site is static: whatever a screen shows must come from `loadDemo` (`index.bin` and
+  the `/data/*.json` files), never from the API, which exists only on `pnpm demo`. Numbers come
+  from `demo.scoreboard` (latest.json as it is), never typed into a component.
+- A new route of the app goes in `packages/client/src/routes.ts` and in the rewrites of
+  `vercel.json` (a test compares them), or it is a 404 on the public site.
 - Workspace packages resolve to `src/` before any build: the `graph-rag-source` export condition
   (TypeScript, Vite) and the aliases in `vitest.config.ts`. A new package the others import needs both.
 
@@ -60,6 +68,8 @@ pnpm retrieval                  # recall@5 and MRR of the 3 variants on probe + 
 | CI fails on Linux where macOS passed            | Run the suite as CI does before a push: `docker run node:24` with `pnpm test --coverage`                |
 | A commit shows a personal e-mail                | A new clone doesn't carry the local `git config user.email`; set the GitHub noreply right after cloning |
 | `index.bin` test fails after a vault edit       | The demo's index is generated: run `pnpm index` (it re-embeds only what changed) and commit the file    |
+| An end-to-end test calls the model              | The e2e server runs with `--no-key`; never drop it, or a key in `.env.local` turns the demo into local  |
+| A route opens locally and is a 404 on Vercel    | `vercel.json` rewrites only the routes in `routes.ts`; add the new one to both                          |
 
 ## Publishing
 
