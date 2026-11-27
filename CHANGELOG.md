@@ -6,6 +6,13 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- The screens on Atlas UI 0.3.0: Explore (3D graph on Three.js, loaded on demand, 2D and a List for
+  keyboards; on phones a map with one bubble per constellation), Ask (a citation per sentence with the
+  exact passage on hover or focus, the sources with their reasons, the path the answer walked with the
+  type of each link, Hybrid / Vectors / Graph, and every state), Note (chunks with the questions that
+  cite them, the frontmatter, links by type) and Evaluation (the sentence from the verdict, recall@5 by
+  kind, the scoreboard, the judge check, every test question). A typed question is embedded in the
+  browser in a worker on WASM, with the ONNX runtime served by the site.
 - One runtime for the vectors: the index, the local API and the evaluation run the embedding model
   on onnxruntime-web (WebAssembly) through `@graph-rag/embeddings/node`, as the browser does, so a
   question gets the same vector everywhere (cosine 0.9999997, the same top 5 in 50 of 50; before,

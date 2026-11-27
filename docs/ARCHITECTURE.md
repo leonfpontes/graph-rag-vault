@@ -146,6 +146,17 @@ nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each s
   hyphens); anything else is `not-found`. The local server and `vercel.json` follow the same table
   (tests compare them).
 
+- **App** (`apps/web`, design in [DESIGN.md](DESIGN.md)): one router over `matchRoute`, one `loadDemo`
+  for every screen. State that can be shared is in the query string: Explore `?focus=<note>`,
+  `?cluster=<project>`, `?view=3d|2d|list|map`; Ask `?q=<question id or text>`,
+  `?variant=vector|graph` (hybrid by default) and `?draft=` (text in the box, not asked yet). The 3D
+  view is Three.js in its own chunk, loaded when shown. A typed question is embedded in a Web Worker
+  (`apps/web/src/ask/embed.worker.ts`): `createEmbedder({ device: 'wasm' })`, the same model, revision,
+  8-bit weights and query prefix as the index, on one WASM thread. The ONNX runtime's files are served
+  by the site (no CDN); the weights come from Hugging Face at the pinned revision and stay in the
+  browser's Cache API. `window.graphRag.embedQuery` exposes the same call: `e2e/embed-parity.e2e.ts`
+  checks that the browser's vectors match the index's (cosine > 0.999) and give the same top 5 in the
+  three variants for the 50 recorded questions. In local mode, the server embeds the question itself.
 - **Data files** (`apps/web/build-plugins.ts`): `/data/latest.json` and `/data/answers.json` are
   `evals/results/*.json` byte for byte, and `/data/questions.json` is `evals/questions.yaml` with
   the fields above. A Vite plugin reads them from the repository on each `pnpm dev` request and on
