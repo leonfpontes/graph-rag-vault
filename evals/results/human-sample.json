@@ -1,0 +1,385 @@
+{
+  "items": [
+    {
+      "item": "S01",
+      "questionId": "q-021",
+      "question": "Who does the author of the wheel building standard report to?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "The passages name Chloé Dumont as the owner of the Wheel building standard, not as its author.",
+      "cited": [
+        {
+          "chunkId": "doc-wheel-building-standard#links",
+          "noteId": "doc-wheel-building-standard",
+          "quote": "The owner of Wheel building standard is Chloé Dumont.",
+          "text": ""
+        }
+      ],
+      "judge": "partial"
+    },
+    {
+      "item": "S02",
+      "questionId": "q-021",
+      "question": "Who does the author of the wheel building standard report to?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "Chloé Dumont reports to Hiro Sato, so on that basis the answer is Hiro Sato.",
+      "cited": [
+        {
+          "chunkId": "per-chloe-dumont#links",
+          "noteId": "per-chloe-dumont",
+          "quote": "Chloé Dumont reports to Hiro Sato.",
+          "text": ""
+        }
+      ],
+      "judge": "partial"
+    },
+    {
+      "item": "S03",
+      "questionId": "q-026",
+      "question": "Who is the account manager of the dealer that hosted the dealer day in May 2026?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "The May 2026 dealer day was hosted at Harbor Bikes in Bristol.",
+      "cited": [
+        {
+          "chunkId": "mtg-2026-05-06-dealer-day#0",
+          "noteId": "mtg-2026-05-06-dealer-day",
+          "quote": "Hosted at Harbor Bikes in Bristol, 22 dealers came.",
+          "text": "Hosted at Harbor Bikes in Bristol, 22 dealers came.\nDealers asked for an e-MTB before 2027 and for faster spare parts.\nThe dealer portal got a lukewarm reception."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S04",
+      "questionId": "q-026",
+      "question": "Who is the account manager of the dealer that hosted the dealer day in May 2026?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "The passages do not use the term account manager, but they name Jonah Whitfield as the owner of Harbor Bikes.",
+      "cited": [
+        {
+          "chunkId": "cus-harbor-bikes#links",
+          "noteId": "cus-harbor-bikes",
+          "quote": "The owner of Harbor Bikes is Jonah Whitfield.",
+          "text": ""
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S05",
+      "questionId": "q-026",
+      "question": "Who is the account manager of the dealer that hosted the dealer day in May 2026?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "Under Jonah Whitfield's team, Sana Orr is listed as handling the day-to-day accounts.",
+      "cited": [
+        {
+          "chunkId": "per-jonah-whitfield#1",
+          "noteId": "per-jonah-whitfield",
+          "quote": "Sana Orr handles the day-to-day accounts.",
+          "text": "Sana Orr handles the day-to-day accounts."
+        }
+      ],
+      "judge": "partial"
+    },
+    {
+      "item": "S06",
+      "questionId": "q-022",
+      "question": "In which meeting was the battery decision taken that the Voltaro switch later replaced?",
+      "variant": "hybrid",
+      "round": 1,
+      "sentence": "The Voltaro switch replaced the earlier decision to keep Ampcore as battery supplier.",
+      "cited": [
+        {
+          "chunkId": "dec-switch-battery-voltaro#links",
+          "noteId": "dec-switch-battery-voltaro",
+          "quote": "Switch Ridgeline battery cells to Voltaro replaces Keep Ampcore as battery supplier.",
+          "text": ""
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S07",
+      "questionId": "q-022",
+      "question": "In which meeting was the battery decision taken that the Voltaro switch later replaced?",
+      "variant": "hybrid",
+      "round": 1,
+      "sentence": "That Keep Ampcore decision was taken at the Supply review of 17 March 2026.",
+      "cited": [
+        {
+          "chunkId": "mtg-2026-03-17-supply-review#1",
+          "noteId": "mtg-2026-03-17-supply-review",
+          "quote": "Keep Ampcore as battery supplier for the Ridgeline and the next model year.",
+          "text": "Keep Ampcore as battery supplier for the Ridgeline and the next model year."
+        },
+        {
+          "chunkId": "mtg-2026-03-17-supply-review#links",
+          "noteId": "mtg-2026-03-17-supply-review",
+          "quote": "Elena Brandt attended Supply review · 17 Mar 2026.",
+          "text": ""
+        }
+      ],
+      "judge": "partial"
+    },
+    {
+      "item": "S08",
+      "questionId": "q-023",
+      "question": "Which meeting first set the ERP go-live date that was later moved to April?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "The February ERP go-live date appears in the outcome of the Finance review of 11 May 2026, the earliest meeting in these passages that records it.",
+      "cited": [
+        {
+          "chunkId": "mtg-2026-05-11-finance-review#1",
+          "noteId": "mtg-2026-05-11-finance-review",
+          "quote": "Go live with the new ERP in February",
+          "text": "Pay dealers a flat fee per lever swap\nGo live with the new ERP in February"
+        }
+      ],
+      "judge": "partial"
+    },
+    {
+      "item": "S09",
+      "questionId": "q-023",
+      "question": "Which meeting first set the ERP go-live date that was later moved to April?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "The go-live date was later moved to April, in the Finance review of 22 Sep 2026, replacing the February date.",
+      "cited": [
+        {
+          "chunkId": "dec-go-live-with-the-new-erp-in-april#links",
+          "noteId": "dec-go-live-with-the-new-erp-in-april",
+          "quote": "Go live with the new ERP in April replaces Go live with the new ERP in February.",
+          "text": ""
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S10",
+      "questionId": "q-037",
+      "question": "When will the second curing oven be installed?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "The second curing oven will be installed during the December shutdown.",
+      "cited": [
+        {
+          "chunkId": "dec-move-the-oven-install-to-the-december-shutdo#0",
+          "noteId": "dec-move-the-oven-install-to-the-december-shutdo",
+          "quote": "The oven goes in during the December shutdown instead.",
+          "text": "The oven goes in during the December shutdown instead. Part of Paint line upgrade."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S11",
+      "questionId": "q-037",
+      "question": "When will the second curing oven be installed?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "This move replaces the earlier plan to install it in the October shutdown.",
+      "cited": [
+        {
+          "chunkId": "dec-move-the-oven-install-to-the-december-shutdo#links",
+          "noteId": "dec-move-the-oven-install-to-the-december-shutdo",
+          "quote": "Move the oven install to the December shutdown replaces Install the oven in the October shutdown.",
+          "text": ""
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S12",
+      "questionId": "q-037",
+      "question": "When will the second curing oven be installed?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "The reason given is that the supplier cannot deliver before November.",
+      "cited": [
+        {
+          "chunkId": "dec-move-the-oven-install-to-the-december-shutdo#1",
+          "noteId": "dec-move-the-oven-install-to-the-december-shutdo",
+          "quote": "The supplier cannot deliver before November.",
+          "text": "The supplier cannot deliver before November."
+        }
+      ],
+      "judge": "partial"
+    },
+    {
+      "item": "S13",
+      "questionId": "q-036",
+      "question": "When do dealer orders close each month?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "Dealer orders close on the first and the third Monday of each month.",
+      "cited": [
+        {
+          "chunkId": "dec-two-order-cut-offs-per-month#0",
+          "noteId": "dec-two-order-cut-offs-per-month",
+          "quote": "Dealer orders close on the first and the third Monday of each month.",
+          "text": "Dealer orders close on the first and the third Monday of each month."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S14",
+      "questionId": "q-036",
+      "question": "When do dealer orders close each month?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "This replaces the older rule of a single cut-off on the first Monday, as set in the 2025 dealer handbook.",
+      "cited": [
+        {
+          "chunkId": "dec-two-order-cut-offs-per-month#links",
+          "noteId": "dec-two-order-cut-offs-per-month",
+          "quote": "Two order cut-offs per month replaces Monthly order cut-off on the first Monday.",
+          "text": ""
+        },
+        {
+          "chunkId": "doc-dealer-handbook-2025#0",
+          "noteId": "doc-dealer-handbook-2025",
+          "quote": "Orders close on the first Monday of each month; bikes ship within three weeks.",
+          "text": "Orders close on the first Monday of each month; bikes ship within three weeks."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S15",
+      "questionId": "q-040",
+      "question": "What is the latest on-time delivery rate of the rack supplier?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "The latest on-time delivery rate for racks is 85%, from the Q3 2026 scorecard.",
+      "cited": [
+        {
+          "chunkId": "doc-supplier-scorecard-q3-2026#0",
+          "noteId": "doc-supplier-scorecard-q3-2026",
+          "quote": "racks 85% (tooling change)",
+          "text": "On-time delivery by supplier: tubing 95%, saddles 93%, tyres 92%, racks 85% (tooling change). One supplier on watch."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S16",
+      "questionId": "q-033",
+      "question": "Where will the Commuter 2027 frames be welded from January?",
+      "variant": "hybrid",
+      "round": 1,
+      "sentence": "From January 2027, the tube joining of the C27 (also called Commuter 2027 frame) moves to Calvane Tubeworks in Porto.",
+      "cited": [
+        {
+          "chunkId": "dec-c27-joining-calvane#0",
+          "noteId": "dec-c27-joining-calvane",
+          "quote": "From January 2027 the tubes of the C27 are joined by Calvane Tubeworks, our contract partner in Porto.",
+          "text": "From January 2027 the tubes of the C27 are joined by Calvane Tubeworks, our contract partner\nin Porto. Tarnwick keeps heat treatment, paint and final assembly."
+        },
+        {
+          "chunkId": "prj-commuter-2027#links",
+          "noteId": "prj-commuter-2027",
+          "quote": "Commuter 2027 frame is also called C27.",
+          "text": ""
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S17",
+      "questionId": "q-033",
+      "question": "Where will the Commuter 2027 frames be welded from January?",
+      "variant": "hybrid",
+      "round": 1,
+      "sentence": "This decision, from 20 Oct 2026, replaces the earlier plan to weld the Commuter 2027 frames in-house in Tarnwick.",
+      "cited": [
+        {
+          "chunkId": "dec-c27-joining-calvane#links",
+          "noteId": "dec-c27-joining-calvane",
+          "quote": "Calvane takes over C27 tube joining from January replaces Weld the Commuter 2027 frames in-house.",
+          "text": ""
+        },
+        {
+          "chunkId": "prj-commuter-2027#1",
+          "noteId": "prj-commuter-2027",
+          "quote": "Frames will be welded in our own frame shop in Tarnwick",
+          "text": "Prototype frames in August, series production from January 2027. Frames will be welded in our\nown frame shop in Tarnwick, as all commuter frames have been since 2015."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S18",
+      "questionId": "q-033",
+      "question": "Where will the Commuter 2027 frames be welded from January?",
+      "variant": "hybrid",
+      "round": 1,
+      "sentence": "Tarnwick keeps heat treatment, paint and final assembly.",
+      "cited": [
+        {
+          "chunkId": "dec-c27-joining-calvane#0",
+          "noteId": "dec-c27-joining-calvane",
+          "quote": "Tarnwick keeps heat treatment, paint and final assembly.",
+          "text": "From January 2027 the tubes of the C27 are joined by Calvane Tubeworks, our contract partner\nin Porto. Tarnwick keeps heat treatment, paint and final assembly."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S19",
+      "questionId": "q-042",
+      "question": "For how long is a frame covered against structural failure if it was bought in October 2026?",
+      "variant": "vector",
+      "round": 1,
+      "sentence": "A frame bought in October 2026 is covered against structural failure for the whole time its first owner keeps the bike.",
+      "cited": [
+        {
+          "chunkId": "dec-lifetime-frame-cover#0",
+          "noteId": "dec-lifetime-frame-cover",
+          "quote": "From 1 September 2026, the chassis of every bike bought from us is covered against structural failure for the whole time its first owner keeps it.",
+          "text": "From 1 September 2026, the chassis of every bike bought from us is covered against structural\nfailure for the whole time its first owner keeps it. Paint, bearings and electrics keep their\ncurrent terms."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S20",
+      "questionId": "q-031",
+      "question": "Who owns the project that the second curing oven is part of?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "The second curing oven is part of the Paint line upgrade project.",
+      "cited": [
+        {
+          "chunkId": "dec-buy-a-second-curing-oven#0",
+          "noteId": "dec-buy-a-second-curing-oven",
+          "quote": "Part of Paint line upgrade.",
+          "text": "We buy a second curing oven for the paint line. Part of Paint line upgrade."
+        }
+      ],
+      "judge": "supported"
+    },
+    {
+      "item": "S21",
+      "questionId": "q-031",
+      "question": "Who owns the project that the second curing oven is part of?",
+      "variant": "graph",
+      "round": 1,
+      "sentence": "Hiro Sato owns the Paint line upgrade project.",
+      "cited": [
+        {
+          "chunkId": "prj-paint-line-upgrade#links",
+          "noteId": "prj-paint-line-upgrade",
+          "quote": "The owner of Paint line upgrade is Hiro Sato.",
+          "text": ""
+        }
+      ],
+      "judge": "supported"
+    }
+  ]
+}

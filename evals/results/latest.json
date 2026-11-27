@@ -1,0 +1,312 @@
+{
+  "version": 1,
+  "runAt": "2026-11-27T06:41:26.257Z",
+  "rehearsal": false,
+  "splits": ["test"],
+  "questions": {
+    "total": 40,
+    "byKind": {
+      "fact": 8,
+      "multi-hop": 14,
+      "temporal": 11,
+      "unanswerable": 7
+    }
+  },
+  "rounds": 3,
+  "models": {
+    "answer": "claude-haiku-5-5",
+    "answerFallback": "claude-haiku-4-5-20251001",
+    "judge": "claude-haiku-5-5",
+    "embeddings": "bge-small-en-v1.5"
+  },
+  "promptVersions": {
+    "answer": "4987a68d9da9",
+    "judge": "4439e6cce528"
+  },
+  "index": {
+    "sourceHash": "0da96347a94270a29d57a566ad31e1b14303a1ba28981f0432bdc40b8dae6070",
+    "model": "Xenova/bge-small-en-v1.5"
+  },
+  "retrieval": {
+    "vector": {
+      "all": {
+        "questions": 33,
+        "recall5": 0.7777777777777777,
+        "mrr": 0.733853238265003
+      },
+      "fact": {
+        "questions": 8,
+        "recall5": 1,
+        "mrr": 0.9166666666666667
+      },
+      "multi-hop": {
+        "questions": 14,
+        "recall5": 0.5476190476190477,
+        "mrr": 0.6517857142857143
+      },
+      "temporal": {
+        "questions": 11,
+        "recall5": 0.9090909090909091,
+        "mrr": 0.7053475935828877
+      }
+    },
+    "graph": {
+      "all": {
+        "questions": 33,
+        "recall5": 0.9292929292929292,
+        "mrr": 0.7828282828282828
+      },
+      "fact": {
+        "questions": 8,
+        "recall5": 1,
+        "mrr": 0.7708333333333333
+      },
+      "multi-hop": {
+        "questions": 14,
+        "recall5": 0.8333333333333333,
+        "mrr": 0.8809523809523808
+      },
+      "temporal": {
+        "questions": 11,
+        "recall5": 1,
+        "mrr": 0.6666666666666666
+      }
+    },
+    "hybrid": {
+      "all": {
+        "questions": 33,
+        "recall5": 0.909090909090909,
+        "mrr": 0.8712121212121212
+      },
+      "fact": {
+        "questions": 8,
+        "recall5": 1,
+        "mrr": 0.875
+      },
+      "multi-hop": {
+        "questions": 14,
+        "recall5": 0.7857142857142857,
+        "mrr": 0.9642857142857143
+      },
+      "temporal": {
+        "questions": 11,
+        "recall5": 1,
+        "mrr": 0.75
+      }
+    }
+  },
+  "baselines": [
+    {
+      "model": "bge-small-en-v1.5",
+      "scores": {
+        "all": {
+          "questions": 33,
+          "recall5": 0.7777777777777777,
+          "mrr": 0.733853238265003
+        },
+        "fact": {
+          "questions": 8,
+          "recall5": 1,
+          "mrr": 0.9166666666666667
+        },
+        "multi-hop": {
+          "questions": 14,
+          "recall5": 0.5476190476190477,
+          "mrr": 0.6517857142857143
+        },
+        "temporal": {
+          "questions": 11,
+          "recall5": 0.9090909090909091,
+          "mrr": 0.7053475935828877
+        }
+      }
+    },
+    {
+      "model": "all-minilm-l6-v2",
+      "scores": {
+        "all": {
+          "questions": 33,
+          "recall5": 0.7272727272727273,
+          "mrr": 0.7638659320477502
+        },
+        "fact": {
+          "questions": 8,
+          "recall5": 1,
+          "mrr": 0.9166666666666667
+        },
+        "multi-hop": {
+          "questions": 14,
+          "recall5": 0.5000000000000001,
+          "mrr": 0.7267316017316017
+        },
+        "temporal": {
+          "questions": 11,
+          "recall5": 0.8181818181818182,
+          "mrr": 0.7000000000000001
+        }
+      }
+    },
+    {
+      "model": "arctic-embed-xs",
+      "scores": {
+        "all": {
+          "questions": 33,
+          "recall5": 0.7777777777777777,
+          "mrr": 0.8188131313131313
+        },
+        "fact": {
+          "questions": 8,
+          "recall5": 1,
+          "mrr": 1
+        },
+        "multi-hop": {
+          "questions": 14,
+          "recall5": 0.5476190476190477,
+          "mrr": 0.7767857142857143
+        },
+        "temporal": {
+          "questions": 11,
+          "recall5": 0.9090909090909091,
+          "mrr": 0.7405303030303029
+        }
+      }
+    }
+  ],
+  "verdict": {
+    "metric": "recall@5",
+    "hybrid": 0.909090909090909,
+    "vector": 0.7777777777777777,
+    "bestVector": {
+      "model": "bge-small-en-v1.5",
+      "recall5": 0.7777777777777777
+    },
+    "points": 13.1,
+    "pointsVsBest": 13.1,
+    "outcome": "win",
+    "outcomeVsBest": "win"
+  },
+  "generation": {
+    "vector": {
+      "faithfulness": {
+        "mean": 0.9617571059431524,
+        "sd": 0.017952613635846746,
+        "rounds": [0.9418604651162791, 0.9767441860465116, 0.9666666666666667]
+      },
+      "citationPrecision": {
+        "mean": 0.9929078014184397,
+        "sd": 0.012284048280630353,
+        "rounds": [1, 0.9787234042553191, 1]
+      },
+      "removedShare": {
+        "mean": 0.007575757575757576,
+        "sd": 0.013121597027036951,
+        "rounds": [0, 0.022727272727272728, 0]
+      },
+      "correctUnknown": {
+        "mean": 1,
+        "sd": 0,
+        "rounds": [1, 1, 1]
+      },
+      "answered": {
+        "mean": 0.7878787878787877,
+        "sd": 1.3597399555105182e-16,
+        "rounds": [0.7878787878787878, 0.7878787878787878, 0.7878787878787878]
+      },
+      "sourceRecall": {
+        "mean": 0.6717171717171716,
+        "sd": 0,
+        "rounds": [0.6717171717171716, 0.6717171717171716, 0.6717171717171716]
+      },
+      "answers": 120,
+      "errors": 0,
+      "costPerAnswerUsd": 0.0004155083333333333,
+      "medianLatencyMs": 1492
+    },
+    "graph": {
+      "faithfulness": {
+        "mean": 0.970132925714457,
+        "sd": 0.01116968687644496,
+        "rounds": [0.9661016949152542, 0.9827586206896551, 0.9615384615384616]
+      },
+      "citationPrecision": {
+        "mean": 0.9892361111111111,
+        "sd": 0.009336340041492206,
+        "rounds": [0.984375, 1, 0.9833333333333333]
+      },
+      "removedShare": {
+        "mean": 0,
+        "sd": 0,
+        "rounds": [0, 0, 0]
+      },
+      "correctUnknown": {
+        "mean": 1,
+        "sd": 0,
+        "rounds": [1, 1, 1]
+      },
+      "answered": {
+        "mean": 0.9393939393939394,
+        "sd": 0.03030303030303033,
+        "rounds": [0.9696969696969697, 0.9393939393939394, 0.9090909090909091]
+      },
+      "sourceRecall": {
+        "mean": 0.8198653198653197,
+        "sd": 0.02591717898710552,
+        "rounds": [0.8484848484848484, 0.813131313131313, 0.7979797979797978]
+      },
+      "answers": 120,
+      "errors": 0,
+      "costPerAnswerUsd": 0.0004781583333333334,
+      "medianLatencyMs": 1620.5
+    },
+    "hybrid": {
+      "faithfulness": {
+        "mean": 0.9439020939445388,
+        "sd": 0.014257676901841524,
+        "rounds": [0.9583333333333334, 0.9298245614035088, 0.9435483870967742]
+      },
+      "citationPrecision": {
+        "mean": 0.9947916666666666,
+        "sd": 0.009021097956087904,
+        "rounds": [1, 0.984375, 1]
+      },
+      "removedShare": {
+        "mean": 0,
+        "sd": 0,
+        "rounds": [0, 0, 0]
+      },
+      "correctUnknown": {
+        "mean": 1,
+        "sd": 0,
+        "rounds": [1, 1, 1]
+      },
+      "answered": {
+        "mean": 0.9595959595959597,
+        "sd": 0.017495462702715917,
+        "rounds": [0.9696969696969697, 0.9393939393939394, 0.9696969696969697]
+      },
+      "sourceRecall": {
+        "mean": 0.8434343434343433,
+        "sd": 0.025252525252525304,
+        "rounds": [0.8434343434343433, 0.818181818181818, 0.8686868686868686]
+      },
+      "answers": 120,
+      "errors": 0,
+      "costPerAnswerUsd": 0.00047093333333333336,
+      "medianLatencyMs": 1805.5
+    }
+  },
+  "cost": {
+    "capUsd": 5,
+    "spentUsd": 0.172223,
+    "answerUsd": 0.112626,
+    "judgeUsd": 0.059597,
+    "skipped": 0,
+    "stoppedEarly": false
+  },
+  "human": null,
+  "notes": [
+    "Before this run, a rehearsal bug answered the 40 test questions once, and those answers were read. Nothing was tuned on them: the search weights were fixed earlier on the 10 tuning questions, and the one change made afterwards (a passage per note that words its typed links and aliases, which live in the frontmatter) came from the tuning questions q-001, q-002, q-008 and q-009, which failed for that reason. The bug is fixed and tested: a rehearsal never answers a test question.",
+    "Graph only finds slightly more of the expected notes in its top 5 than hybrid (93% against 91%), but hybrid ranks them higher (MRR 0.87 against 0.78) and answers more of the answerable questions (96% against 94%).",
+    "The human check samples half of its answers among those with a sentence the judge did not fully support, so the agreement measures the judge where it matters; it is not a random sample of all answers."
+  ]
+}

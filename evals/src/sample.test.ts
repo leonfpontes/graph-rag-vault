@@ -62,6 +62,19 @@ describe('pickSample', () => {
     expect(pickSample(RECORDS, text, chunk, 6)).toEqual(items)
   })
 
+  it('takes half the answers among those with a sentence the judge did not fully support', () => {
+    const partial = { verdicts: [{ verdict: 'partial' as const, reason: 'extra detail' }] }
+    const records = [...RECORDS, rec('q-020', 'graph', partial), rec('q-021', 'vector', partial)]
+    const items = pickSample(records, text, chunk, 4)
+    expect(items.slice(0, 2).map((i) => [i.questionId, i.judge])).toEqual(
+      expect.arrayContaining([
+        ['q-020', 'partial'],
+        ['q-021', 'partial'],
+      ]),
+    )
+    expect(items.slice(2).every((i) => i.judge === 'supported')).toBe(true)
+  })
+
   it('takes what there is when there are fewer answers than asked', () => {
     expect(pickSample(RECORDS.slice(0, 2), text, chunk, 10)).toHaveLength(2)
   })

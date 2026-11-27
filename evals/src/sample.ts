@@ -28,9 +28,10 @@ export interface HumanLabels {
 const hash = (s: string) => createHash('sha256').update(s).digest('hex')
 
 /**
- * Picks `answers` answered records of round 1, taking the variants in turn and a different question
- * each time when possible; the order inside a variant is a hash, so the pick is stable and blind to
- * the results.
+ * Picks `answers` answered records of round 1. Half come from the answers with a sentence the judge
+ * did not fully support, the rest from the others: with almost every verdict `supported`, a plain
+ * random sample would leave kappa with nothing to measure. Inside each half the variants take turns
+ * and a new question is preferred; the order inside a variant is a hash, so the pick is stable.
  */
 export function pickSample(
   records: readonly AnswerRecord[],
@@ -41,29 +42,38 @@ export function pickSample(
   const candidates = records.filter(
     (r) => r.round === 1 && r.status === 'answered' && r.verdicts.length === r.sentences.length,
   )
-  const variants = [...new Set(candidates.map((r) => r.variant))]
-  const queues = new Map(
-    variants.map((v) => [
-      v,
-      candidates
-        .filter((r) => r.variant === v)
-        .sort((a, b) =>
-          hash(`${a.questionId}|${a.variant}`).localeCompare(hash(`${b.questionId}|${b.variant}`)),
-        ),
-    ]),
-  )
+  const flagged = (r: AnswerRecord) => r.verdicts.some((v) => v.verdict !== 'supported')
   const picked: AnswerRecord[] = []
   const seen = new Set<string>()
-  while (picked.length < answers && [...queues.values()].some((q) => q.length > 0))
-    for (const v of variants) {
-      if (picked.length >= answers) break
-      const queue = queues.get(v)!
-      const i = queue.findIndex((r) => !seen.has(r.questionId))
-      const next = queue.splice(i === -1 ? 0 : i, 1)[0]
-      if (!next) continue
-      picked.push(next)
-      seen.add(next.questionId)
-    }
+  const take = (from: AnswerRecord[], count: number) => {
+    const variants = [...new Set(from.map((r) => r.variant))]
+    const queues = new Map(
+      variants.map((v) => [
+        v,
+        from
+          .filter((r) => r.variant === v)
+          .sort((a, b) =>
+            hash(`${a.questionId}|${a.variant}`).localeCompare(hash(`${b.questionId}|${b.variant}`)),
+          ),
+      ]),
+    )
+    const goal = picked.length + count
+    while (picked.length < goal && [...queues.values()].some((q) => q.length > 0))
+      for (const v of variants) {
+        if (picked.length >= goal) break
+        const queue = queues.get(v)!
+        const i = queue.findIndex((r) => !seen.has(r.questionId))
+        const next = queue.splice(i === -1 ? 0 : i, 1)[0]
+        if (!next) continue
+        picked.push(next)
+        seen.add(next.questionId)
+      }
+  }
+  take(candidates.filter(flagged), Math.ceil(answers / 2))
+  take(
+    candidates.filter((r) => !flagged(r)),
+    answers - picked.length,
+  )
   let n = 0
   return picked.flatMap((r) =>
     r.sentences.map((s, i) => ({

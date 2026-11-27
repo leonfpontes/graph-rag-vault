@@ -161,3 +161,5 @@ port. `pnpm demo` and `pnpm serve` default to 8787, `pnpm dev` to 5173 (it proxi
   pinned to a revision, the same in Node and in the browser.
 - [ADR 0005](adr/0005-hybrid-search-score-propagation.md): hybrid search, fused entry lists and
   scores spread along typed links, tuned on probe and dev only.
+- [ADR 0006](adr/0006-scoreboard-and-judge.md): the scoreboard on the 40 test questions, 3 rounds
+  of answers, a faithfulness judge and a blind human check with Cohen's kappa.
