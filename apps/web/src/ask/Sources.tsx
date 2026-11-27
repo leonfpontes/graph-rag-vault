@@ -45,7 +45,7 @@ export function excerpt(text: string, words: readonly string[], max = 240): stri
 export const matchedWords = (hit: SearchHit) =>
   hit.reasons.flatMap((r) => (r.kind === 'keyword' ? r.terms : r.kind === 'title' ? [r.matched] : []))
 
-function ReasonChip({
+export function ReasonChip({
   reason,
   rankOf,
   titleOf,

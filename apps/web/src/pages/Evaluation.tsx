@@ -243,7 +243,7 @@ function Bar({ variant, value }: { variant: SearchVariant; value: number | undef
   )
 }
 
-function KindCard({ sb, kind }: { sb: Scoreboard; kind: string }) {
+export function KindCard({ sb, kind }: { sb: Scoreboard; kind: string }) {
   const r = (v: SearchVariant) => sb.retrieval[v][kind]?.recall5
   return (
     <div className="grid content-start gap-3 rounded-lg border bg-card p-4">

@@ -3,6 +3,8 @@
 // cannot check (the 3D scene, hover previews, the phone map).
 import { expect, test, type Page } from '@playwright/test'
 
+import { HEADLINE } from '../apps/web/src/test/approved.js'
+
 const watch = (page: Page) => {
   const errors: string[] = []
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))
@@ -13,6 +15,8 @@ const sideways = (page: Page) => page.evaluate(() => document.documentElement.sc
 const phone = (page: Page) => (page.viewportSize()?.width ?? 1440) < 768
 
 for (const [route, title] of [
+  ['/', HEADLINE.short],
+  ['/nope', 'No page at this address'],
   ['/explore', 'Explore'],
   ['/ask?q=q-022', 'Ask the vault'],
   ['/notes/dec-switch-battery-voltaro', 'Switch Ridgeline battery cells to Voltaro'],
@@ -26,7 +30,9 @@ for (const [route, title] of [
     await expect(page.getByRole('heading', { level: 1, name: title })).toBeVisible()
     await page.waitForLoadState('networkidle')
     expect(await sideways(page)).toBeLessThanOrEqual(0)
-    expect(errors).toEqual([])
+    // The 404 page comes with HTTP 404, which the browser logs on its own.
+    const own = route === '/nope' ? errors.filter((e) => !/status of 404/.test(e)) : errors
+    expect(own).toEqual([])
   })
 
 test('Explore draws the 3D scene with Three.js on desktop, and a map of constellations on phones', async ({
