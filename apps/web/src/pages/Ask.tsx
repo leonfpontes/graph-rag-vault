@@ -1,4 +1,4 @@
-// Ask: a question and a cited answer, not a chat. The 50 evaluation questions answer at once from the
+// Ask: a question and a cited answer, not a chat. The recorded questions answer at once from the
 // recorded run; a question a person types is embedded here, in the browser (the model loads only for
 // the first one), and searched with the same code the evaluation measures. The written answer to a new
 // question needs a local run with the person's key. The right column keeps the graph in view, with
@@ -54,6 +54,7 @@ import { duration, mb, thousands, usd } from '../lib/format'
 import { VARIANT_NAME, VARIANT_SHORT } from '../lib/headline'
 import { NARROW, PHONE, useMedia } from '../lib/media'
 import { NOTE_TYPES, Shape, TypeTag } from '../lib/notes'
+import { questionCounts, recordedQuestionsText } from '../lib/questions'
 import { Link, useRouter, withParams } from '../lib/router'
 import { CodeBlock } from '../shell/CodeBlock'
 import { DemoError, DownloadStatus } from '../shell/states'
@@ -204,8 +205,8 @@ export function Ask() {
           <p className="mt-2.5 flex items-start gap-2 text-[13px] text-muted-foreground">
             <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
             <span>
-              The 50 evaluation questions answer at once from the recorded run. Your own question is searched
-              here, in your browser;{' '}
+              {demo ? `The ${recordedQuestionsText(demo.questions)}` : 'The recorded questions'} answer at
+              once from the recorded run. Your own question is searched here, in your browser;{' '}
               {demo?.mode === 'local' ? (
                 'this local server writes the answer with your key.'
               ) : (
@@ -339,12 +340,15 @@ function QuestionBox({
 
 function RecordedQuestions({ demo, open }: { demo: Demo; open: boolean }) {
   const starters = starterQuestions(demo.questions)
+  const counts = questionCounts(demo.questions)
   return (
     <Collapsible defaultOpen={open} className="mt-2.5 rounded-lg border bg-card">
       <CollapsibleTrigger className="group flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-lg px-3.5 text-left text-sm font-medium outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
         <List aria-hidden="true" className="size-4" />
         Recorded questions{' '}
-        <span className="font-normal text-muted-foreground">· {demo.questions.length} answer at once</span>
+        <span className="font-normal text-muted-foreground">
+          · {counts.all} answer at once ({counts.scored} scored, {counts.tuned} for tuning)
+        </span>
         <ChevronDown
           aria-hidden="true"
           className="ml-auto size-4 transition-transform group-data-[state=open]:rotate-180"

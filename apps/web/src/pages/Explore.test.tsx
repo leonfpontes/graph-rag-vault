@@ -46,6 +46,10 @@ describe('Explore', () => {
     )
     expect(file.querySelectorAll('wbr')).toHaveLength(1)
     expect(file.className).not.toMatch(/break-all/)
+    // The file name never breaks at its hyphens: only the folder's "/" is a break opportunity.
+    const name = [...file.querySelectorAll('span')].find((s) => s.textContent === 'dec-keep-ampcore.md')!
+    expect(name.className).toMatch(/whitespace-nowrap/)
+    expect(name.querySelector('wbr')).toBeNull()
     expect(
       within(preview).getByRole('link', { name: 'Switch Ridgeline battery cells to Voltaro' }),
     ).toBeTruthy()

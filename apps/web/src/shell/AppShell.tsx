@@ -18,6 +18,7 @@ import {
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 
 import { useDemo } from '../lib/demo'
+import { recordedQuestionsText } from '../lib/questions'
 import { GithubIcon, Mark } from '../lib/icons'
 import { Link, useRouter } from '../lib/router'
 import { useTheme } from '../lib/theme'
@@ -220,7 +221,11 @@ function ModeButton() {
         <p className="text-muted-foreground">{text.lead}</p>
         <ul className="m-0 grid list-none gap-1.5 p-0">
           <ModeLine ok>Explore, notes and search: live, in your browser</ModeLine>
-          <ModeLine ok>The 50 evaluation questions: recorded answers, instant</ModeLine>
+          <ModeLine ok>
+            {state.status === 'ready'
+              ? `The ${recordedQuestionsText(state.demo.questions)}: instant answers`
+              : 'The recorded questions: instant answers'}
+          </ModeLine>
           {text.key ? (
             <ModeLine>{text.key}</ModeLine>
           ) : (
