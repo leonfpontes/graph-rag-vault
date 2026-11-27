@@ -18,13 +18,13 @@ export default tseslint.config(
     },
   },
   {
-    // The search runs in Node and in the browser (the static demo): no Node built-ins in it.
-    files: ['packages/search/src/**/*.ts'],
+    // The search and the embedder run in Node and in the browser (static demo, Ask worker): no Node built-ins.
+    files: ['packages/search/src/**/*.ts', 'packages/embeddings/src/**/*.ts'],
     ignores: ['**/*.test.ts'],
     rules: {
       'no-restricted-imports': [
         'error',
-        { patterns: [{ group: ['node:*'], message: 'packages/search runs in the browser too.' }] },
+        { patterns: [{ group: ['node:*'], message: 'This package runs in the browser too.' }] },
       ],
     },
   },

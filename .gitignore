@@ -14,3 +14,5 @@ CLAUDE.local.md
 # Local index databases built from the vault (pnpm index rebuilds them).
 *.sqlite
 *.sqlite-*
+# Embedding model weights downloaded from the Hugging Face hub (packages/embeddings).
+.cache/

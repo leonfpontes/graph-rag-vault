@@ -1,0 +1,22 @@
+{
+  "name": "@graph-rag/embeddings",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The embedding model shared by the index (Node) and the browser: one open model pinned by id and revision, the query prefix, and the token counter for the chunker.",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "graph-rag-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.2"
+  }
+}

@@ -22,14 +22,15 @@ flowchart LR
 
 ## Packages
 
-| Package             | Folder            | Owns                                                                     |
-| ------------------- | ----------------- | ------------------------------------------------------------------------ |
-| `@graph-rag/vault`  | `packages/vault`  | `Note`, `Link`, the 6 note types and the 7 relations; the parser         |
-| `@graph-rag/index`  | `packages/index`  | `openIndex`, reversible `migrate` (PRAGMA `user_version`), the schema    |
-| `@graph-rag/search` | `packages/search` | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf` |
-| `@graph-rag/api`    | `packages/api`    | The fetch handler (`createApi`) and the Node server (`serveHttp`)        |
-| `@graph-rag/web`    | `apps/web`        | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                   |
-| `@graph-rag/evals`  | `evals`           | `Question` (kind, split, expected sources), `recallAtK`, MRR, mean ± sd  |
+| Package                 | Folder                | Owns                                                                               |
+| ----------------------- | --------------------- | ---------------------------------------------------------------------------------- |
+| `@graph-rag/vault`      | `packages/vault`      | `Note`, `Link`, the 6 note types and the 7 relations; the parser                   |
+| `@graph-rag/index`      | `packages/index`      | `openIndex`, reversible `migrate` (PRAGMA `user_version`), the schema              |
+| `@graph-rag/search`     | `packages/search`     | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf`           |
+| `@graph-rag/embeddings` | `packages/embeddings` | `createEmbedder`: the pinned model, query prefix, token counter (Node and browser) |
+| `@graph-rag/api`        | `packages/api`        | The fetch handler (`createApi`) and the Node server (`serveHttp`)                  |
+| `@graph-rag/web`        | `apps/web`            | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                             |
+| `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), `recallAtK`, MRR, mean ± sd            |
 
 ## Contracts
 
@@ -69,3 +70,5 @@ port. `pnpm demo` and `pnpm serve` default to 8787, `pnpm dev` to 5173 (it proxi
 - [ADR 0001](adr/0001-pnpm-typescript-atlas.md): one pnpm monorepo in TypeScript, Atlas UI from npm.
 - [ADR 0002](adr/0002-sqlite-brute-force-vectors-and-static-demo.md): SQLite with brute-force
   vectors, and a static demo that searches in the browser.
+- [ADR 0003](adr/0003-local-embedding-model.md): one open embedding model (bge-small-en-v1.5),
+  pinned to a revision, the same in Node and in the browser.

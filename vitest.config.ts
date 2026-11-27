@@ -12,6 +12,7 @@ export default defineConfig({
       { find: /^@graph-rag\/vault$/, replacement: src('./packages/vault/src/index.ts') },
       { find: /^@graph-rag\/index$/, replacement: src('./packages/index/src/index.ts') },
       { find: /^@graph-rag\/search$/, replacement: src('./packages/search/src/index.ts') },
+      { find: /^@graph-rag\/embeddings$/, replacement: src('./packages/embeddings/src/index.ts') },
       { find: /^@graph-rag\/api$/, replacement: src('./packages/api/src/index.ts') },
       { find: /^@graph-rag\/evals$/, replacement: src('./evals/src/index.ts') },
     ],
@@ -23,6 +24,11 @@ export default defineConfig({
       { extends: true, test: { name: '@graph-rag/index', root: 'packages/index', environment: 'node' } },
       // The search also runs in the browser: its tests run in jsdom, with no Node globals to lean on.
       { extends: true, test: { name: '@graph-rag/search', root: 'packages/search', environment: 'jsdom' } },
+      // The embedder runs in the Ask worker too; its tests use a fake model (no network).
+      {
+        extends: true,
+        test: { name: '@graph-rag/embeddings', root: 'packages/embeddings', environment: 'node' },
+      },
       { extends: true, test: { name: '@graph-rag/api', root: 'packages/api', environment: 'node' } },
       { extends: true, test: { name: '@graph-rag/evals', root: 'evals', environment: 'node' } },
       'apps/web',

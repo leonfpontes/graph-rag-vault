@@ -128,6 +128,7 @@ describe('monorepo', () => {
     ['packages/vault', '@graph-rag/vault'],
     ['packages/index', '@graph-rag/index'],
     ['packages/search', '@graph-rag/search'],
+    ['packages/embeddings', '@graph-rag/embeddings'],
     ['packages/api', '@graph-rag/api'],
     ['apps/web', '@graph-rag/web'],
     ['evals', '@graph-rag/evals'],

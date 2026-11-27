@@ -10,6 +10,8 @@ overrides:
 
 allowBuilds:
   esbuild: false # its postinstall only re-checks the platform binary, which comes as an optional dependency
+  onnxruntime-node: false # the CPU binaries ship in the package; its postinstall only downloads CUDA libraries on linux/x64
+  protobufjs: false # its postinstall only warns about the version scheme of dependents
 
 minimumReleaseAgeExclude:
   - '@leonfpontes/atlas-tokens@0.2.0'
