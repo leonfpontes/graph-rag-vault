@@ -61,7 +61,12 @@ export function DemoProvider({
     const base = optionsRef.current?.fetch ?? globalThis.fetch.bind(globalThis)
     loadDemo({
       ...optionsRef.current,
-      fetch: progressFetch(base, (download) => live && setState({ status: 'loading', download })),
+      // Progress only moves a loading state: the index can still be arriving after another file
+      // failed, and the error (with Try again) must stay on screen.
+      fetch: progressFetch(
+        base,
+        (download) => live && setState((s) => (s.status === 'loading' ? { status: 'loading', download } : s)),
+      ),
     }).then(
       (demo) => live && setState({ status: 'ready', demo }),
       (error: unknown) =>

@@ -1,5 +1,5 @@
-// Q1 (QA): bugs found in the final round. Each test fails today and is marked test.fail with its card;
-// the fix turns test.fail into test and the suite stays green.
+// Q1 (QA): bugs found in the final round, each with its card. They were marked test.fail until fixed;
+// now they pass for real.
 import { expect, test } from '@playwright/test'
 
 test.describe('bugs of the Q1 final round', () => {
@@ -9,7 +9,6 @@ test.describe('bugs of the Q1 final round', () => {
   test('Ask: a free question keeps the graph on few WebGL contexts, and the 3D path never loses its own', async ({
     page,
   }) => {
-    test.fail(true, 'GraphCanvas calls hasWebGL() on every render, and each call opens a new WebGL context')
     test.setTimeout(120_000)
     await page.addInitScript(() => {
       const w = window as unknown as { __gl: number }
@@ -45,7 +44,6 @@ test.describe('bugs of the Q1 final round', () => {
     test(`a failed /data/${file} shows the error with Try again, not "Loading" for ever`, async ({
       page,
     }) => {
-      test.fail(true, 'the index download progress writes "loading" over the error state')
       await page.route(`**/data/${file}`, (r) => r.fulfill({ status: 404, body: 'Not found' }))
       // The failure lands first and the index arrives after it, as on a slow link: the order of the bug.
       let indexServed!: () => void
