@@ -119,6 +119,7 @@ describe('answerQuestion', () => {
       },
     ])
     expect(result.removed).toEqual([])
+    expect(result.citations).toEqual({ submitted: 3, kept: 3 })
     expect(result.nearest).toEqual([])
     expect(result).toMatchObject({ model: 'claude-haiku-5-5', fallbackUsed: false, calls: 1 })
     // 1 000 input × $0.10 + 200 output × $0.50 per million tokens
@@ -147,6 +148,8 @@ describe('answerQuestion', () => {
     const result = await answerQuestion({ question: Q, passages: PASSAGES, provider })
     expect(result.status).toBe('answered')
     expect(result.sentences.map((s) => s.text)).toEqual(['Frames are covered for life.'])
+    // 3 sources given, 1 passed: P9 was never sent and the P2 quote is not in P2
+    expect(result.citations).toEqual({ submitted: 3, kept: 1 })
     expect(result.removed).toEqual([
       { text: 'The warranty is transferable.', reason: 'no-source' },
       { text: 'Dealers pay for repairs.', reason: 'unknown-passage' },
@@ -202,8 +205,8 @@ describe('answerQuestion', () => {
     expect(request!.messages).toEqual([{ role: 'user', content: userMessage(Q, PASSAGES) }])
   })
 
-  it('reads only the first 12 passages', async () => {
-    const many = Array.from({ length: 15 }, (_, i) => ({
+  it('reads only the first 15 passages', async () => {
+    const many = Array.from({ length: 18 }, (_, i) => ({
       ...PASSAGES[3]!,
       chunkId: `c#${i}`,
       noteId: `n-${i}`,
@@ -211,8 +214,8 @@ describe('answerQuestion', () => {
     const provider = scriptedProvider([submit({ answerable: false, sentences: [] })])
     await answerQuestion({ question: Q, passages: many, provider })
     const content = provider.requests[0]!.messages[0]!.content as string
-    expect(content).toContain('id="P12"')
-    expect(content).not.toContain('id="P13"')
+    expect(content).toContain('id="P15"')
+    expect(content).not.toContain('id="P16"')
   })
 
   it('reminds the model once when it answers in text, and once when its answer is broken', async () => {

@@ -16,3 +16,5 @@ CLAUDE.local.md
 *.sqlite-*
 # Embedding model weights downloaded from the Hugging Face hub (packages/embeddings).
 .cache/
+# Rehearsals on the tuning questions (pnpm eval --split probe,dev): local only.
+evals/results/rehearsal*

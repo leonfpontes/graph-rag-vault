@@ -6,6 +6,11 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
 
 ### Added
 
+- The scoreboard (`pnpm eval`): retrieval of the three variants and vector baselines with each
+  embedding model; answers and a faithfulness judge over 3 rounds with mean ± deviation; citations
+  kept, sentences removed, "I don't know", cost and latency; a hard $5 cap; a blind human check of
+  the judge with Cohen's kappa. Answers read a "Links" passage per note that words its typed links
+  and aliases, which live in the frontmatter.
 - Hybrid search with the reason for every result (vector, title, keyword, typed link, replacement,
   recency, stale): entry lists fused by RRF, then scores spread along typed links; the same code in
   Node and the browser (ADR 0005). Incremental ingestion into SQLite, the search index file for the

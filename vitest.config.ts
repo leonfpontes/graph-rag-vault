@@ -49,6 +49,7 @@ export default defineConfig({
         // (ingest, exportIndex, sourceHash, retrievalReport) are tested, and so is the file they write.
         'packages/index/src/cli.ts',
         'evals/src/retrieval-cli.ts',
+        'evals/src/eval-cli.ts',
       ],
       // Floors that only go up: packages and rules 80%, screens 60%.
       thresholds: {

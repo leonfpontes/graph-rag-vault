@@ -23,7 +23,7 @@ export const promptVersion = (prompt: string) =>
 export const ANSWER_MODELS = { primary: 'claude-haiku-5-5', fallback: 'claude-haiku-4-5-20251001' } as const
 
 /** More passages than this are cut: the answer reads the top of the search. */
-export const MAX_PASSAGES = 12
+export const MAX_PASSAGES = 15
 /** Notes offered when the answer is "I don't know". */
 export const NEAREST_NOTES = 3
 
@@ -57,6 +57,11 @@ export interface RemovedSentence {
   reason: RemovalReason
 }
 
+export interface CitationCount {
+  submitted: number
+  kept: number
+}
+
 export interface AnswerResult {
   status: 'answered' | 'unknown'
   sentences: Sentence[]
@@ -71,6 +76,8 @@ export interface AnswerResult {
   usage: TokenUsage
   costMicros: number
   promptVersion: string
+  /** Sources the model gave and how many passed the check: the citation precision, with no model. */
+  citations: CitationCount
 }
 
 export const ANSWER_TOOL: ToolSpec = {
@@ -162,7 +169,8 @@ export function userMessage(question: string, passages: readonly Passage[]): str
 export function checkSentences(
   submitted: Submitted['sentences'],
   passages: readonly Passage[],
-): { sentences: Sentence[]; removed: RemovedSentence[] } {
+): { sentences: Sentence[]; removed: RemovedSentence[]; citations: CitationCount } {
+  const count: CitationCount = { submitted: 0, kept: 0 }
   const byId = new Map(passages.map((p, i) => [`P${i + 1}`, p]))
   const sentences: Sentence[] = []
   const removed: RemovedSentence[] = []
@@ -176,6 +184,7 @@ export function checkSentences(
     const citations: Citation[] = []
     let known = 0
     for (const src of s.sources) {
+      count.submitted++
       const passage = byId.get(src.passage.trim().toUpperCase())
       if (!passage) continue
       known++
@@ -183,10 +192,11 @@ export function checkSentences(
       if (quote && normalize(passage.text).includes(quote))
         citations.push({ chunkId: passage.chunkId, noteId: passage.noteId, quote: src.quote.trim() })
     }
+    count.kept += citations.length
     if (citations.length > 0) sentences.push({ text, citations })
     else removed.push({ text, reason: known === 0 ? 'unknown-passage' : 'quote-not-found' })
   }
-  return { sentences, removed }
+  return { sentences, removed, citations: count }
 }
 
 export interface AnswerOptions {
@@ -226,6 +236,7 @@ export async function answerQuestion(options: AnswerOptions): Promise<AnswerResu
     calls: 0,
     usage: NO_USAGE,
     costMicros: 0,
+    citations: { submitted: 0, kept: 0 },
     promptVersion: promptVersion(prompt),
   }
   // Nothing found: nothing to answer from, and no call to pay for.
@@ -286,6 +297,7 @@ export async function answerQuestion(options: AnswerOptions): Promise<AnswerResu
   const checked = checkSentences(submitted.sentences, passages)
   result.sentences = checked.sentences
   result.removed = checked.removed
+  result.citations = checked.citations
   if (checked.sentences.length > 0) {
     result.status = 'answered'
     result.nearest = []

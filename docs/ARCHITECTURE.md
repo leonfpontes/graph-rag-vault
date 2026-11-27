@@ -106,7 +106,7 @@ flowchart LR
   Custom weights are refused on the test split.
 - **Answer** (`packages/answer`, ADR 0004): `answerQuestion({ question, passages, provider })`, where a
   `Passage` is `{ chunkId, noteId, title, heading?, text, updated, status? }` (the search results,
-  best first, at most 12 read). It returns `{ status: 'answered' | 'unknown', sentences, removed,
+  best first, at most 15 read; `passagesFromHits` builds them from search hits: the chunks of the top 5 notes and a "Links" passage per note that words its typed links and aliases). It returns `{ status: 'answered' | 'unknown', sentences, removed,
 nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each sentence carries
   `citations: { chunkId, noteId, quote }[]`, and each removed one a `reason`. Local mode only:
   `createAnthropicProvider({ apiKey })` reads no environment itself, the caller passes the key.
@@ -128,6 +128,21 @@ nearest, model, fallbackUsed, calls, usage, costMicros, promptVersion }`; each s
   fact, 4 multi-hop, 3 temporal, 1 unanswerable) and 40 for the scoreboard (`test`: 8, 14, 11 and
   7), with at least 12 two-hop questions in the test split. The test questions are written from the
   rules and the world, never checked against what a search returns.
+- **Scoreboard** (`pnpm eval`, `evals/src/evaluate.ts`): on the 40 test questions, recall@5 and MRR
+  of the three variants in one round, plus the vector-only baseline with each candidate embedding
+  model (re-embedded locally, no cost). Then, for each question, variant and round (3 by default),
+  `answerQuestion` reads `passagesFromHits` of that variant and the judge (`judgeAnswer`, prompt
+  `evals/prompts/judge.md`, output through `submit_verdicts`) labels each kept sentence `supported`,
+  `partial` or `unsupported` against the passages it cites. Per variant, mean ± sample deviation
+  over rounds: faithfulness (1 / 0.5 / 0), citations kept by the quote check, sentences removed,
+  "I don't know" on unanswerable questions, answered on answerable ones, expected notes cited, cost
+  and latency. A hard cap (default $5) is reserved per job at the fallback's worst case. The run
+  writes `evals/results/latest.json` (the source the README, the site and the share images read),
+  `latest.md` and `answers.json` (every answer, plus one hybrid answer per tuning question for the
+  demo to replay). A run without the test split is a rehearsal (`rehearsal.*`, not committed) and
+  never answers a test question. `pnpm eval --sheet <file>` picks about 10 round-1 answers for a
+  human check (`human-sample.json`, the judge hidden on the sheet); `human-labels.json` with the
+  person's labels and `pnpm eval --report` add the agreement and Cohen's kappa to the scoreboard.
 
 ## Servers and ports
 
