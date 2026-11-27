@@ -24,13 +24,13 @@ flowchart LR
 
 | Package                 | Folder                | Owns                                                                               |
 | ----------------------- | --------------------- | ---------------------------------------------------------------------------------- |
-| `@graph-rag/vault`      | `packages/vault`      | `Note`, `Link`, the 6 note types and the 7 relations; the parser                   |
+| `@graph-rag/vault`      | `packages/vault`      | `Note`, `Link`, the 6 note types and the 7 relations; the parser; the world        |
 | `@graph-rag/index`      | `packages/index`      | `openIndex`, reversible `migrate` (PRAGMA `user_version`), the schema              |
 | `@graph-rag/search`     | `packages/search`     | `SearchHit` with `Reason[]`, vectors as BLOBs, brute-force `topK`, `rrf`           |
 | `@graph-rag/embeddings` | `packages/embeddings` | `createEmbedder`: the pinned model, query prefix, token counter (Node and browser) |
 | `@graph-rag/api`        | `packages/api`        | The fetch handler (`createApi`) and the Node server (`serveHttp`)                  |
 | `@graph-rag/web`        | `apps/web`            | The app on Atlas UI (`@leonfpontes/atlas-ui` from npm)                             |
-| `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), `recallAtK`, MRR, mean ± sd            |
+| `@graph-rag/evals`      | `evals`               | `Question` (kind, split, expected sources), traps, `recallAtK`, MRR, mean ± sd     |
 
 ## Contracts
 
@@ -39,9 +39,32 @@ flowchart LR
   `updated` (ISO dates), `status`, `path` and `body`. Typed relations come from frontmatter fields
   of the same name (`owner`, `attendees`, `decided_in`, `customer`, `supersedes`, `reports_to`);
   a wikilink in the body is a `mentions` link. `supersedes` points from the newer note to the older.
+  A relation field holds a wikilink (`owner: "[[per-maya-okafor]]"`) or a list of them.
+  `parseNote(path, text)` reads one note with no Node APIs and throws a `NoteError` listing every
+  problem; `readVault(dir)` (`@graph-rag/vault/node`) reads a folder and reports bad notes, duplicate
+  ids and broken links instead of throwing.
+- **Example vault** (`examples/tarnwick`): Tarnwick Cycles, an invented bicycle maker. `world.yaml`
+  is the source of truth: 207 people, projects, customers, meetings, decisions and documents, with
+  stale and replaced notes on purpose (some replaced notes still say `current`, so recency has to
+  come from the dates). `pnpm --filter @graph-rag/vault generate` renders one note per entity into
+  `vault/<type folder>/<id>.md`; a test compares the files with the world byte by byte and reads
+  every link back. The generated notes are not formatted by Prettier.
 - **Index** (`packages/index`): SQLite through `node:sqlite`. Migrations are numbered 1..n, each with
   an `up` and a `down`, one transaction each; a failing one rolls back. Embeddings are Float32
-  vectors stored as little-endian BLOBs (`toBlob`/`fromBlob` in `packages/search`).
+  vectors stored as little-endian BLOBs (`toBlob`/`fromBlob` in `packages/search`). Schema
+  (`migrations.ts`, rules in CHECKs and foreign keys):
+
+  | Table        | Holds                                                     | Keys and indexes                                    |
+  | ------------ | --------------------------------------------------------- | --------------------------------------------------- |
+  | `notes`      | one row per note, with `content_hash` to re-index changes | `id`; `path` unique; `(type, updated DESC)`         |
+  | `aliases`    | the names a note answers to, `norm` lowercased            | `(note_id, norm)`; `norm` (graph entry point)       |
+  | `links`      | typed edges; `dst` may be a note not written yet          | `(src, relation, dst)`; `(dst, relation)` backlinks |
+  | `chunks`     | `chunkNote` output: `text` for the app, `embed_text`      | `id` = `<note_id>#<ord>`; `(note_id, ord)`          |
+  | `chunks_fts` | FTS5 (porter) over `embed_text`, kept by triggers         | BM25 for the keyword list                           |
+  | `embeddings` | one vector per chunk and model, `length = dim × 4`        | `(model, chunk_id)`                                 |
+
+  Deleting a note deletes its aliases, outgoing links, chunks and their vectors.
+
 - **Chunks** (`packages/index`, `chunkNote`): sections follow the headings; paragraphs are packed
   up to 200 approximate tokens (prefix included), with no overlap; a long paragraph splits by
   sentence, then by word. A chunk has `id` (`<noteId>#<ord>`), `noteId`, `ord`, `heading`, `text`
@@ -57,7 +80,13 @@ flowchart LR
   API story.
 - **Evaluation** (`evals`): questions of 4 kinds (`fact`, `multi-hop`, `temporal`, `unanswerable`)
   in 3 splits (`probe` and `dev` tune, `test` scores). recall@5 and MRR leave unanswerable
-  questions out of the mean. Deviation across rounds is the sample standard deviation.
+  questions out of the mean. Deviation across rounds is the sample standard deviation. The set
+  lives in `evals/questions.yaml` (`loadQuestions`); each question lists its traps, and
+  `checkQuestions` proves them from the vault: `bridge` (typed links from a note the question names
+  to the answer; the notes past the start are not named), `supersedes` (a newer note replaces the
+  one the question's words point at; `vocabulary: other` when it shares fewer words), `alias` (the
+  question uses only an alias) and `neighbour` (an unanswerable question on a covered topic, with
+  patterns that must match no note).
 
 ## Servers and ports
 

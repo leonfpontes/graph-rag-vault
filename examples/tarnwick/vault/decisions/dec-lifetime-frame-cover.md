@@ -13,8 +13,8 @@ supersedes:
 # Lifetime structural cover for first owners
 
 ## Decision
-For bikes sold new from 1 September 2026, the chassis is covered against structural failure
-for as long as the first owner keeps the bike. Paint, bearings and electrics keep their
+From 1 September 2026, the chassis of every bike bought from us is covered against structural
+failure for the whole time its first owner keeps it. Paint, bearings and electrics keep their
 current terms.
 
 ## Why

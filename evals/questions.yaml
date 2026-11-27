@@ -1,0 +1,72 @@
+# Evaluation questions about the Tarnwick vault (examples/tarnwick). Each question has the notes a
+# good answer must come from (`expectedSources`) and the traps that make it hard for a search that only
+# compares embeddings. evals/src/questions.test.ts proves every trap from the vault itself.
+#
+# Trap kinds:
+# - bridge: the answer is reached from a note the question names by following typed links; the notes
+#   in between (the bridge) and the answer are not named in the question.
+# - supersedes: a newer note replaces an older one; with `vocabulary: other` it shares fewer words
+#   with the question than the note it replaces.
+# - alias: the question names a note only by one of its aliases.
+# - neighbour: an unanswerable question about a topic the vault does cover, without the fact asked.
+#
+# The probe split calibrates the difficulty of the set before the full set is written.
+questions:
+  - id: q-001
+    kind: multi-hop
+    split: probe
+    question: Which dealer joined the meeting where the C27 frame material was chosen?
+    expectedSources: [dec-aluminium-6061, mtg-2026-09-12-c27-kickoff, cus-velo-lund]
+    traps:
+      - kind: bridge
+        from: dec-aluminium-6061
+        path:
+          - { relation: decided_in, to: mtg-2026-09-12-c27-kickoff }
+          - { relation: customer, to: cus-velo-lund }
+
+  - id: q-002
+    kind: multi-hop
+    split: probe
+    question: Who does the owner of RL-1 report to?
+    expectedSources: [prj-ridgeline-emtb, per-tomas-lindqvist, per-maya-okafor]
+    traps:
+      - kind: alias
+        note: prj-ridgeline-emtb
+        alias: RL-1
+      - kind: bridge
+        from: prj-ridgeline-emtb
+        path:
+          - { relation: owner, to: per-tomas-lindqvist }
+          - { relation: reports_to, to: per-maya-okafor }
+
+  - id: q-003
+    kind: temporal
+    split: probe
+    question: How long is the frame warranty on a new Tarnwick bike?
+    expectedSources: [dec-lifetime-frame-cover]
+    traps:
+      - kind: supersedes
+        newer: dec-lifetime-frame-cover
+        older: doc-warranty-terms
+        vocabulary: other
+
+  - id: q-004
+    kind: temporal
+    split: probe
+    question: Who supplies the battery cells for the Ridgeline?
+    expectedSources: [dec-switch-battery-voltaro]
+    traps:
+      - kind: supersedes
+        newer: dec-switch-battery-voltaro
+        older: dec-keep-ampcore
+        vocabulary: same
+
+  - id: q-005
+    kind: unanswerable
+    split: probe
+    question: What is the retail price of the Ridgeline in Sweden?
+    expectedSources: []
+    traps:
+      - kind: neighbour
+        near: [doc-pricing-sheet-2026, prj-nordic-dealers, cus-velo-lund]
+        absent: ['\bSEK\b', '\bkronor\b', '\bkrona\b', 'Sweden[^.]*\bprice', 'Swedish[^.]*\bprice']
