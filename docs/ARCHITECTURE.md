@@ -70,6 +70,22 @@ flowchart LR
   sentence, then by word. A chunk has `id` (`<noteId>#<ord>`), `noteId`, `ord`, `heading`, `text`
   (the Markdown as written, for the app) and `embedText` (`Title › Heading`, a blank line, then the
   text with wikilinks as words: what gets embedded). A note with no body has no chunks.
+- **Embeddings** (`packages/embeddings`, ADR 0003): its own package, apart from the search, so the
+  static demo loads the search alone and fetches the model only when a person asks a new question.
+  No Node APIs (the Ask worker runs it in the browser); the model loader is injected, so tests need
+  no network.
+  `createEmbedder({ model?, batchSize?, cacheDir?, device?, load? }): Promise<Embedder>`, where
+  `Embedder = { model, embedQuery(question), embedPassages(texts), countTokens(text) }`.
+  `embedQuery` adds the model's query prefix, and `embedPassages` takes chunk `embedText` with no
+  prefix and refuses a passage over `model.maxTokens`. Both return unit `Float32Array`s of
+  `model.dims` (384). `EmbeddingModel` pins `id`, `revision`, `pooling`, `queryPrefix`, `dims` and
+  `maxTokens`; `DEFAULT_EMBEDDING_MODEL` is the one the index and the browser share.
+- **Ingestion** (`packages/index`, B2) wires them together. Each note goes through
+  `chunkNote(note, { countTokens: embedder.countTokens })`, then
+  `embedder.embedPassages(chunks.map((c) => c.embedText))`, then `toBlob`, into `embeddings` keyed
+  by `(model, chunk_id)`. Only notes whose `content_hash` changed are re-chunked and re-embedded.
+  At search time, `embedQuery(question)` goes to `topK` over the same model's vectors, in Node or in
+  the browser.
 - **Search** (`packages/search`): variants `vector`, `graph` and `hybrid`. Every hit carries the
   reasons it came in: `vector` (similarity), `title` (matched alias), `keyword` (terms), `link`
   (from, relation, 1 or 2 hops) or `same-project`. Lists are fused with reciprocal rank fusion
