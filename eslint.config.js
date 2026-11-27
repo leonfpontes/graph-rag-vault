@@ -18,8 +18,14 @@ export default tseslint.config(
     },
   },
   {
-    // The search and the embedder run in Node and in the browser (static demo, Ask worker): no Node built-ins.
-    files: ['packages/search/src/**/*.ts', 'packages/embeddings/src/**/*.ts'],
+    // The search, the embedder, the client and the answer's browser entry run in the browser too
+    // (static demo, Ask worker): no Node built-ins.
+    files: [
+      'packages/search/src/**/*.ts',
+      'packages/embeddings/src/**/*.ts',
+      'packages/client/src/**/*.ts',
+      'packages/answer/src/{browser,passages,types,provider}.ts',
+    ],
     ignores: ['**/*.test.ts'],
     rules: {
       'no-restricted-imports': [

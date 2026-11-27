@@ -1,0 +1,26 @@
+{
+  "name": "@graph-rag/client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "What the app reads, in the browser: the routes, the static demo (search on the index file, recorded answers, the scoreboard) and the local answer API, with no key needed.",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "graph-rag-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@graph-rag/answer": "workspace:*",
+    "@graph-rag/search": "workspace:*"
+  },
+  "devDependencies": {
+    "@graph-rag/evals": "workspace:*"
+  }
+}

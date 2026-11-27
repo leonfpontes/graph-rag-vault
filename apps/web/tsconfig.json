@@ -6,9 +6,11 @@
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    // vite.config.ts imports build-plugins.ts with its extension (Vite's native config loader wants it).
+    "allowImportingTsExtensions": true
   },
-  "include": ["src", "vite.config.ts"],
+  "include": ["src", "vite.config.ts", "build-plugins.ts"],
   // Tests run in Node (jsdom): they get Node types in tsconfig.test.json.
   "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/test"]
 }

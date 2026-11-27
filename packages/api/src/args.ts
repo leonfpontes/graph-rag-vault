@@ -6,6 +6,8 @@ export const DEFAULT_PORT = 8787
 export interface ServeOptions {
   command: string | undefined
   port: number
+  /** Never read a key, even with one in .env.local: recorded answers only, like the public site. */
+  noKey: boolean
 }
 
 /** `pnpm demo -- --port 8891` passes the `--` through: it is dropped, or the flags after it are lost. */
@@ -16,11 +18,11 @@ export function parseServeArgs(
   const { values, positionals } = parseArgs({
     args: argv.filter((arg) => arg !== '--'),
     allowPositionals: true,
-    options: { port: { type: 'string' } },
+    options: { port: { type: 'string' }, 'no-key': { type: 'boolean' } },
   })
   const raw = values.port ?? env.PORT ?? String(DEFAULT_PORT)
   const port = Number(raw)
   if (!/^\d+$/.test(raw) || !Number.isInteger(port) || port < 1 || port > 65535)
     throw new Error(`The port must be a number from 1 to 65535, not "${raw}".`)
-  return { command: positionals[0], port }
+  return { command: positionals[0], port, noKey: values['no-key'] ?? false }
 }

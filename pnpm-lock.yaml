@@ -54,6 +54,9 @@ importers:
       '@fontsource/ibm-plex-sans':
         specifier: 5.3.0
         version: 5.3.0
+      '@graph-rag/client':
+        specifier: workspace:*
+        version: link:../../packages/client
       '@leonfpontes/atlas-ui':
         specifier: 0.2.0
         version: 0.2.0(@types/react-dom@19.3.0(@types/react@19.3.3))(@types/react@19.3.3)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(tailwindcss@4.3.5)
@@ -64,6 +67,9 @@ importers:
         specifier: 19.3.1
         version: 19.3.1(react@19.3.1)
     devDependencies:
+      '@graph-rag/evals':
+        specifier: workspace:*
+        version: link:../../evals
       '@graph-rag/search':
         specifier: workspace:*
         version: link:../../packages/search
@@ -103,6 +109,9 @@ importers:
       vitest:
         specifier: 5.1.2
         version: 5.1.2(@types/node@24.19.4)(@vitest/coverage-v8@5.1.2)(jsdom@31.0.1)(vite@8.3.8(@types/node@24.19.4)(jiti@2.7.0)(yaml@2.9.1))
+      yaml:
+        specifier: 2.9.1
+        version: 2.9.1
 
   evals:
     dependencies:
@@ -128,7 +137,33 @@ importers:
         specifier: workspace:*
         version: link:../search
 
-  packages/api: {}
+  packages/api:
+    dependencies:
+      '@graph-rag/answer':
+        specifier: workspace:*
+        version: link:../answer
+      '@graph-rag/client':
+        specifier: workspace:*
+        version: link:../client
+      '@graph-rag/embeddings':
+        specifier: workspace:*
+        version: link:../embeddings
+      '@graph-rag/search':
+        specifier: workspace:*
+        version: link:../search
+
+  packages/client:
+    dependencies:
+      '@graph-rag/answer':
+        specifier: workspace:*
+        version: link:../answer
+      '@graph-rag/search':
+        specifier: workspace:*
+        version: link:../search
+    devDependencies:
+      '@graph-rag/evals':
+        specifier: workspace:*
+        version: link:../../evals
 
   packages/embeddings:
     dependencies:

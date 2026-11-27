@@ -18,12 +18,13 @@ export default defineConfig({
     {
       name: 'mobile',
       use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 812 } },
-      // Ranking parity doesn't depend on the viewport: one browser run is enough.
-      testIgnore: '**/search-parity.e2e.ts',
+      // Ranking parity and the demo's data layer don't depend on the viewport: one run is enough.
+      testIgnore: ['**/search-parity.e2e.ts', '**/demo.e2e.ts'],
     },
   ],
   webServer: {
-    command: `node packages/api/dist/cli.js serve --port ${port}`,
+    // --no-key: recorded answers only, like the public site, even with a key in .env.local.
+    command: `node packages/api/dist/cli.js serve --port ${port} --no-key`,
     url: `http://127.0.0.1:${port}/api/meta`,
     reuseExistingServer: false,
     timeout: 60_000,

@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.base.json",
+  // Runs in the browser (the app and the static demo): DOM types, no Node types, so a Node API fails
+  // the typecheck. The local server imports it too, for the wire contract and the note views.
+  "compilerOptions": { "noEmit": true, "types": [], "lib": ["ES2023", "DOM"] },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts", "src/test"]
+}

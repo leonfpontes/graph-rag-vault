@@ -14,7 +14,9 @@ export default defineConfig({
       { find: /^@graph-rag\/index$/, replacement: src('./packages/index/src/index.ts') },
       { find: /^@graph-rag\/search$/, replacement: src('./packages/search/src/index.ts') },
       { find: /^@graph-rag\/embeddings$/, replacement: src('./packages/embeddings/src/index.ts') },
+      { find: /^@graph-rag\/answer\/passages$/, replacement: src('./packages/answer/src/browser.ts') },
       { find: /^@graph-rag\/answer$/, replacement: src('./packages/answer/src/index.ts') },
+      { find: /^@graph-rag\/client$/, replacement: src('./packages/client/src/index.ts') },
       { find: /^@graph-rag\/api$/, replacement: src('./packages/api/src/index.ts') },
       { find: /^@graph-rag\/evals$/, replacement: src('./evals/src/index.ts') },
     ],
@@ -32,6 +34,8 @@ export default defineConfig({
         test: { name: '@graph-rag/embeddings', root: 'packages/embeddings', environment: 'node' },
       },
       { extends: true, test: { name: '@graph-rag/answer', root: 'packages/answer', environment: 'node' } },
+      // The client runs in the browser: jsdom, like the search.
+      { extends: true, test: { name: '@graph-rag/client', root: 'packages/client', environment: 'jsdom' } },
       { extends: true, test: { name: '@graph-rag/api', root: 'packages/api', environment: 'node' } },
       { extends: true, test: { name: '@graph-rag/evals', root: 'evals', environment: 'node' } },
       'apps/web',
