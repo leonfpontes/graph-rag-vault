@@ -93,7 +93,30 @@ export interface Scoreboard {
     kappa: number | undefined
     labeledBy: string
     labeledAt: string
+    /** False when the person reviewed the judge's verdicts rather than labelling without them. */
+    blind?: boolean
   } | null
+  /** A second automatic judge on the same sample: agreement between 2 models, not a human check. */
+  secondJudge?: {
+    model: string
+    judgedAt: string
+    costUsd: number
+    items: number
+    answers: number
+    observed: number
+    kappa: number | undefined
+    /** Sentences the main judge did not mark as fully supported. */
+    judgeFlagged: number
+    disagreements: {
+      item: string
+      questionId: string
+      variant: string
+      sentence: string
+      judge: 'supported' | 'partial' | 'unsupported'
+      second: 'supported' | 'partial' | 'unsupported'
+      reason: string
+    }[]
+  }
   notes: string[]
 }
 

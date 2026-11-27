@@ -24,6 +24,8 @@ export default defineConfig({
   },
   preview: { ...server, port: Number(process.env.PORT ?? 4173) },
   build: {
+    // Three.js and the embedding worker are already chunks of their own, loaded only when used.
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       onwarn(warning, warn) {
         // shadcn files start with "use client" (for Next.js); this app doesn't need it.

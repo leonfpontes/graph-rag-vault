@@ -1,32 +1,95 @@
 /* The Atlas theme (shadcn/ui variables, light and dark) from the published package and the IBM Plex
-   fonts. One new color with one job: --evidence marks what an answer used (docs/DESIGN.md comes with
-   the design story). */
+   fonts, plus what this product adds (docs/DESIGN.md):
+   - one new color with one job: --evidence marks what an answer used (citation chips, the lit path,
+     the ring on cited notes, the cited chunk bar);
+   - the note type colors (the shape carries the type; the color only helps);
+   - the graph canvas, its context links and the bar track;
+   - the variant keys of the charts (vectors gray, graph striped blue, hybrid ink). */
 @import '@leonfpontes/atlas-ui/styles.css';
 @import '@fontsource/ibm-plex-sans/400.css';
+@import '@fontsource/ibm-plex-sans/500.css';
 @import '@fontsource/ibm-plex-sans/600.css';
 @import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
 @source '../src';
 
 :root {
   --evidence: #0f766e;
   --evidence-subtle: #e2f4f1;
   --evidence-foreground: #ffffff;
+  --t-person: #0b63b5;
+  --t-project: #a35f00;
+  --t-decision: #9d3f86;
+  --t-meeting: #5c6b00;
+  --t-customer: #c0430a;
+  --t-document: #5b6475;
+  --key-graph: #0b5cad;
+  --key-vector: #636b7d;
+  --track: #edeff3;
+  --canvas: #f6f7f9;
+  --edge: #b8bfcc;
 }
 .dark {
   --evidence: #2dd4bf;
   --evidence-subtle: #0f2e2b;
   --evidence-foreground: #11151c;
+  --t-person: #6fb3f5;
+  --t-project: #f2a93b;
+  --t-decision: #e59ad0;
+  --t-meeting: #c9d45c;
+  --t-customer: #ff8a5c;
+  --t-document: #a3acbd;
+  --key-graph: #6fa8f5;
+  --key-vector: #9aa3b5;
+  --track: #232937;
+  --canvas: #0d1117;
+  --edge: #3a4252;
 }
 
 @theme inline {
   --color-evidence: var(--evidence);
   --color-evidence-subtle: var(--evidence-subtle);
   --color-evidence-foreground: var(--evidence-foreground);
+  --color-canvas: var(--canvas);
+  --color-track: var(--track);
+  --color-key-vector: var(--key-vector);
 }
 
 @layer base {
   body {
     font-size: 16px;
     line-height: 1.6;
+  }
+}
+
+/* Numbers are mono and tabular everywhere. */
+@utility n {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The graph variant's key: striped, so it never depends on color alone. */
+@utility key-graph {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--key-graph) 0 3px,
+    color-mix(in srgb, var(--key-graph) 55%, var(--track)) 3px 6px
+  );
+}
+
+/* Highlighted words in a source excerpt. */
+mark {
+  background: var(--evidence-subtle);
+  color: var(--foreground);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin,
+  .animate-pulse,
+  [data-slot='skeleton'] {
+    animation: none !important;
   }
 }

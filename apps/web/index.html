@@ -27,11 +27,19 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="__SITE_URL__/og.png" />
     <script>
-      // The theme before the first paint: ?dark / ?theme=, then the system.
+      // The theme before the first paint: ?dark / ?light / ?theme=, then the last choice, then the system.
       try {
         var q = new URLSearchParams(location.search)
+        var saved = null
+        try {
+          saved = localStorage.getItem('graph-rag-vault:theme')
+        } catch (e) {}
         var dark = q.has('dark') || q.get('theme') === 'dark'
         var light = q.has('light') || q.get('theme') === 'light'
+        if (!dark && !light) {
+          dark = saved === 'dark'
+          light = saved === 'light'
+        }
         if (dark || (!light && matchMedia('(prefers-color-scheme: dark)').matches))
           document.documentElement.classList.add('dark')
       } catch (e) {}
