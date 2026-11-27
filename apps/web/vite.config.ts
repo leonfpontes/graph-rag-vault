@@ -1,3 +1,6 @@
+import { statSync } from 'node:fs'
+import { createRequire } from 'node:module'
+
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defaultClientConditions } from 'vite'
@@ -10,9 +13,16 @@ import { evalData, siteUrl } from './build-plugins.ts'
 const port = Number(process.env.PORT ?? 5173)
 const server = { host: '127.0.0.1', port, strictPort: true }
 
+// The size of the runtime's .wasm, for the Ask page's progress bar (a server may compress it, so its
+// Content-Length is not the size that arrives).
+const ortWasmBytes = statSync(
+  createRequire(import.meta.url).resolve('onnxruntime-web/ort-wasm-simd-threaded.wasm'),
+).size
+
 export default defineConfig({
   // evalData serves the scoreboard, the recorded answers and the questions under /data/ (see the file).
   plugins: [react(), tailwindcss(), evalData(), siteUrl()],
+  define: { __ORT_WASM_BYTES__: JSON.stringify(ortWasmBytes) },
   // Workspace packages resolve to their source (see tsconfig.base.json, "graph-rag-source").
   resolve: { conditions: ['graph-rag-source', ...defaultClientConditions] },
   // pnpm dev: the API runs on its own (pnpm serve), on GRAPH_RAG_API for another port.
@@ -24,7 +34,8 @@ export default defineConfig({
   },
   preview: { ...server, port: Number(process.env.PORT ?? 4173) },
   build: {
-    // Three.js and the embedding worker are already chunks of their own, loaded only when used.
+    // The main chunk is about 525 KB (165 KB gzip), mostly react-dom; Three.js and the embedding worker
+    // are chunks of their own, loaded only when used.
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       onwarn(warning, warn) {

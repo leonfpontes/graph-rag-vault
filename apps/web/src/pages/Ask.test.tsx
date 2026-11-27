@@ -3,7 +3,7 @@ import { decodeIndex } from '@graph-rag/search'
 import { act, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { pathTree } from './Ask'
+import { nestRows, pathTree } from './Ask'
 import { axe } from '../test/axe'
 import { evalFile, INDEX_BYTES } from '../test/demo'
 import { asPhone, renderAt } from '../test/render'
@@ -112,6 +112,8 @@ describe('Ask', () => {
     const box = screen.getByRole('textbox', { name: 'Your question' })
     await user.type(box, 'Which dealers asked for a cargo bike?{Enter}')
     expect(await screen.findByText('Loading the search model')).toBeTruthy()
+    // Only the step is a live region; the byte count is outside it (the progress bar has the value).
+    expect(screen.getByRole('status').textContent).toBe('Loading the search model')
     expect(screen.getByText('11 of 34 MB')).toBeTruthy()
     expect(
       screen.getByRole('progressbar', { name: 'Search model download' }).getAttribute('aria-valuenow'),
@@ -212,6 +214,38 @@ describe('Ask', () => {
     const sheet = await screen.findByRole('dialog', { name: 'Source 1' })
     await user.click(within(sheet).getByRole('button', { name: 'Close source preview' }))
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+  })
+})
+
+describe('nestRows', () => {
+  it('puts each link inside the note it starts from, with two branches', () => {
+    const tree = nestRows(
+      pathTree([
+        { from: 'hub', to: 'b', relation: 'owner' },
+        { from: 'hub', to: 'c', relation: 'supersedes' },
+        { from: 'c', to: 'd', relation: 'decided_in' },
+        { from: 'b', to: 'e', relation: 'reports_to' },
+      ]),
+    )
+    const shape = (n: ReturnType<typeof nestRows>[number]): unknown => [n.row.note, n.children.map(shape)]
+    expect(tree.map(shape)).toEqual([
+      [
+        'hub',
+        [
+          ['b', [['e', []]]],
+          ['c', [['d', []]]],
+        ],
+      ],
+    ])
+  })
+
+  it('renders the tree as nested lists for screen readers', async () => {
+    renderAt('/ask?q=q-022')
+    const region = await screen.findByRole('region', { name: 'The path, as text' })
+    const top = within(region).getAllByRole('list')[0]!
+    const nested = top.querySelector('li > ol')
+    expect(nested).toBeTruthy()
+    expect(nested!.closest('li')!.querySelector('a')!.textContent).toBeTruthy()
   })
 })
 

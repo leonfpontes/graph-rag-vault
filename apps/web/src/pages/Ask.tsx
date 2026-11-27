@@ -73,6 +73,8 @@ const VARIANT_CAPTION: Record<SearchVariant, string> = {
 }
 
 const MODEL = EMBEDDING_MODELS[DEFAULT_EMBEDDING_MODEL]
+/** The first typed question downloads the model and the runtime's .wasm. */
+const DOWNLOAD_BYTES = MODEL.bytes + __ORT_WASM_BYTES__
 
 type Phase =
   | { name: 'idle' }
@@ -134,12 +136,12 @@ export function Ask() {
         if (demo.mode === 'local' && !known) setPhase({ name: 'writing' })
         return demo.answer({ question: q, variant, signal })
       }
-      let last: ModelProgress = { loaded: 0, total: MODEL.bytes }
+      let last: ModelProgress = { loaded: 0, total: DOWNLOAD_BYTES }
       if (!modelReady()) setPhase({ name: 'model', progress: last })
       const vector = await embedQuery(q, {
         signal,
         onProgress: (p) => {
-          last = { loaded: p.loaded, total: p.total ?? MODEL.bytes }
+          last = { loaded: p.loaded, total: p.total ?? DOWNLOAD_BYTES }
           setPhase({ name: 'model', progress: last })
         },
       }).catch((e: unknown) => {
@@ -408,20 +410,24 @@ function Turn({
             {kind}
             <span>search in your browser</span>
           </TurnMeta>
-          <div role="status" className="grid gap-2 rounded-lg border bg-card px-4 py-3.5">
+          <div className="grid gap-2 rounded-lg border bg-card px-4 py-3.5">
             <div className="flex items-center gap-2.5 text-sm">
               <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
-              <strong className="font-medium">Loading the search model</strong>
+              {/* Only the step is live: the byte count changes with every piece of the download. */}
+              <strong role="status" className="font-medium">
+                Loading the search model
+              </strong>
               <span className="flex-1" />
               <span className="n text-[13px]">
-                {mb(phase.progress.loaded, 0)} of {mb(phase.progress.total ?? MODEL.bytes, 0)} MB
+                {mb(phase.progress.loaded, 0)} of {mb(phase.progress.total ?? DOWNLOAD_BYTES, 0)} MB
               </span>
             </div>
             <Progress
               aria-label="Search model download"
+              aria-valuetext={`${mb(phase.progress.loaded, 0)} of ${mb(phase.progress.total ?? DOWNLOAD_BYTES, 0)} MB`}
               value={Math.min(
                 100,
-                Math.round((phase.progress.loaded / (phase.progress.total ?? MODEL.bytes)) * 100),
+                Math.round((phase.progress.loaded / (phase.progress.total ?? DOWNLOAD_BYTES)) * 100),
               )}
             />
             <p className="text-[13px] text-muted-foreground">
@@ -465,7 +471,7 @@ function Turn({
             <AlertDescription>
               <p>
                 {phase.progress && phase.progress.loaded > 0
-                  ? `The download stopped at ${mb(phase.progress.loaded, 0)} of ${mb(phase.progress.total ?? MODEL.bytes, 0)} MB (${phase.message}). `
+                  ? `The download stopped at ${mb(phase.progress.loaded, 0)} of ${mb(phase.progress.total ?? DOWNLOAD_BYTES, 0)} MB (${phase.message}). `
                   : `${phase.message}. `}
                 Try again, or pick a recorded question above: they need no model.
               </p>
@@ -764,45 +770,66 @@ function PathAsText({ demo, path }: { demo: Demo; path: AnswerPath }) {
         {path.cites[id]}
       </span>
     ) : null
-  const rows = pathTree(path.edges)
+  const item = (node: PathNode): ReactNode => (
+    <li key={node.row.key} className="grid gap-1.5">
+      <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5 leading-snug">
+        {node.row.relation && (
+          <span className="font-mono text-xs font-medium text-evidence">
+            {node.row.outward ? `${node.row.relation} →` : `← ${node.row.relation}`}
+          </span>
+        )}
+        <Shape type={type(node.row.note)} />
+        <span>
+          <Link
+            href={paths.note(node.row.note)}
+            className={cn(
+              'text-foreground no-underline hover:underline',
+              node.row.depth === 0 && 'font-semibold',
+            )}
+          >
+            {title(node.row.note)}
+          </Link>
+          {cite(node.row.note)}
+        </span>
+      </span>
+      {/* Each link sits inside the note it starts from, so a screen reader hears the tree. */}
+      {node.children.length > 0 && (
+        <ol className="m-0 grid list-none gap-1.5 p-0 pl-[18px]">{node.children.map(item)}</ol>
+      )}
+    </li>
+  )
   return (
     <section aria-labelledby="path-h" className="grid gap-2 rounded-lg border bg-card px-4 py-3">
       <h2 id="path-h" className="text-sm font-semibold">
         The path, as text
       </h2>
       <ol className="m-0 grid list-none gap-1.5 p-0 text-[13px]">
-        {rows.map((r) => (
-          <li
-            key={r.key}
-            className="flex flex-wrap items-center gap-x-2 gap-y-0.5 leading-snug"
-            style={{ paddingLeft: `${Math.min(r.depth, 4) * 18}px` }}
-          >
-            {r.relation && (
-              <span className="font-mono text-xs font-medium text-evidence">
-                {r.outward ? `${r.relation} →` : `← ${r.relation}`}
-              </span>
-            )}
-            <Shape type={type(r.note)} />
-            <span>
-              <Link
-                href={paths.note(r.note)}
-                className={cn(
-                  'text-foreground no-underline hover:underline',
-                  r.depth === 0 && 'font-semibold',
-                )}
-              >
-                {title(r.note)}
-              </Link>
-              {cite(r.note)}
-            </span>
-          </li>
-        ))}
+        {nestRows(pathTree(path.edges)).map(item)}
       </ol>
     </section>
   )
 }
 
-interface PathRow {
+export interface PathNode {
+  row: PathRow
+  children: PathNode[]
+}
+
+/** The rows of pathTree (in order, with their depth) as a tree: each row under its parent. */
+export function nestRows(rows: readonly PathRow[]): PathNode[] {
+  const roots: PathNode[] = []
+  const stack: PathNode[] = []
+  for (const row of rows) {
+    const node = { row, children: [] }
+    while (stack.length > row.depth) stack.pop()
+    if (row.depth === 0 || !stack.length) roots.push(node)
+    else stack[stack.length - 1]!.children.push(node)
+    stack.push(node)
+  }
+  return roots
+}
+
+export interface PathRow {
   key: string
   note: string
   depth: number
