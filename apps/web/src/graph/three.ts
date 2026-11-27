@@ -52,14 +52,24 @@ function shapeTexture(type: string): Texture {
   return t
 }
 
-/** True when the browser can draw WebGL (no WebGL: the 2D view). */
+let webgl: boolean | undefined
+
+/**
+ * True when the browser can draw WebGL (no WebGL: the 2D view). Asked once per page: each probe
+ * opens a WebGL context, and browsers keep only about 16 alive, so probing on every render made the
+ * 3D scene lose its own. The probe's context is released at once.
+ */
 export function hasWebGL(): boolean {
+  if (webgl !== undefined) return webgl
   try {
     const c = document.createElement('canvas')
-    return !!(c.getContext('webgl2') ?? c.getContext('webgl'))
+    const ctx = c.getContext('webgl2') ?? c.getContext('webgl')
+    webgl = !!ctx
+    ctx?.getExtension('WEBGL_lose_context')?.loseContext()
   } catch {
-    return false
+    webgl = false
   }
+  return webgl
 }
 
 export function mountThreeGraph(

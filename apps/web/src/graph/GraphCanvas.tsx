@@ -47,6 +47,7 @@ export function GraphCanvas({
   optionsRef.current = options
   const wants3d = options.mode === '3d' && !options.summary
   const [three, setThree] = useState<ThreeModule | null>(null)
+  // hasWebGL() asks the browser once per page (each probe opens a WebGL context).
   const use3d = wants3d && !!three && three.hasWebGL()
 
   useEffect(() => {
