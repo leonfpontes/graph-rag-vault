@@ -308,6 +308,8 @@ const dist = mkdtempSync(path.join(tmpdir(), 'graph-rag-web-'))
 mkdirSync(path.join(dist, 'assets'))
 writeFileSync(path.join(dist, 'index.html'), '<!doctype html><title>graph-rag-vault</title>')
 writeFileSync(path.join(dist, 'assets', 'app.js'), 'console.log(1)')
+writeFileSync(path.join(dist, 'assets', 'runtime.mjs'), 'export {}')
+writeFileSync(path.join(dist, 'assets', 'runtime.wasm'), new Uint8Array([0, 97, 115, 109]))
 const received: number[] = []
 const server = serveHttp(
   async (request) => {
@@ -347,6 +349,9 @@ describe('local server', () => {
     expect(await (await fetch(`${base}/api/meta`)).json()).toEqual({ name: 'graph-rag-vault', mode: 'demo' })
     const asset = await fetch(`${base}/assets/app.js`)
     expect(asset.headers.get('content-type')).toContain('javascript')
+    // The Ask worker's runtime: a module import needs a JavaScript type, and WebAssembly its own.
+    expect((await fetch(`${base}/assets/runtime.mjs`)).headers.get('content-type')).toContain('javascript')
+    expect((await fetch(`${base}/assets/runtime.wasm`)).headers.get('content-type')).toBe('application/wasm')
     const head = await fetch(`${base}/`, { method: 'HEAD' })
     expect(head.status).toBe(200)
     expect(await head.text()).toBe('')

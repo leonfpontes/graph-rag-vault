@@ -14,6 +14,10 @@ import { MAX_BODY_BYTES } from './routes.js'
 const TYPES: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
+  // The Ask worker imports the ONNX runtime's .mjs as a module: a module needs a JavaScript type.
+  '.mjs': 'text/javascript; charset=utf-8',
+  '.wasm': 'application/wasm',
+  '.woff': 'font/woff',
   '.css': 'text/css; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml',

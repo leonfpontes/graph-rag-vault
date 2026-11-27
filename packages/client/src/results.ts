@@ -84,6 +84,8 @@ export interface Scoreboard {
     answerUsd: number
     judgeUsd: number
     skipped: number
+    /** Answers kept from the earlier run because their search notes did not change. */
+    reused?: number
     stoppedEarly: boolean
   }
   human: {
@@ -93,7 +95,50 @@ export interface Scoreboard {
     kappa: number | undefined
     labeledBy: string
     labeledAt: string
+    /** False when the person reviewed the judge's verdicts rather than labelling without them. */
+    blind?: boolean
+    /** Answers in the sample, and those with a sentence the person has not labelled yet. */
+    sampleAnswers?: number
+    pendingAnswers?: number
+    pendingReason?: string
+    /** The sentences the person labelled blind, inside a review that was otherwise not blind. */
+    blindPart?: {
+      items: number
+      agreed: number
+      labeledAt: string
+      disagreements: {
+        item: string
+        questionId: string
+        variant: string
+        sentence: string
+        judge: 'supported' | 'partial' | 'unsupported'
+        human: 'supported' | 'partial' | 'unsupported'
+      }[]
+    }
   } | null
+  /** A second automatic judge on the same sample: agreement between 2 models, not a human check. */
+  secondJudge?: {
+    model: string
+    judgedAt: string
+    costUsd: number
+    items: number
+    answers: number
+    observed: number
+    kappa: number | undefined
+    /** Sentences the main judge did not mark as fully supported. */
+    judgeFlagged: number
+    /** The labels the second judge gave (one label only: kappa says little). */
+    secondLabels?: ('supported' | 'partial' | 'unsupported')[]
+    disagreements: {
+      item: string
+      questionId: string
+      variant: string
+      sentence: string
+      judge: 'supported' | 'partial' | 'unsupported'
+      second: 'supported' | 'partial' | 'unsupported'
+      reason: string
+    }[]
+  }
   notes: string[]
 }
 
