@@ -41,6 +41,11 @@ flowchart LR
 - **Index** (`packages/index`): SQLite through `node:sqlite`. Migrations are numbered 1..n, each with
   an `up` and a `down`, one transaction each; a failing one rolls back. Embeddings are Float32
   vectors stored as little-endian BLOBs (`toBlob`/`fromBlob` in `packages/search`).
+- **Chunks** (`packages/index`, `chunkNote`): sections follow the headings; paragraphs are packed
+  up to 200 approximate tokens (prefix included), with no overlap; a long paragraph splits by
+  sentence, then by word. A chunk has `id` (`<noteId>#<ord>`), `noteId`, `ord`, `heading`, `text`
+  (the Markdown as written, for the app) and `embedText` (`Title › Heading`, a blank line, then the
+  text with wikilinks as words: what gets embedded). A note with no body has no chunks.
 - **Search** (`packages/search`): variants `vector`, `graph` and `hybrid`. Every hit carries the
   reasons it came in: `vector` (similarity), `title` (matched alias), `keyword` (terms), `link`
   (from, relation, 1 or 2 hops) or `same-project`. Lists are fused with reciprocal rank fusion
