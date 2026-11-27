@@ -1,7 +1,7 @@
 import type { SearchHit } from '@graph-rag/search'
 import { describe, expect, it } from 'vitest'
 
-import { linkSentences, linksPassageId, passagesFromHits, passageText } from './index.js'
+import { linkSentences, linksPassageId, passagesFromHits, passageText, passageTextById } from './index.js'
 
 const note = (id: string, updated = '2026-01-01', status = 'active') => ({
   id,
@@ -76,6 +76,10 @@ describe('passagesFromHits', () => {
     })
     expect(passages[3]!.text).toBe('Nora Pell is also called Nora. Nora Pell reports to Kofi Mensah.')
     expect(linksPassageId('x')).toBe('x#links')
+    expect(passageTextById(index, 'per-nora#links')).toBe(passages[3]!.text)
+    expect(passageTextById(index, 'doc-p#0')).toBe(passages[0]!.text)
+    expect(passageTextById(index, 'per-kofi#links')).toBeUndefined()
+    expect(passageTextById(index, 'nope#0')).toBeUndefined()
   })
 
   it('words every typed link but mentions, and names a missing note by its id', () => {

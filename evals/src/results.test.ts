@@ -3,6 +3,7 @@
 // and this test says to run `pnpm eval` again.
 import { existsSync, readFileSync } from 'node:fs'
 
+import { normalize } from '@graph-rag/answer'
 import { createSearch, decodeIndex } from '@graph-rag/search'
 import { format, resolveConfig } from 'prettier'
 import { describe, expect, it } from 'vitest'
@@ -80,6 +81,8 @@ describe.runIf(has)('the committed scoreboard', () => {
         record?.sentences.map((s) => s.text),
         it.item,
       ).toContain(it.sentence)
+      for (const c of it.cited)
+        expect(normalize(c.text), `${it.item} ${c.chunkId}`).toContain(normalize(c.quote))
     }
   })
 

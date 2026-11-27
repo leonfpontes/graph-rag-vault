@@ -51,6 +51,19 @@ export function linkSentences(index: Pick<SearchIndex, 'notes' | 'links'>, noteI
   return out
 }
 
+/** The text of any passage the answer may cite, by id: a chunk, or a note's Links passage. */
+export function passageTextById(
+  index: Pick<SearchIndex, 'notes' | 'chunks' | 'links'>,
+  id: string,
+): string | undefined {
+  if (id.endsWith('#links')) {
+    const sentences = linkSentences(index, id.slice(0, -'#links'.length))
+    return sentences.length ? sentences.join(' ') : undefined
+  }
+  const chunk = index.chunks.find((c) => c.id === id)
+  return chunk ? passageText(chunk.embedText) : undefined
+}
+
 export function passagesFromHits(
   index: Pick<SearchIndex, 'notes' | 'chunks' | 'links'>,
   hits: readonly SearchHit[],

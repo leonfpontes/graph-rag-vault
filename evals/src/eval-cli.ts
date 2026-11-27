@@ -9,7 +9,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import path from 'node:path'
 
-import { createAnthropicProvider, passageText } from '@graph-rag/answer'
+import { createAnthropicProvider, passageTextById } from '@graph-rag/answer'
 import { createEmbedder, DEFAULT_EMBEDDING_MODEL, EMBEDDING_MODEL_KEYS } from '@graph-rag/embeddings'
 import { decodeIndex } from '@graph-rag/search'
 
@@ -47,12 +47,11 @@ const questions = loadQuestions(readFileSync(at(args.questionsFile), 'utf8'))
 
 if (args.sheet) {
   const records = readJson<AnswerRecord[]>(files.answers)
-  const chunks = new Map(index.chunks.map((c) => [c.id, c]))
   const text = new Map(questions.map((q) => [q.id, q.question]))
   const items = pickSample(
     records.filter((r) => args.splits.includes(r.split)),
     (id) => text.get(id) ?? id,
-    (id) => passageText(chunks.get(id)?.embedText ?? ''),
+    (id) => passageTextById(index, id) ?? '',
   )
   await write(files.sample, JSON.stringify({ items }, null, 2))
   const sheet = sampleSheet(
