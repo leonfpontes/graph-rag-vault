@@ -32,7 +32,7 @@ Against the strongest vector search we tried (arctic-embed-xs, 78%), hybrid is +
 | Graph only   | 97% ± 1      | 99% ± 1        | 0% ± 0            | 100% ± 0                         | 94% ± 3                  | 82% ± 3              | $0.0005         | 1.6 s          |
 | Hybrid       | 95% ± 1      | 99% ± 0        | 1% ± 1            | 100% ± 0                         | 96% ± 2                  | 84% ± 3              | $0.0005         | 1.8 s          |
 
-**Judge reviewed by a person (Leonardo Pontes), not blind:** agreed with the judge on 18 of 18 sentences from 8 of 10 answers, stratified sample (half of the 10 answers from those with a sentence the judge did not fully support). No kappa: the person saw the judge's verdicts. Review pending for 2 of 10 answers after the index rebuild.
+**Judge checked by a person (Leonardo Pontes):** stratified sample of 10 answers (half from those with a sentence the judge did not fully support). Reviewed not blind: agreed with the judge on 18 of 18 sentences. Labelled blind, without the judge's verdicts (the 3 sentences of the answers that changed in the index rebuild, 2026-11-27): agreed on 2 of 3 (S01, Vectors only, q-039: judge partial, person supported). No kappa: the review saw the verdicts, and 3 blind sentences are too few for one.
 
 **Agreement between 2 automatic judges (not a human check):** claude-opus-5-5 labelled the same 21 sentences from 10 answers of the judge-check sample (stratified, not random: see the note above) on 2026-11-27, with the same prompt and passages and without seeing the first verdicts. Agreement 76%, Cohen's kappa 0.00.
 

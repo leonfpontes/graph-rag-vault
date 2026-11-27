@@ -14,7 +14,9 @@ Notable changes, newest first. The format follows [Keep a Changelog](https://kee
   rebuilt: graph only and hybrid keep 93% and 91%, vectors only goes from 78% to 73%.
   `pnpm eval --reuse` asked again only the 111 answers whose search notes changed ($0.04);
   `pnpm eval --sheet` keeps the judge-check sample, moves the person's labels where nothing
-  changed and lists only what needs review.
+  changed and lists only what needs review. The 3 sentences of the changed answers were labelled
+  blind: 2 of 3 agree with the judge; the scoreboard and the README show the review (18 of 18, not
+  blind) and the blind part apart, with no kappa.
 - The judge check on the scoreboard and in the README: the person's review, not blind (agreed with
   the judge on 21 of 21 sentences, no kappa), and a blind second judge, Claude Opus 5.5, on the same
   stratified sample (`pnpm eval --second-judge`): agreement between two automatic judges 76%,

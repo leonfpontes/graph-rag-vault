@@ -311,15 +311,29 @@
     "stoppedEarly": false
   },
   "human": {
-    "items": 18,
-    "observed": 1,
-    "answers": 8,
+    "items": 21,
+    "observed": 0.9523809523809523,
+    "answers": 10,
     "labeledBy": "Leonardo Pontes",
     "labeledAt": "2026-11-27",
     "blind": false,
     "sampleAnswers": 10,
-    "pendingAnswers": 2,
-    "pendingReason": "after the index rebuild"
+    "pendingAnswers": 0,
+    "blindPart": {
+      "items": 3,
+      "agreed": 2,
+      "labeledAt": "2026-11-27",
+      "disagreements": [
+        {
+          "item": "S01",
+          "questionId": "q-039",
+          "variant": "vector",
+          "sentence": "The most recent field return rate was 0.8%, reported in the Q3 2026 quality report.",
+          "judge": "partial",
+          "human": "supported"
+        }
+      ]
+    }
   },
   "notes": [
     "The index was rebuilt on 2026-11-27 with onnxruntime-web (WebAssembly), the runtime the browser uses, so a question searched in the demo gets the same vector as here (cosine > 0.9999). The earlier vectors came from onnxruntime-node, whose 8-bit kernels round differently (cosine 0.996). Graph only and hybrid kept their recall@5 and MRR; vectors only went from 78% to 73%. The 111 answers whose search notes changed were asked and judged again; the other 259 have the same inputs and were kept.",

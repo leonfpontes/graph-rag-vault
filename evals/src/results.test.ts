@@ -101,9 +101,22 @@ describe.runIf(has)('the committed scoreboard', () => {
       expect(results.human).toEqual(JSON.parse(JSON.stringify(humanAgreement(items, labels))))
       if (labels.blind === false) {
         expect(results.human?.kappa).toBeUndefined()
-        expect(readme).toContain(
-          `Reviewed by a person (${labels.labeledBy}), not blind: agreed with the judge on ${Math.round(results.human!.observed * results.human!.items)} of ${results.human!.items} sentences`,
-        )
+        const h = results.human!
+        const b = h.blindPart
+        const agreed = Math.round(h.observed * h.items)
+        if (b) {
+          expect(readme).toContain(`Checked by a person (${labels.labeledBy})`)
+          expect(readme).toContain(
+            `Reviewed not blind: agreed with the judge on ${agreed - b.agreed} of ${h.items - b.items} sentences.`,
+          )
+          expect(readme).toContain(
+            `Labelled blind, without the judge's verdicts: agreed on ${b.agreed} of ${b.items} sentences`,
+          )
+        } else
+          expect(readme).toContain(
+            `Reviewed by a person (${labels.labeledBy}), not blind: agreed with the judge on ${agreed} of ${h.items} sentences`,
+          )
+        if (!h.pendingAnswers) expect(readme).not.toContain('Review pending')
       }
     } else expect(results.human).toBeNull()
     if (file('second-judge.json')) {

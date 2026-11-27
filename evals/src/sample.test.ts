@@ -150,6 +150,31 @@ describe('after a rebuild', () => {
     expect(check.pendingReason).toBe('after the index rebuild')
   })
 
+  it('reports the blind part of a review on its own, with no kappa', () => {
+    const items = pickSample(RECORDS, text, chunk, 3)
+    const check = humanAgreement(items, {
+      labeledBy: 'owner',
+      labeledAt: '2026-11-27',
+      blind: false,
+      blindItems: [items[2]!.item],
+      labels: { [items[0]!.item]: 'supported', [items[1]!.item]: 'supported', [items[2]!.item]: 'partial' },
+    })
+    expect(check.kappa).toBeUndefined()
+    expect(check.blindPart).toMatchObject({ items: 1, agreed: 0, labeledAt: '2026-11-27' })
+    expect(check.blindPart!.disagreements).toEqual([
+      expect.objectContaining({ item: items[2]!.item, judge: 'supported', human: 'partial' }),
+    ])
+    expect(() =>
+      humanAgreement(items, {
+        labeledBy: 'o',
+        labeledAt: 'd',
+        blind: false,
+        blindItems: ['S09'],
+        labels: {},
+      }),
+    ).toThrow('The blind item S09 has no label.')
+  })
+
   it('replaces an answer with nothing left to check by the next one of the same variant and half', () => {
     const [first] = before
     const unknown = RECORDS.map((r) =>

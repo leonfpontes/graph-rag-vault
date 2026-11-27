@@ -60,10 +60,12 @@ Answers by Claude Haiku 5.5, mean of 3 rounds.
   evaluation (cosine > 0.9999).
 - **Faithfulness** comes from an automatic judge (Claude Haiku 5.5), sentence by sentence, against
   the passages each sentence cites.
-- **Reviewed by a person (Leonardo Pontes), not blind: agreed with the judge on 18 of 18
-  sentences** from 8 of 10 answers, stratified sample (half of the 10 answers from those with a
-  sentence the judge did not fully support). No kappa: the person saw the judge's verdicts. Review
-  pending for 2 of 10 answers after the index rebuild.
+- **Checked by a person (Leonardo Pontes)** on a stratified sample of 10 answers (half from those
+  with a sentence the judge did not fully support). **Reviewed not blind: agreed with the judge on
+  18 of 18 sentences.** **Labelled blind, without the judge's verdicts: agreed on 2 of 3
+  sentences** (the answers that changed in the index rebuild); on the third the judge said partial
+  and the person supported, the same direction as the second judge. No kappa: the review saw the
+  verdicts, and 3 blind sentences are too few for one.
 - **Agreement between two automatic judges:** Claude Opus 5.5, blind, on the same 21 sentences:
   76%, Cohen's kappa 0.00. All 5 disagreements go the same way: the main judge said partial, the
   second judge said supported, so the faithfulness above is a conservative estimate. Kappa says

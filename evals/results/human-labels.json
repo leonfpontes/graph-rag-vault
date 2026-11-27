@@ -3,6 +3,7 @@
   "labeledAt": "2026-11-27",
   "blind": false,
   "labels": {
+    "S01": "supported",
     "S02": "supported",
     "S03": "supported",
     "S04": "partial",
@@ -19,8 +20,11 @@
     "S15": "supported",
     "S16": "supported",
     "S17": "supported",
+    "S18": "supported",
+    "S19": "supported",
     "S20": "supported",
     "S21": "supported"
   },
-  "pendingReason": "after the index rebuild"
+  "blindItems": ["S01", "S18", "S19"],
+  "blindLabeledAt": "2026-11-27"
 }

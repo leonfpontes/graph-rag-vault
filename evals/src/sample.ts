@@ -29,6 +29,9 @@ export interface HumanLabels {
   blind?: boolean
   /** Why some sample answers have no label yet (e.g. "after the index rebuild"). */
   pendingReason?: string
+  /** Items the person labelled without seeing the judge, when the rest was a review (blind: false). */
+  blindItems?: string[]
+  blindLabeledAt?: string
   labels: Record<string, Verdict>
 }
 
@@ -249,5 +252,32 @@ export function humanAgreement(items: readonly SampleItem[], labels: HumanLabels
     sampleAnswers: sampleAnswers.size,
     pendingAnswers: pendingAnswers.size,
     ...(pendingAnswers.size && labels.pendingReason ? { pendingReason: labels.pendingReason } : {}),
+    ...(labels.blindItems?.length ? { blindPart: blindPart(items, labels) } : {}),
+  }
+}
+
+/**
+ * The part of a review the person labelled blind: how many agree with the judge and where they
+ * differ. No kappa: a handful of items can't carry one.
+ */
+function blindPart(items: readonly SampleItem[], labels: HumanLabels) {
+  const blindItems = labels.blindItems ?? []
+  for (const key of blindItems)
+    if (!labels.labels[key]) throw new Error(`The blind item ${key} has no label.`)
+  const part = items.filter((it) => blindItems.includes(it.item))
+  return {
+    items: part.length,
+    agreed: part.filter((it) => labels.labels[it.item] === it.judge).length,
+    labeledAt: labels.blindLabeledAt ?? labels.labeledAt,
+    disagreements: part
+      .filter((it) => labels.labels[it.item] !== it.judge)
+      .map((it) => ({
+        item: it.item,
+        questionId: it.questionId,
+        variant: it.variant,
+        sentence: it.sentence,
+        judge: it.judge,
+        human: labels.labels[it.item]!,
+      })),
   }
 }

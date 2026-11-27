@@ -56,7 +56,10 @@ blind, and agreed with all 21; Claude Opus 5.5, blind, agreed with Haiku 5.5 on 
 Haiku said partial and Opus supported on all 5 differences. The product owner kept Haiku 5.5 as
 the main judge: its faithfulness is a conservative estimate. After the rebuild, one sample answer
 became "I don't know" and was replaced by the next of its group, and one changed: the person's
-labels stand for the 18 sentences of the 8 unchanged answers, and 2 answers wait for review. Opus
+labels stand for the 18 sentences of the 8 unchanged answers. The 3 sentences of the 2 changed
+answers were labelled blind (2026-11-27): 2 of 3 agree with the judge; on the third the judge said
+partial and the person supported, the direction of the second judge. Published as two parts (18 of
+18 reviewed not blind, 2 of 3 blind), with no kappa (`blindItems` in `human-labels.json`). Opus
 again agreed on 76%, with the same direction on all 5 differences; it marked every sentence
 supported, so kappa is 0 by construction. Each second-judge run cost $0.11.
 

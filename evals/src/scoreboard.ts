@@ -66,6 +66,20 @@ export interface Results {
     sampleAnswers?: number
     pendingAnswers?: number
     pendingReason?: string
+    /** The sentences the person labelled blind, inside a review that was otherwise not blind. */
+    blindPart?: {
+      items: number
+      agreed: number
+      labeledAt: string
+      disagreements: {
+        item: string
+        questionId: string
+        variant: string
+        sentence: string
+        judge: Verdict
+        human: Verdict
+      }[]
+    }
   } | null
   /** A second automatic judge on the same sample: agreement between 2 models, not a human check. */
   secondJudge?: {
@@ -215,11 +229,13 @@ export function toMarkdown(r: Results): string {
         return `| ${VARIANT_NAMES[variant]} | ${pm(g.faithfulness)} | ${pm(g.citationPrecision)} | ${pm(g.removedShare)} | ${pm(g.correctUnknown)} | ${pm(g.answered)} | ${pm(g.sourceRecall)} | ${usd(g.costPerAnswerUsd)} | ${g.medianLatencyMs === undefined ? '—' : `${(g.medianLatencyMs / 1000).toFixed(1)} s`} |`
       }),
     '',
-    r.human?.blind === false
-      ? `**Judge reviewed by a person (${r.human.labeledBy}), not blind:** agreed with the judge on ${Math.round(r.human.observed * r.human.items)} of ${r.human.items} sentences${r.human.pendingAnswers ? ` from ${r.human.answers} of ${r.human.sampleAnswers} answers` : ''}, stratified sample (half of the ${r.human.sampleAnswers ?? r.human.answers} answers from those with a sentence the judge did not fully support). No kappa: the person saw the judge's verdicts.${r.human.pendingAnswers ? ` Review pending for ${r.human.pendingAnswers} of ${r.human.sampleAnswers} answers${r.human.pendingReason ? ` ${r.human.pendingReason}` : ''}.` : ''}`
-      : r.human
-        ? `**Judge checked by a human:** ${r.human.items} sentences from ${r.human.answers} answers; agreement ${pct(r.human.observed)}, Cohen's kappa ${r.human.kappa?.toFixed(2) ?? '— (one label only)'}.`
-        : `**Judge not checked by a person:** the faithfulness above comes from the automatic judge (${r.models.judge}), sentence by sentence.`,
+    r.human?.blind === false && r.human.blindPart
+      ? reviewWithBlindPart(r.human, r.human.blindPart)
+      : r.human?.blind === false
+        ? `**Judge reviewed by a person (${r.human.labeledBy}), not blind:** agreed with the judge on ${Math.round(r.human.observed * r.human.items)} of ${r.human.items} sentences${r.human.pendingAnswers ? ` from ${r.human.answers} of ${r.human.sampleAnswers} answers` : ''}, stratified sample (half of the ${r.human.sampleAnswers ?? r.human.answers} answers from those with a sentence the judge did not fully support). No kappa: the person saw the judge's verdicts.${r.human.pendingAnswers ? ` Review pending for ${r.human.pendingAnswers} of ${r.human.sampleAnswers} answers${r.human.pendingReason ? ` ${r.human.pendingReason}` : ''}.` : ''}`
+        : r.human
+          ? `**Judge checked by a human:** ${r.human.items} sentences from ${r.human.answers} answers; agreement ${pct(r.human.observed)}, Cohen's kappa ${r.human.kappa?.toFixed(2) ?? '— (one label only)'}.`
+          : `**Judge not checked by a person:** the faithfulness above comes from the automatic judge (${r.models.judge}), sentence by sentence.`,
     ...(r.secondJudge ? secondJudgeLines(r.secondJudge, r.models.judge) : []),
     '',
     `**Cost:** ${r.cost.reused ? `this run ${usd(r.cost.spentUsd, 2)} of a ${usd(r.cost.capUsd, 2)} cap, for the answers whose search notes changed; ${r.cost.reused} answers with the same notes kept from the earlier run. All recorded answers: ${usd(r.cost.answerUsd + r.cost.judgeUsd, 2)}` : `${usd(r.cost.spentUsd, 2)} of a ${usd(r.cost.capUsd, 2)} cap`} (answers ${usd(r.cost.answerUsd, 2)}, judge ${usd(r.cost.judgeUsd, 2)})${r.cost.stoppedEarly ? `; stopped at the cap with ${r.cost.skipped} answers not run` : ''}${r.secondJudge ? `; the second judge added ${usd(r.secondJudge.costUsd, 2)}` : ''}.`,
@@ -258,4 +274,20 @@ function secondJudgeLines(s: NonNullable<Results['secondJudge']>, judge: string)
     ),
   )
   return lines
+}
+
+/** A review that was not blind for most sentences and blind for a few: each part on its own. */
+function reviewWithBlindPart(
+  h: NonNullable<Results['human']>,
+  b: NonNullable<NonNullable<Results['human']>['blindPart']>,
+): string {
+  const reviewed = h.items - b.items
+  const agreedReviewed = Math.round(h.observed * h.items) - b.agreed
+  const differ = b.disagreements
+    .map(
+      (d) =>
+        `${d.item}, ${VARIANT_NAMES[d.variant as RetrievalVariant] ?? d.variant}, ${d.questionId}: judge ${d.judge}, person ${d.human}`,
+    )
+    .join('; ')
+  return `**Judge checked by a person (${h.labeledBy}):** stratified sample of ${h.sampleAnswers ?? h.answers} answers (half from those with a sentence the judge did not fully support). Reviewed not blind: agreed with the judge on ${agreedReviewed} of ${reviewed} sentences. Labelled blind, without the judge's verdicts (the ${b.items} sentences of the answers that changed in the index rebuild, ${b.labeledAt}): agreed on ${b.agreed} of ${b.items}${differ ? ` (${differ})` : ''}. No kappa: the review saw the verdicts, and ${b.items} blind sentences are too few for one.`
 }
